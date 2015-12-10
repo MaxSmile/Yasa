@@ -51,12 +51,12 @@ public class FeedActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_feed);
         ButterKnife.inject(this);
         EventBus.getDefault().register(this);
         initView();
 
-        //如果没有照片则打开相机
+        //If there is no picture then turn on the camera
         String str = DataUtils.getStringPreferences(App.getApp(), AppConstants.FEED_INFO);
         if (StringUtils.isNotEmpty(str)) {
             feedList = JSON.parseArray(str, FeedItem.class);
@@ -70,16 +70,7 @@ public class FeedActivity extends BaseActivity {
     }
 
 
-    public void onEventMainThread(FeedItem feedItem) {
-        if (feedList == null) {
-            feedList = new ArrayList<FeedItem>();
-        }
-        feedList.add(0, feedItem);
-        DataUtils.setStringPreferences(App.getApp(), AppConstants.FEED_INFO, JSON.toJSONString(feedList));
-        mAdapter.setList(feedList);
-        mAdapter.notifyDataSetChanged();
 
-    }
 
     @Override
     protected void onDestroy() {
@@ -107,7 +98,6 @@ public class FeedActivity extends BaseActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-
         if (id == R.id.action_settings) {
             return true;
         }
@@ -116,7 +106,7 @@ public class FeedActivity extends BaseActivity {
     }
 
 
-    //照片适配器
+    //Photo adapter
     public class PictureAdapter extends RecyclerView.Adapter<ViewHolder> {
 
         private List<FeedItem> items = new ArrayList<FeedItem>();
@@ -150,7 +140,7 @@ public class FeedActivity extends BaseActivity {
 
         @Override
         public void onViewRecycled(ViewHolder holder) {
-            // 将标签移除,避免回收使用时标签重复
+            // Label repeat the label removed, avoid recycling used
             holder.pictureLayout.removeViews(1, holder.pictureLayout.getChildCount() - 1);
             super.onViewRecycled(holder);
         }
@@ -158,7 +148,7 @@ public class FeedActivity extends BaseActivity {
         @Override
         public void onViewAttachedToWindow(ViewHolder holder) {
             super.onViewAttachedToWindow(holder);
-            // 这里可能有问题 延迟200毫秒加载是为了等pictureLayout已经在屏幕上显示getWidth才为具体的值
+            // There may be problems delayed 200 milliseconds to wait pictureLayout loading is already displayed on the screen only for the specific values getWidth
             holder.pictureLayout.getHandler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
