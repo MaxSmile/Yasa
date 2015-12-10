@@ -1,4 +1,4 @@
-package com.getyasa.app.camera.ui;
+package com.getyasa.app.ui;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -29,7 +29,7 @@ import com.getyasa.R;
 import com.getyasa.app.camera.CameraBaseActivity;
 import com.getyasa.app.camera.CameraManager;
 import com.getyasa.app.camera.EffectService;
-import com.getyasa.app.camera.adapter.FilterAdapter;
+import com.getyasa.app.camera.adapter.FiltersAdapter;
 import com.getyasa.app.camera.adapter.StickerToolAdapter;
 import com.getyasa.app.camera.effect.FilterEffect;
 import com.getyasa.app.camera.util.EffectUtil;
@@ -37,7 +37,6 @@ import com.getyasa.app.camera.util.GPUImageFilterTools;
 import com.getyasa.app.model.Addon;
 import com.getyasa.app.model.FeedItem;
 import com.getyasa.app.model.TagItem;
-import com.getyasa.app.ui.EditTextActivity;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -366,8 +365,8 @@ public class PhotoProcessActivity extends CameraBaseActivity {
 
     //初始化滤镜
     private void initFilterToolBar(){
-        final List<FilterEffect> filters = EffectService.getInst().getLocalFilters();
-        final FilterAdapter adapter = new FilterAdapter(PhotoProcessActivity.this, filters,smallImageBackgroud);
+        final List<FilterEffect> filters = EffectService.getInst().getLocalFilters(this);
+        final FiltersAdapter adapter = new FiltersAdapter(PhotoProcessActivity.this, filters,smallImageBackgroud);
         bottomToolBar.setAdapter(adapter);
         bottomToolBar.setOnItemClickListener(new it.sephiroth.android.library.widget.AdapterView.OnItemClickListener() {
             @Override

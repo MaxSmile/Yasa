@@ -18,10 +18,10 @@ import jp.co.cyberagent.android.gpuimage.GPUImageFilter;
 import jp.co.cyberagent.android.gpuimage.GPUImageView;
 
 /**
- * @author tongqian.ni
+ * List of Filters
  *
  */
-public class FilterAdapter extends BaseAdapter {
+public class FiltersAdapter extends BaseAdapter {
 
     List<FilterEffect> filterUris;
     Context            mContext;
@@ -37,7 +37,7 @@ public class FilterAdapter extends BaseAdapter {
         return selectFilter;
     }
 
-    public FilterAdapter(Context context, List<FilterEffect> effects, Bitmap backgroud) {
+    public FiltersAdapter(Context context, List<FilterEffect> effects, Bitmap backgroud) {
         filterUris = effects;
         mContext = context;
         this.background = backgroud;

@@ -5,6 +5,9 @@
     <dimen name="activity_horizontal_margin">0dp</dimen>
     <dimen name="shape_square_size">86dp</dimen>
     <dimen name="shape_distance">26dp</dimen>
+    <dimen name="filter_icon_size">60dp</dimen>
+    <dimen name="filter_toolbox_size">80dp</dimen>
+    <dimen name="filter_label_size">14sp</dimen>
 
     <!-- Various heights -->
     <dimen name="height_625px">313dp</dimen>

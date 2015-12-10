@@ -7,9 +7,10 @@ import android.net.Uri;
 
 import com.common.util.ImageUtils;
 import com.getyasa.AppConstants;
-import com.getyasa.app.camera.ui.CameraActivity;
+import com.getyasa.app.ui.ApplyEffectsActivity;
+import com.getyasa.app.ui.CameraActivity;
 import com.getyasa.app.camera.ui.CropPhotoActivity;
-import com.getyasa.app.camera.ui.PhotoProcessActivity;
+import com.getyasa.app.ui.PhotoProcessActivity;
 import com.getyasa.app.model.PhotoItem;
 
 import java.util.Stack;
@@ -41,20 +42,26 @@ public class CameraManager {
         context.startActivity(intent);
     }
 
-    //判断图片是否需要裁剪
+
     public void processPhotoItem(Activity activity, PhotoItem photo) {
         Uri uri = photo.getImageUri().startsWith("file:") ? Uri.parse(photo
                 .getImageUri()) : Uri.parse("file://" + photo.getImageUri());
-        if (ImageUtils.isSquare(photo.getImageUri())) {
-            Intent newIntent = new Intent(activity, PhotoProcessActivity.class);
-            newIntent.setData(uri);
-            activity.startActivity(newIntent);
-        } else {
-            Intent i = new Intent(activity, CropPhotoActivity.class);
-            i.setData(uri);
-            //TODO稍后添加
-            activity.startActivityForResult(i, AppConstants.REQUEST_CROP);
-        }
+        Intent newIntent = new Intent(activity, ApplyEffectsActivity.class);
+        newIntent.setData(uri);
+        activity.startActivity(newIntent);
+
+//        Uri uri = photo.getImageUri().startsWith("file:") ? Uri.parse(photo
+//                .getImageUri()) : Uri.parse("file://" + photo.getImageUri());
+//        if (ImageUtils.isSquare(photo.getImageUri())) {
+//            Intent newIntent = new Intent(activity, ApplyEffectsActivity.class);
+//            newIntent.setData(uri);
+//            activity.startActivity(newIntent);
+//        } else {
+//            Intent i = new Intent(activity, CropPhotoActivity.class);
+//            i.setData(uri);
+//            //TODO稍后添加
+//            activity.startActivityForResult(i, AppConstants.REQUEST_CROP);
+//        }
     }
 
     public void close() {

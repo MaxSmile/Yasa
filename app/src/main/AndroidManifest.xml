@@ -31,7 +31,7 @@
         </activity>
 
         <activity
-            android:name=".app.camera.ui.CameraActivity"
+            android:name=".app.ui.CameraActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"/>
         <activity
@@ -42,8 +42,13 @@
             android:name=".app.camera.ui.AlbumActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"/>
+        <!--<activity
+            android:name=".app.ui.PhotoProcessActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>-->
+
         <activity
-            android:name=".app.camera.ui.PhotoProcessActivity"
+            android:name=".app.ui.ApplyEffectsActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"/>
 

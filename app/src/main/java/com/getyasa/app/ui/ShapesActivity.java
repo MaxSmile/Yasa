@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.getyasa.R;
-import com.getyasa.app.camera.ui.CameraActivity;
 import com.getyasa.base.YasaBaseActivity;
 
 

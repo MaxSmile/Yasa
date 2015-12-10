@@ -51,12 +51,16 @@ public class CropPhotoActivity extends CameraBaseActivity {
 
     @InjectView(R.id.crop_image)
     ImageViewTouch cropImage;
+
     @InjectView(R.id.draw_area)
     ViewGroup drawArea;
+
     @InjectView(R.id.wrap_image)
     View wrapImage;
+
     @InjectView(R.id.btn_crop_type)
     View btnCropType;
+
     @InjectView(R.id.image_center)
     ImageView imageCenter;
 
@@ -86,7 +90,7 @@ public class CropPhotoActivity extends CameraBaseActivity {
         imageCenter.setOnClickListener(v -> wrapImage.setSelected(!wrapImage.isSelected()));
         findViewById(R.id.cancel).setOnClickListener(v -> finish());
         findViewById(R.id.picked).setOnClickListener(v -> {
-            showProgressDialog("图片处理中...");
+            showProgressDialog(getString(R.string.picture_processing));
             new Thread() {
                 public void run() {
                     if (btnCropType.isSelected()) {
@@ -130,7 +134,7 @@ public class CropPhotoActivity extends CameraBaseActivity {
         drawArea.getLayoutParams().height = App.getApp().getScreenWidth();
         InputStream inputStream = null;
         try {
-            //得到图片宽高比
+            //Get the picture aspect ratio
             double rate = ImageUtils.getImageRadio(getContentResolver(), fileUri);
             oriBitmap = ImageUtils.decodeBitmapWithOrientationMax(fileUri.getPath(), App.getApp().getScreenWidth(), App.getApp().getScreenHeight());
 
@@ -173,7 +177,7 @@ public class CropPhotoActivity extends CameraBaseActivity {
                 finish();
             } catch (Exception e) {
                 e.printStackTrace();
-                toast("裁剪图片异常，请稍后重试", Toast.LENGTH_LONG);
+                toast(getString(R.string.crop_picture_exception), Toast.LENGTH_LONG);
             }
         }
     }

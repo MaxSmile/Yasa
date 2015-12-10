@@ -16,6 +16,7 @@ import com.getyasa.R;
 import com.getyasa.app.camera.CameraBaseActivity;
 import com.getyasa.app.camera.fragment.AlbumFragment;
 import com.getyasa.app.model.Album;
+import com.getyasa.app.ui.PhotoProcessActivity;
 
 import java.util.ArrayList;
 import java.util.List;

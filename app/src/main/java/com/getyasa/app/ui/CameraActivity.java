@@ -1,4 +1,4 @@
-package com.getyasa.app.camera.ui;
+package com.getyasa.app.ui;
 
 import android.annotation.TargetApi;
 import android.content.Intent;
@@ -15,7 +15,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.FloatMath;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -24,14 +23,12 @@ import android.view.ViewGroup;
 import android.view.animation.ScaleAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.common.util.DistanceUtil;
 import com.common.util.FileUtils;
 import com.common.util.IOUtil;
-import com.common.util.ImageLoaderUtils;
 import com.common.util.ImageUtils;
 import com.common.util.StringUtils;
 import com.customview.CameraGrid;
@@ -40,6 +37,7 @@ import com.getyasa.AppConstants;
 import com.getyasa.R;
 import com.getyasa.app.camera.CameraBaseActivity;
 import com.getyasa.app.camera.CameraManager;
+import com.getyasa.app.camera.ui.AlbumActivity;
 import com.getyasa.app.camera.util.CameraHelper;
 import com.getyasa.app.model.PhotoItem;
 
@@ -119,6 +117,20 @@ public class CameraActivity extends CameraBaseActivity {
         ButterKnife.inject(this);
         initView();
         initEvent();
+    }
+
+    @Override
+    protected void onActivityResult(final int requestCode, final int resultCode, final Intent result) {
+        if (requestCode == AppConstants.REQUEST_PICK && resultCode == RESULT_OK) {
+            CameraManager.getInst().processPhotoItem(
+                    CameraActivity.this,
+                    new PhotoItem(result.getData().getPath(), System
+                            .currentTimeMillis()));
+        } else if (requestCode == AppConstants.REQUEST_CROP && resultCode == RESULT_OK) {
+            Intent newIntent = new Intent(this, ApplyEffectsActivity.class);
+            newIntent.setData(result.getData());
+            startActivity(newIntent);
+        }
     }
 
     private void initView() {
@@ -275,19 +287,7 @@ public class CameraActivity extends CameraBaseActivity {
 
     }
 
-    @Override
-    protected void onActivityResult(final int requestCode, final int resultCode, final Intent result) {
-        if (requestCode == AppConstants.REQUEST_PICK && resultCode == RESULT_OK) {
-            CameraManager.getInst().processPhotoItem(
-                    CameraActivity.this,
-                    new PhotoItem(result.getData().getPath(), System
-                            .currentTimeMillis()));
-        } else if (requestCode == AppConstants.REQUEST_CROP && resultCode == RESULT_OK) {
-            Intent newIntent = new Intent(this, PhotoProcessActivity.class);
-            newIntent.setData(result.getData());
-            startActivity(newIntent);
-        }
-    }
+
 
     /**
      * The distance between two points

@@ -1,5 +1,8 @@
 package com.getyasa.app.camera;
 
+import android.content.Context;
+
+import com.getyasa.R;
 import com.getyasa.app.camera.effect.FilterEffect;
 import com.getyasa.app.camera.util.GPUImageFilterTools;
 
@@ -24,24 +27,24 @@ public class EffectService {
     private EffectService() {
     }
 
-    public List<FilterEffect> getLocalFilters() {
+    public List<FilterEffect> getLocalFilters(Context context) {
         List<FilterEffect> filters = new ArrayList<FilterEffect>();
-        filters.add(new FilterEffect("原始", GPUImageFilterTools.FilterType.NORMAL, 0));
+        filters.add(new FilterEffect(context.getString(R.string.effect_normal), GPUImageFilterTools.FilterType.NORMAL, 0));
 
-        filters.add(new FilterEffect("暧昧", GPUImageFilterTools.FilterType.ACV_AIMEI, 0));
-        filters.add(new FilterEffect("淡蓝", GPUImageFilterTools.FilterType.ACV_DANLAN, 0));
-        filters.add(new FilterEffect("蛋黄", GPUImageFilterTools.FilterType.ACV_DANHUANG, 0));
-        filters.add(new FilterEffect("复古", GPUImageFilterTools.FilterType.ACV_FUGU, 0));
-        filters.add(new FilterEffect("高冷", GPUImageFilterTools.FilterType.ACV_GAOLENG, 0));
-        filters.add(new FilterEffect("怀旧", GPUImageFilterTools.FilterType.ACV_HUAIJIU, 0));
-        filters.add(new FilterEffect("胶片", GPUImageFilterTools.FilterType.ACV_JIAOPIAN, 0));
-        filters.add(new FilterEffect("可爱", GPUImageFilterTools.FilterType.ACV_KEAI, 0));
-        filters.add(new FilterEffect("落寞", GPUImageFilterTools.FilterType.ACV_LOMO, 0));
-        filters.add(new FilterEffect("加强", GPUImageFilterTools.FilterType.ACV_MORENJIAQIANG, 0));
-        filters.add(new FilterEffect("暖心", GPUImageFilterTools.FilterType.ACV_NUANXIN, 0));
-        filters.add(new FilterEffect("清新", GPUImageFilterTools.FilterType.ACV_QINGXIN, 0));
-        filters.add(new FilterEffect("日系", GPUImageFilterTools.FilterType.ACV_RIXI, 0));
-        filters.add(new FilterEffect("温暖", GPUImageFilterTools.FilterType.ACV_WENNUAN, 0));
+        filters.add(new FilterEffect(context.getString(R.string.effect_ambiguous), GPUImageFilterTools.FilterType.ACV_AIMEI, 0));
+        filters.add(new FilterEffect(context.getString(R.string.effect_light_blue), GPUImageFilterTools.FilterType.ACV_DANLAN, 0));
+        filters.add(new FilterEffect(context.getString(R.string.effect_yolk), GPUImageFilterTools.FilterType.ACV_DANHUANG, 0));
+        filters.add(new FilterEffect(context.getString(R.string.effect_retro), GPUImageFilterTools.FilterType.ACV_FUGU, 0));
+        filters.add(new FilterEffect(context.getString(R.string.effect_high_cold), GPUImageFilterTools.FilterType.ACV_GAOLENG, 0));
+        //filters.add(new FilterEffect(context.getString(R.string.effect_reminiscence), GPUImageFilterTools.FilterType.ACV_HUAIJIU, 0));
+        filters.add(new FilterEffect(context.getString(R.string.effect_film), GPUImageFilterTools.FilterType.ACV_JIAOPIAN, 0));
+        filters.add(new FilterEffect(context.getString(R.string.effect_lovely), GPUImageFilterTools.FilterType.ACV_KEAI, 0));
+        filters.add(new FilterEffect(context.getString(R.string.effect_lonely), GPUImageFilterTools.FilterType.ACV_LOMO, 0));
+        filters.add(new FilterEffect(context.getString(R.string.effect_strengthen), GPUImageFilterTools.FilterType.ACV_MORENJIAQIANG, 0));
+        //filters.add(new FilterEffect(context.getString(R.string.effect_heart_warming), GPUImageFilterTools.FilterType.ACV_NUANXIN, 0));
+        filters.add(new FilterEffect(context.getString(R.string.effect_fresh), GPUImageFilterTools.FilterType.ACV_QINGXIN, 0));
+        filters.add(new FilterEffect(context.getString(R.string.effect_descent), GPUImageFilterTools.FilterType.ACV_RIXI, 0));
+        filters.add(new FilterEffect(context.getString(R.string.effect_warm), GPUImageFilterTools.FilterType.ACV_WENNUAN, 0));
 
         return filters;
     }

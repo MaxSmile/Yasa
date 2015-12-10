@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#313131</color>
-    <color name="colorAccentYellow">#faed2c</color>
+    <color name="common_background">#313131</color>
+    <color name="colorAccentYellow">#f1d11d</color>
     <color name="filter_title">#666666</color>
 
     <color name="transparent">#00000000</color>
@@ -9,7 +10,7 @@
     <color name="white">#ffffffff</color>
     <color name="gray">#666666</color>
     <color name="dialog_title">#ffff0000</color>
-    <color name="common_background">#f5f3f0</color>
+
     <color name="txt_color_gray_3">#cbc4c6</color>
 	<color name="brown">#cccccc</color>
     <color name="pale_pink">#cbc4c6</color>
