@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.getyasa.R;
+import com.getyasa.base.YasaBaseActivity;
 
 
 /**
@@ -22,7 +23,6 @@ public class ShapesActivity extends YasaBaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shapes);
 
-        setUpActionBar(false,false,"Choose a shape");
     }
 
     public void onShapeClick(View v) {

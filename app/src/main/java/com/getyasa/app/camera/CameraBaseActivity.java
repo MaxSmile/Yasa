@@ -2,10 +2,10 @@ package com.getyasa.app.camera;
 
 import android.os.Bundle;
 
-import com.getyasa.base.BaseActivity;
+import com.getyasa.base.YasaBaseActivity;
 
 
-public class CameraBaseActivity extends BaseActivity {
+public class CameraBaseActivity extends YasaBaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

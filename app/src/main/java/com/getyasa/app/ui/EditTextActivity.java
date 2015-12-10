@@ -14,7 +14,7 @@ import android.widget.Toast;
 import com.common.util.StringUtils;
 import com.getyasa.AppConstants;
 import com.getyasa.R;
-import com.getyasa.base.BaseActivity;
+import com.getyasa.base.YasaBaseActivity;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -26,7 +26,7 @@ import butterknife.InjectView;
  * Weibo: http://weibo.com/2030683111
  * Email: 1132234509@qq.com
  */
-public class EditTextActivity extends BaseActivity {
+public class EditTextActivity extends YasaBaseActivity {
 
     private final static int MAX        = 10;
     private int maxlength               = MAX;

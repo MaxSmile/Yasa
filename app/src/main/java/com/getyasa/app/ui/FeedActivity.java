@@ -23,7 +23,7 @@ import com.getyasa.AppConstants;
 import com.getyasa.app.camera.CameraManager;
 import com.getyasa.app.model.FeedItem;
 import com.getyasa.app.model.TagItem;
-import com.getyasa.base.BaseActivity;
+import com.getyasa.base.YasaBaseActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +38,7 @@ import de.greenrobot.event.EventBus;
  * Weibo: http://weibo.com/2030683111
  * Email: 1132234509@qq.com
  */
-public class FeedActivity extends BaseActivity {
+public class FeedActivity extends YasaBaseActivity {
 
     @InjectView(R.id.fab)
     FloatingActionButton fab;

@@ -16,10 +16,10 @@ import com.readystatesoftware.systembartint.SystemBarTintManager;
 /**
  * Created by sky on 15/7/6.
  */
-public class BaseActivity extends AppCompatActivity implements ActivityResponsable {
+public class YasaBaseActivity extends AppCompatActivity implements ActivityResponsable {
 
     protected CommonTitleBar titleBar;
-    //Activity辅助类
+
     private ActivityHelper           mActivityHelper;
 
 
