@@ -8,7 +8,6 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Rect;
 import android.graphics.RectF;
-import android.graphics.Region;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -18,9 +17,9 @@ import com.customview.drawable.EditableDrawable;
 import com.customview.drawable.FeatherDrawable;
 import com.github.skykai.stickercamera.R;
 import com.imagezoom.ImageViewTouch;
-import com.stickercamera.App;
-import com.stickercamera.app.camera.util.Point2D;
-import com.stickercamera.app.camera.util.UIUtils;
+import com.getyasa.App;
+import com.getyasa.app.camera.util.Point2D;
+import com.getyasa.app.camera.util.UIUtils;
 
 
 public class MyHighlightView implements EditableDrawable.OnSizeChange {

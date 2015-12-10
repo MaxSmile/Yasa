@@ -6,7 +6,7 @@ android {
     buildToolsVersion "22.0.1"
 
     defaultConfig {
-        applicationId "com.github.skykai.stickercamera"
+        applicationId "com.github.skykai.getyasa"
         minSdkVersion 15
         targetSdkVersion 22
         versionCode 1

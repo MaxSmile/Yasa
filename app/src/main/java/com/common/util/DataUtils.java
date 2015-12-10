@@ -5,9 +5,7 @@ import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
-import com.stickercamera.App;
-import java.util.HashSet;
-import java.util.Set;
+import com.getyasa.App;
 
 public final class DataUtils {
 

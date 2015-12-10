@@ -1,7 +1,5 @@
 package com.customview;
 
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -16,10 +14,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.github.skykai.stickercamera.R;
-import com.stickercamera.App;
-import com.stickercamera.AppConstants;
-import com.stickercamera.app.camera.util.EffectUtil;
-import com.stickercamera.app.model.TagItem;
+import com.getyasa.App;
+import com.getyasa.AppConstants;
+import com.getyasa.app.camera.util.EffectUtil;
+import com.getyasa.app.model.TagItem;
 
 
 /**

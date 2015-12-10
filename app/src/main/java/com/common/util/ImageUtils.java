@@ -2,7 +2,6 @@ package com.common.util;
 
 import android.content.ContentResolver;
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -12,9 +11,9 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.provider.MediaStore;
 
-import com.stickercamera.App;
-import com.stickercamera.app.model.Album;
-import com.stickercamera.app.model.PhotoItem;
+import com.getyasa.App;
+import com.getyasa.app.model.Album;
+import com.getyasa.app.model.PhotoItem;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -30,7 +29,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 
 /**

@@ -1,6 +1,6 @@
 package com.common.util;
 
-import com.stickercamera.App;
+import com.getyasa.App;
 
 public class DistanceUtil {
 
