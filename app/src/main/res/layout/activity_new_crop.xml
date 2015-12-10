@@ -8,7 +8,7 @@
     <com.customview.CommonTitleBar
         android:id="@+id/title_layout"
         style="@style/head_default"
-        app:titleTxt="裁剪相片" />
+        app:titleTxt="@string/crop_photo" />
 
     <View
         android:layout_width="fill_parent"

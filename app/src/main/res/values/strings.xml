@@ -1,6 +1,20 @@
 <resources>
-    <string name="app_name">StickerCamera</string>
+    <string name="app_name">Yasa</string>
 
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="my_gallery">My Gallery</string>
+    <string name="cancel">Cancel</string>
+    <string name="input">Input</string>
+    <string name="save">Save</string>
+    <string name="you_can_enter_10_characters_0_10">You can enter 10 characters (0/10)</string>
+    <string name="edit_photos">Edit Photos</string>
+    <string name="next">Next</string>
+    <string name="crop_photo">Crop photo</string>
+    <string name="no_filters">No filters</string>
+    <string name="stickers">Stickers</string>
+    <string name="filters">Filters</string>
+    <string name="label">Label</string>
+    <string name="placeholder">...</string>
+    <string name="processing">Processing</string>
+    <string name="camera_failed">Camera failed, please try again later!</string>
 </resources>

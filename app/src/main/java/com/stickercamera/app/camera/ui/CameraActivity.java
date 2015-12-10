@@ -57,7 +57,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 /**
- * 相机界面
+ * Camera Interface
  * Created by sky on 15/7/6.
  */
 public class CameraActivity extends CameraBaseActivity {
@@ -70,12 +70,12 @@ public class CameraActivity extends CameraBaseActivity {
     private int photoNumber = 4;
     private int photoMargin = App.getApp().dp2px(1);
     private float pointX, pointY;
-    static final int FOCUS = 1;            // 聚焦
-    static final int ZOOM = 2;            // 缩放
-    private int mode;                      //0是聚焦 1是放大
+    static final int FOCUS = 1;
+    static final int ZOOM = 2;
+    private int mode;                      //0 is 1 is an enlarged focus
     private float dist;
     private int PHOTO_SIZE = 2000;
-    private int mCurrentCameraId = 0;  //1是前置 0是后置
+    private int mCurrentCameraId = 0;  //1 is a front-0 is the rear
     private Handler handler = new Handler();
 
     @InjectView(R.id.masking)
@@ -116,9 +116,9 @@ public class CameraActivity extends CameraBaseActivity {
         surfaceHolder.setKeepScreenOn(true);
         surfaceView.setFocusable(true);
         surfaceView.setBackgroundColor(TRIM_MEMORY_BACKGROUND);
-        surfaceView.getHolder().addCallback(new SurfaceCallback());//为SurfaceView的句柄添加一个回调函数
+        surfaceView.getHolder().addCallback(new SurfaceCallback());//Add a callback to handle SurfaceView
 
-        //设置相机界面,照片列表,以及拍照布局的高度(保证相机预览为正方形)
+        //Set up the camera interface, the photo list, and highly photographed layout (guarantee camera preview square)
         ViewGroup.LayoutParams layout = cameraGrid.getLayoutParams();
         layout.height = App.getApp().getScreenWidth();
         layout = photoArea.getLayoutParams();
@@ -128,7 +128,7 @@ public class CameraActivity extends CameraBaseActivity {
                 - App.getApp().getScreenWidth()
                 - DistanceUtil.getCameraPhotoAreaHeight();
 
-        //添加系统相册内的图片
+        //Add a picture album within the system
         ArrayList<PhotoItem> sysPhotos = FileUtils.getInst().findPicsInDir(
                 FileUtils.getInst().getSystemPhotoPath());
         int showNumber = sysPhotos.size() > photoNumber ? photoNumber
@@ -168,13 +168,12 @@ public class CameraActivity extends CameraBaseActivity {
     }
 
     private void initEvent() {
-        //拍照
         takePicture.setOnClickListener(v -> {
             try {
                 cameraInst.takePicture(null, null, new MyPictureCallback());
             } catch (Throwable t) {
                 t.printStackTrace();
-                toast("拍照失败，请重试！", Toast.LENGTH_LONG);
+                toast("Camera failed, please try again!", Toast.LENGTH_LONG);
                 try {
                     cameraInst.startPreview();
                 } catch (Throwable e) {
@@ -183,23 +182,23 @@ public class CameraActivity extends CameraBaseActivity {
             }
 
         });
-        //闪光灯
+
         flashBtn.setOnClickListener(v -> turnLight(cameraInst));
-        //前后置摄像头切换
+        //Front and rear camera switch
         boolean canSwitch = false;
         try {
             canSwitch = mCameraHelper.hasFrontCamera() && mCameraHelper.hasBackCamera();
         } catch (Exception e) {
-            //获取相机信息失败
+            //Get the camera information failed
         }
         if (!canSwitch) {
             changeBtn.setVisibility(View.GONE);
         } else {
             changeBtn.setOnClickListener(v -> switchCamera());
         }
-        //跳转相册
+        //Jump albums
         galleryBtn.setOnClickListener(v -> startActivity(new Intent(CameraActivity.this, AlbumActivity.class)));
-        //返回按钮
+        //back button
         backBtn.setOnClickListener(v -> finish());
         surfaceView.setOnTouchListener((v, event) -> {
             switch (event.getAction() & MotionEvent.ACTION_MASK) {
@@ -212,7 +211,7 @@ public class CameraActivity extends CameraBaseActivity {
                 // 副点按下
                 case MotionEvent.ACTION_POINTER_DOWN:
                     dist = spacing(event);
-                    // 如果连续两点距离大于10，则判定为多点模式
+                    // If the distance is greater than 10 points in a row, it is determined that multi-point mode
                     if (spacing(event) > 10f) {
                         mode = ZOOM;
                     }
@@ -252,13 +251,13 @@ public class CameraActivity extends CameraBaseActivity {
             focusIndex.setVisibility(View.VISIBLE);
             ScaleAnimation sa = new ScaleAnimation(3f, 1f, 3f, 1f,
                     ScaleAnimation.RELATIVE_TO_SELF, 0.5f, ScaleAnimation.RELATIVE_TO_SELF, 0.5f);
-            sa.setDuration(800);
+            sa.setDuration(200);
             focusIndex.startAnimation(sa);
             handler.postDelayed(() -> focusIndex.setVisibility(View.INVISIBLE), 800);
         });
 
         takePhotoPanel.setOnClickListener(v -> {
-            //doNothing 防止聚焦框出现在拍照区域
+            //doNothing Focus frame appears to prevent the shot area
         });
 
     }
@@ -278,7 +277,7 @@ public class CameraActivity extends CameraBaseActivity {
     }
 
     /**
-     * 两点的距离
+     * The distance between two points
      */
     private float spacing(MotionEvent event) {
         if (event == null) {
@@ -289,7 +288,7 @@ public class CameraActivity extends CameraBaseActivity {
         return FloatMath.sqrt(x * x + y * y);
     }
 
-    //放大缩小
+
     int curZoomValue = 0;
 
     private void addZoomIn(int delta) {
@@ -319,7 +318,7 @@ public class CameraActivity extends CameraBaseActivity {
         }
     }
 
-    //定点对焦的代码
+    //SPOT FOCUS code
     private void pointFocus(int x, int y) {
         cameraInst.cancelAutoFocus();
         parameters = cameraInst.getParameters();
@@ -355,9 +354,9 @@ public class CameraActivity extends CameraBaseActivity {
         @Override
         public void onPictureTaken(byte[] data, Camera camera) {
             bundle = new Bundle();
-            bundle.putByteArray("bytes", data); //将图片字节数据保存在bundle当中，实现数据交换
+            bundle.putByteArray("bytes", data); //The image byte data is stored in the bundle, the data exchange
             new SavePicTask(data).execute();
-            camera.startPreview(); // 拍完照后，重新开始预览
+            camera.startPreview(); // After taking photographs, resume preview
         }
     }
 
@@ -365,10 +364,10 @@ public class CameraActivity extends CameraBaseActivity {
         private byte[] data;
 
         protected void onPreExecute() {
-            showProgressDialog("处理中");
+            showProgressDialog(getString(R.string.processing));
         }
 
-        ;
+
 
         SavePicTask(byte[] data) {
             this.data = data;
@@ -393,7 +392,7 @@ public class CameraActivity extends CameraBaseActivity {
                     CameraManager.getInst().processPhotoItem(CameraActivity.this,
                             new PhotoItem(result, System.currentTimeMillis()));
             } else {
-                toast("拍照失败，请稍后重试！", Toast.LENGTH_LONG);
+                toast(getString(R.string.camera_failed), Toast.LENGTH_LONG);
             }
         }
     }
@@ -410,7 +409,7 @@ public class CameraActivity extends CameraBaseActivity {
                     cameraInst = null;
                 }
             } catch (Exception e) {
-                //相机已经关了
+                //The camera has been closed
             }
 
         }
@@ -435,7 +434,7 @@ public class CameraActivity extends CameraBaseActivity {
         }
     }
 
-    //实现自动对焦
+    //Autofocus
     private void autoFocus() {
         new Thread() {
             @Override
@@ -452,7 +451,7 @@ public class CameraActivity extends CameraBaseActivity {
                     @Override
                     public void onAutoFocus(boolean success, Camera camera) {
                         if (success) {
-                            initCamera();//实现相机的参数初始化
+                            initCamera();//Parametric initialize the camera's
                         }
                     }
                 });
@@ -513,17 +512,17 @@ public class CameraActivity extends CameraBaseActivity {
     }
 
     /**
-     * 最小预览界面的分辨率
+     * Minimum preview screen resolution
      */
     private static final int MIN_PREVIEW_PIXELS = 480 * 320;
     /**
-     * 最大宽高比差
+     * Maximum aspect ratio difference
      */
     private static final double MAX_ASPECT_DISTORTION = 0.15;
     private static final String TAG = "Camera";
 
     /**
-     * 找出最适合的预览界面分辨率
+     * Identify the most suitable preview screen resolution
      *
      * @return
      */
@@ -536,7 +535,7 @@ public class CameraActivity extends CameraBaseActivity {
             return defaultPreviewResolution;
         }
 
-        // 按照分辨率从大到小排序
+        // Descending order in accordance with Resolution
         List<Camera.Size> supportedPreviewResolutions = new ArrayList<Camera.Size>(rawSupportedSizes);
         Collections.sort(supportedPreviewResolutions, new Comparator<Camera.Size>() {
             @Override
@@ -561,7 +560,7 @@ public class CameraActivity extends CameraBaseActivity {
         Log.v(TAG, "Supported preview resolutions: " + previewResolutionSb);
 
 
-        // 移除不符合条件的分辨率
+        // Remove the resolution does not meet the conditions
         double screenAspectRatio = (double) App.getApp().getScreenWidth()
                 / (double) App.getApp().getScreenHeight();
         Iterator<Camera.Size> it = supportedPreviewResolutions.iterator();
@@ -570,7 +569,7 @@ public class CameraActivity extends CameraBaseActivity {
             int width = supportedPreviewResolution.width;
             int height = supportedPreviewResolution.height;
 
-            // 移除低于下限的分辨率，尽可能取高分辨率
+            // Remove below the lower limit of the resolution, as far as possible to take high resolution
             if (width * height < MIN_PREVIEW_PIXELS) {
                 it.remove();
                 continue;

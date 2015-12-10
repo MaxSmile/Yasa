@@ -6,7 +6,7 @@
     <com.customview.CommonTitleBar
         android:id="@+id/title_layout"
         style="@style/head_default"
-        app:titleTxt="贴纸相机" />
+        app:titleTxt="@string/app_name" />
 
 
     <android.support.v7.widget.RecyclerView

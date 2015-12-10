@@ -332,7 +332,7 @@ public class GPUImageFilterTools {
         try {
             GPUImageTwoInputFilter filter = filterClass.newInstance();
             filter.setBitmap(BitmapFactory.decodeResource(context.getResources(),
-                R.drawable.ic_launcher));
+                R.mipmap.ic_launcher));
             return filter;
         } catch (Exception e) {
             e.printStackTrace();

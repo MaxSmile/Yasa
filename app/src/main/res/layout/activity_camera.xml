@@ -1,9 +1,9 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff">
+    android:background="@color/white">
 
-    <!-- 显示预览图形 -->
+    <!-- Show preview graphics -->
 
     <SurfaceView
         android:id="@+id/surfaceView"

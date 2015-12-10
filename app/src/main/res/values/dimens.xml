@@ -1,9 +1,12 @@
 <resources>
-    <!-- Default screen margins, per the Android Design guidelines. -->
-    <dimen name="activity_horizontal_margin">16dp</dimen>
-    <dimen name="activity_vertical_margin">16dp</dimen>
 
-    <!-- 各种高度 -->
+    <dimen name="shape_horizontal_margin">0dp</dimen>
+    <dimen name="activity_vertical_margin">0dp</dimen>
+    <dimen name="activity_horizontal_margin">0dp</dimen>
+    <dimen name="shape_square_size">86dp</dimen>
+    <dimen name="shape_distance">26dp</dimen>
+
+    <!-- Various heights -->
     <dimen name="height_625px">313dp</dimen>
     <dimen name="height_414px">207dp</dimen>
     <dimen name="height_350px">175dp</dimen>
@@ -83,7 +86,6 @@
 
     <dimen name="dis_0">0dp</dimen>
     <dimen name="dis_1">1dp</dimen>
-    <!-- 各种高度 -->
 
 
     <dimen name="crop__bar_height">48dp</dimen>

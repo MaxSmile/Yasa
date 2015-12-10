@@ -21,7 +21,7 @@ import com.github.skykai.stickercamera.R;
  */
 public class CommonTitleBar extends RelativeLayout {
 
-    // 防重复点击时间
+    // Anti-repeat-click
     private static final int BTN_LIMIT_TIME = 500;
 
     private TextView         leftButton;
@@ -55,7 +55,6 @@ public class CommonTitleBar extends RelativeLayout {
         }
 
         LayoutInflater.from(context).inflate(R.layout.view_title_bar, this);
-        findViewById(R.id.title_out_frame).setBackgroundResource(R.color.blue);
         arr.recycle();
     }
 

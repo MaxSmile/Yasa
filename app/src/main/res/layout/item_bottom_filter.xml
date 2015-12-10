@@ -28,8 +28,8 @@
         android:layout_below="@id/small_filter_container"
         android:layout_marginTop="10dp"
         android:gravity="center"
-        android:text="无滤镜"
-        android:textColor="#9b6b6c"
+        android:text="@string/no_filters"
+        android:textColor="@color/filter_title"
         android:textSize="20sp" />
 
 </RelativeLayout>

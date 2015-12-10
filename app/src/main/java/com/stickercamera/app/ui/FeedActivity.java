@@ -1,26 +1,19 @@
 package com.stickercamera.app.ui;
 
 import android.graphics.BitmapFactory;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.common.util.DataUtils;
-import com.common.util.FileUtils;
 import com.common.util.StringUtils;
 import com.customview.LabelView;
 import com.github.skykai.stickercamera.R;
@@ -31,8 +24,6 @@ import com.stickercamera.app.camera.CameraManager;
 import com.stickercamera.app.model.FeedItem;
 import com.stickercamera.app.model.TagItem;
 import com.stickercamera.base.BaseActivity;
-
-import org.json.JSONArray;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +38,7 @@ import de.greenrobot.event.EventBus;
  * Weibo: http://weibo.com/2030683111
  * Email: 1132234509@qq.com
  */
-public class MainActivity extends BaseActivity {
+public class FeedActivity extends BaseActivity {
 
     @InjectView(R.id.fab)
     FloatingActionButton fab;
@@ -71,7 +62,7 @@ public class MainActivity extends BaseActivity {
             feedList = JSON.parseArray(str, FeedItem.class);
         }
         if (feedList == null) {
-            CameraManager.getInst().openCamera(MainActivity.this);
+            CameraManager.getInst().openCamera(FeedActivity.this);
         } else {
             mAdapter.setList(feedList);
         }
@@ -103,7 +94,7 @@ public class MainActivity extends BaseActivity {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mAdapter = new PictureAdapter();
         mRecyclerView.setAdapter(mAdapter);
-        fab.setOnClickListener(v -> CameraManager.getInst().openCamera(MainActivity.this));
+        fab.setOnClickListener(v -> CameraManager.getInst().openCamera(FeedActivity.this));
     }
 
 
@@ -172,7 +163,7 @@ public class MainActivity extends BaseActivity {
                 @Override
                 public void run() {
                     for (TagItem feedImageTag : holder.getTagList()) {
-                        LabelView tagView = new LabelView(MainActivity.this);
+                        LabelView tagView = new LabelView(FeedActivity.this);
                         tagView.init(feedImageTag);
                         tagView.draw(holder.pictureLayout,
                                 (int) (feedImageTag.getX() * ((double) holder.pictureLayout.getWidth() / (double) 1242)),
