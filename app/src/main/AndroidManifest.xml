@@ -42,10 +42,11 @@
             android:name=".app.camera.ui.AlbumActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"/>
-        <!--<activity
-            android:name=".app.ui.PhotoProcessActivity"
+
+        <activity
+            android:name=".app.ui.AddStickersActivity"
             android:configChanges="orientation"
-            android:screenOrientation="portrait"/>-->
+            android:screenOrientation="portrait"/>
 
         <activity
             android:name=".app.ui.ApplyEffectsActivity"

@@ -33,8 +33,9 @@
     <string name="effect_lovely">Lovely</string>
     <string name="effect_lonely">Lonely</string>
     <string name="effect_strengthen">Strengthen</string>
-    <string name="effect_heart_warming">Heart-warming</string>
+    <string name="effect_heart_warming">Confident</string>
     <string name="effect_fresh">Fresh</string>
     <string name="effect_descent">Descent</string>
     <string name="effect_warm">Warm</string>
+    <string name="label_teke_pictures"> </string>
 </resources>

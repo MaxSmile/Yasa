@@ -66,9 +66,7 @@ public class CameraActivity extends CameraBaseActivity {
     private Bundle bundle = null;
     private int photoWidth = DistanceUtil.getCameraPhotoWidth();
 
-    //private int photoNumber = 4;
 
-    private int photoMargin = App.getApp().dp2px(1);
     private float pointX, pointY;
     static final int FOCUS = 1;
     static final int ZOOM = 2;
@@ -81,8 +79,6 @@ public class CameraActivity extends CameraBaseActivity {
     @InjectView(R.id.masking)
     CameraGrid cameraGrid;
 
-    //@InjectView(R.id.photo_area)
-    //LinearLayout photoArea;
 
     @InjectView(R.id.panel_take_photo)
     View takePhotoPanel;
@@ -96,8 +92,7 @@ public class CameraActivity extends CameraBaseActivity {
     @InjectView(R.id.change)
     ImageView changeBtn;
 
-    @InjectView(R.id.back)
-    ImageView backBtn;
+
 
     @InjectView(R.id.next)
     ImageView galleryBtn;
@@ -134,6 +129,7 @@ public class CameraActivity extends CameraBaseActivity {
     }
 
     private void initView() {
+        setUpActionBar(true,false,getString(R.string.label_teke_pictures));
         SurfaceHolder surfaceHolder = surfaceView.getHolder();
         surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
         surfaceHolder.setKeepScreenOn(true);
@@ -222,18 +218,19 @@ public class CameraActivity extends CameraBaseActivity {
             changeBtn.setOnClickListener(v -> switchCamera());
         }
         //Jump albums
-        galleryBtn.setOnClickListener(v -> startActivity(new Intent(CameraActivity.this, AlbumActivity.class)));
-        //back button
-        backBtn.setOnClickListener(v -> finish());
+        galleryBtn.setOnClickListener(v -> startActivity(new Intent(this, AlbumActivity.class)));
+
+
+
         surfaceView.setOnTouchListener((v, event) -> {
             switch (event.getAction() & MotionEvent.ACTION_MASK) {
-                // 主点按下
+                // Main point Press
                 case MotionEvent.ACTION_DOWN:
                     pointX = event.getX();
                     pointY = event.getY();
                     mode = FOCUS;
                     break;
-                // 副点按下
+                // Vice Point Press
                 case MotionEvent.ACTION_POINTER_DOWN:
                     dist = spacing(event);
                     // If the distance is greater than 10 points in a row, it is determined that multi-point mode
@@ -369,7 +366,7 @@ public class CameraActivity extends CameraBaseActivity {
             bundle = new Bundle();
             bundle.putByteArray("bytes", data); //The image byte data is stored in the bundle, the data exchange
             new SavePicTask(data).execute();
-            camera.startPreview(); // After taking photographs, resume preview
+            //camera.startPreview(); // After taking photographs, resume preview
         }
     }
 

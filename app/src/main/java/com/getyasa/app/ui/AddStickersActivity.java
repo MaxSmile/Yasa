@@ -1,37 +1,43 @@
 package com.getyasa.app.ui;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Matrix;
 import android.graphics.RectF;
-import android.net.Uri;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.common.util.FileUtils;
 import com.common.util.ImageUtils;
 import com.common.util.StringUtils;
 import com.common.util.TimeUtils;
+import com.customview.LabelSelector;
+import com.customview.LabelView;
+import com.customview.MyHighlightView;
 import com.customview.MyImageViewDrawableOverlay;
 import com.getyasa.App;
+import com.getyasa.AppConstants;
 import com.getyasa.R;
 import com.getyasa.app.camera.CameraBaseActivity;
 import com.getyasa.app.camera.CameraManager;
 import com.getyasa.app.camera.EffectService;
 import com.getyasa.app.camera.adapter.FiltersAdapter;
+import com.getyasa.app.camera.adapter.StickerToolAdapter;
 import com.getyasa.app.camera.effect.FilterEffect;
 import com.getyasa.app.camera.util.EffectUtil;
 import com.getyasa.app.camera.util.GPUImageFilterTools;
+import com.getyasa.app.model.Addon;
 import com.getyasa.app.model.FeedItem;
 import com.getyasa.app.model.TagItem;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -45,12 +51,16 @@ import jp.co.cyberagent.android.gpuimage.GPUImageView;
 
 /**
  * Created by Maxim Vasilkov maxim.vasilkov@gmail.com on 25/11/15.
- * To the collage you got you can apply a filter/effect.
- * This functionality is very simple to the one in Instagram.
- * Almost identical. With the difference of may be just having different names for the effects.
- * The number of effects: 5-10.
+ * Over the collage on this screen you are able to place stickers.
+ * Stickers are of two type: text and pics.
+ * The list of the pics stickers going to be similar to those which are free in Moldiv application.
+ * To remove a sticker you have to move it out of the collage edit area.
+ * And finally the last and most important is Share function.
+ * This going to work as a standard Android Share action which will automatically propagate all
+ * available options of pics sharing on the device with that difference that saving to the device
+ * storage option will be added.
  */
-public class ApplyEffectsActivity extends CameraBaseActivity {
+public class AddStickersActivity extends CameraBaseActivity {
 
     @InjectView(R.id.gpuimage)
     GPUImageView mGPUImageView;
@@ -58,31 +68,35 @@ public class ApplyEffectsActivity extends CameraBaseActivity {
     @InjectView(R.id.drawing_view_container)
     ViewGroup drawArea;
 
+
     @InjectView(R.id.list_tools)
     HListView bottomToolBar;
 
+    @InjectView(R.id.toolbar_area)
+    ViewGroup toolArea;
 
-    // TODO: optimize overlay?
     private MyImageViewDrawableOverlay mImageView;
+    private LabelSelector labelSelector;
 
-
-    //Current picture
+    //当前图片
     private Bitmap currentBitmap;
 
-    //Small pictures for Filters preview
-    private Bitmap smallImageBackgroud;
+    //小白点标签
+    private LabelView emptyLabelView;
 
 
 
+    //标签区域
+    private View commonLabelArea;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_apply_effects);
+        setContentView(R.layout.activity_add_stickers);
         ButterKnife.inject(this);
         EffectUtil.clear();
         initView();
-
+        initStickerToolBar();
 
         ImageUtils.asyncLoadImage(this, getIntent().getData(), new ImageUtils.LoadImageCallback() {
             @Override
@@ -92,37 +106,45 @@ public class ApplyEffectsActivity extends CameraBaseActivity {
             }
         });
 
-        ImageUtils.asyncLoadSmallImage(this, getIntent().getData(), new ImageUtils.LoadImageCallback() {
-            @Override
-            public void callback(Bitmap result) {
-                smallImageBackgroud = result;//getResizedBitmap(result,80,80);
-                initFilterToolBar();
-            }
-        });
 
     }
-
-
     private void initView() {
-        setUpActionBar(true,true,"Apply Filter");
-        View overlay = LayoutInflater.from(ApplyEffectsActivity.this).inflate(
-                R.layout.view_drawable_overlay, null);
 
+        setUpActionBar(true,false,"Add Stickers & Share");
+
+        View overlay = LayoutInflater.from(AddStickersActivity.this).inflate(
+                R.layout.view_drawable_overlay, null);
         mImageView = (MyImageViewDrawableOverlay) overlay.findViewById(R.id.drawable_overlay);
         ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(App.getApp().getScreenWidth(),
                 App.getApp().getScreenWidth());
         mImageView.setLayoutParams(params);
         overlay.setLayoutParams(params);
         drawArea.addView(overlay);
-
-
+        //添加标签选择器
         RelativeLayout.LayoutParams rparams = new RelativeLayout.LayoutParams(App.getApp().getScreenWidth(), App.getApp().getScreenWidth());
+        labelSelector = new LabelSelector(this);
+        labelSelector.setLayoutParams(rparams);
+        drawArea.addView(labelSelector);
+        labelSelector.hide();
 
-
-        //Initializes the filter image
+        //初始化滤镜图片
         mGPUImageView.setLayoutParams(rparams);
 
 
+        //初始化空白标签
+        emptyLabelView = new LabelView(this);
+        emptyLabelView.setEmpty();
+        EffectUtil.addLabelEditable(mImageView, drawArea, emptyLabelView,
+                mImageView.getWidth() / 2, mImageView.getWidth() / 2);
+        emptyLabelView.setVisibility(View.INVISIBLE);
+
+        //初始化推荐标签栏
+        commonLabelArea = LayoutInflater.from(AddStickersActivity.this).inflate(
+                R.layout.view_label_bottom,null);
+        commonLabelArea.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT));
+        toolArea.addView(commonLabelArea);
+        commonLabelArea.setVisibility(View.GONE);
     }
 
     @Override
@@ -132,9 +154,8 @@ public class ApplyEffectsActivity extends CameraBaseActivity {
     }
 
 
-    //Save Image
+
     private void savePicture(){
-        //Add filters
         final Bitmap newBitmap = Bitmap.createBitmap(mImageView.getWidth(), mImageView.getHeight(),
                 Bitmap.Config.ARGB_8888);
         Canvas cv = new Canvas(newBitmap);
@@ -146,7 +167,6 @@ public class ApplyEffectsActivity extends CameraBaseActivity {
             cv.drawBitmap(currentBitmap, null, dst, null);
         }
 
-        //Add watermark Stickers
         EffectUtil.applyOnSave(cv, mImageView);
 
         new SavePicToFileTask().execute(newBitmap);
@@ -157,7 +177,7 @@ public class ApplyEffectsActivity extends CameraBaseActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            showProgressDialog(getString(R.string.save_picture));
+            showProgressDialog("图片处理中...");
         }
 
         @Override
@@ -180,37 +200,30 @@ public class ApplyEffectsActivity extends CameraBaseActivity {
         protected void onPostExecute(String fileName) {
             super.onPostExecute(fileName);
             dismissProgressDialog();
-            navigateToNextActivity(Uri.fromFile(new File(fileName)));
+            // TODO: on file saved!
         }
     }
 
-    private void navigateToNextActivity(Uri uri) {
-        Intent newIntent = new Intent(this, AddStickersActivity.class);
-        newIntent.setData(uri);
-        this.startActivity(newIntent);
-    }
 
 
 
-    private void initFilterToolBar(){
-        final List<FilterEffect> filters = EffectService.getInst().getLocalFilters(this);
-        final FiltersAdapter adapter = new FiltersAdapter(ApplyEffectsActivity.this, filters,smallImageBackgroud);
-        bottomToolBar.setAdapter(adapter);
+    private void initStickerToolBar(){
+
+        bottomToolBar.setAdapter(new StickerToolAdapter(AddStickersActivity.this, EffectUtil.addonList));
         bottomToolBar.setOnItemClickListener(new it.sephiroth.android.library.widget.AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(it.sephiroth.android.library.widget.AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 
-                if (adapter.getSelectFilter() != arg2) {
-                    adapter.setSelectFilter(arg2);
-                    GPUImageFilter filter = GPUImageFilterTools.createFilterForType(
-                            ApplyEffectsActivity.this, filters.get(arg2).getType());
-                    mGPUImageView.setFilter(filter);
-                    GPUImageFilterTools.FilterAdjuster mFilterAdjuster = new GPUImageFilterTools.FilterAdjuster(filter);
-                    //Adjustable color filters
-                    if (mFilterAdjuster.canAdjust()) {
-                        //mFilterAdjuster.adjust(100);//Adjustable filters to choose an appropriate value
-                    }
-                }
+            @Override
+            public void onItemClick(it.sephiroth.android.library.widget.AdapterView<?> arg0,
+                                    View arg1, int arg2, long arg3) {
+                labelSelector.hide();
+                Addon sticker = EffectUtil.addonList.get(arg2);
+                EffectUtil.addStickerImage(mImageView, AddStickersActivity.this, sticker,
+                        new EffectUtil.StickerCallback() {
+                            @Override
+                            public void onRemoveSticker(Addon sticker) {
+                                labelSelector.hide();
+                            }
+                        });
             }
         });
     }

@@ -5,9 +5,13 @@ import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.customview.CommonTitleBar;
 import com.getyasa.R;
@@ -17,6 +21,9 @@ import com.readystatesoftware.systembartint.SystemBarTintManager;
  * Created by sky on 15/7/6.
  */
 public class YasaBaseActivity extends AppCompatActivity implements ActivityResponsable {
+    protected Bundle savedInstanceState;
+    private ImageButton back_btn,forward_btn;
+    private TextView title;
 
     protected CommonTitleBar titleBar;
 
@@ -28,7 +35,7 @@ public class YasaBaseActivity extends AppCompatActivity implements ActivityRespo
         super.onCreate(savedInstanceState);
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
         mActivityHelper = new ActivityHelper(this);
-
+        this.savedInstanceState = savedInstanceState;
     }
 
 
@@ -46,8 +53,6 @@ public class YasaBaseActivity extends AppCompatActivity implements ActivityRespo
     }
 
     /**
-     * 弹对话框
-     *
      * @param title
      * @param msg
      * @param positive
@@ -63,22 +68,13 @@ public class YasaBaseActivity extends AppCompatActivity implements ActivityRespo
     }
 
     /**
-     * 弹对话框
-     *
      * @param title
-     *            标题
      * @param msg
-     *            消息
      * @param positive
-     *            确定
      * @param positiveListener
-     *            确定回调
      * @param negative
-     *            否定
      * @param negativeListener
-     *            否定回调
      * @param isCanceledOnTouchOutside
-     *            外部点是否可以取消对话框
      */
     @Override
     public void alert(String title, String msg, String positive,
@@ -93,9 +89,7 @@ public class YasaBaseActivity extends AppCompatActivity implements ActivityRespo
      * TOAST
      *
      * @param msg
-     *            消息
      * @param period
-     *            时长
      */
     @Override
     public void toast(String msg, int period) {
@@ -103,10 +97,7 @@ public class YasaBaseActivity extends AppCompatActivity implements ActivityRespo
     }
 
     /**
-     * 显示进度对话框
-     *
      * @param msg
-     *            消息
      */
     @Override
     public void showProgressDialog(String msg) {
@@ -114,10 +105,7 @@ public class YasaBaseActivity extends AppCompatActivity implements ActivityRespo
     }
 
     /**
-     * 显示可取消的进度对话框
-     *
      * @param msg
-     *            消息
      */
     public void showProgressDialog(final String msg, final boolean cancelable,
                                    final DialogInterface.OnCancelListener cancelListener) {
@@ -127,5 +115,82 @@ public class YasaBaseActivity extends AppCompatActivity implements ActivityRespo
     @Override
     public void dismissProgressDialog() {
         mActivityHelper.dismissProgressDialog();
+    }
+
+
+
+    protected void setUpActionBar(boolean back,boolean forward, String label) {
+        // Inflate your custom layout
+        final ViewGroup actionBarLayout = (ViewGroup) getLayoutInflater().inflate(
+                R.layout.action_bar,
+                null);
+
+        // Set up your ActionBar
+        final android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowHomeEnabled(false);
+        actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setDisplayShowCustomEnabled(true);
+        actionBar.setCustomView(actionBarLayout);
+        Toolbar parent = (Toolbar) actionBarLayout.getParent();
+        parent.setContentInsetsAbsolute(0,0);
+        back_btn = (ImageButton)actionBarLayout.findViewById(R.id.back);
+        forward_btn = (ImageButton)actionBarLayout.findViewById(R.id.forward);
+        title = (TextView) actionBarLayout.findViewById(R.id.title);
+        if(!back){
+            hideBackButton();
+        }
+        if(!forward) {
+            hideForwardButton();
+        }
+        setActionBarTitle(label);
+    }
+
+    public void showForwardButton() {
+        if(forward_btn!=null)
+            forward_btn.setVisibility(View.VISIBLE);
+    }
+
+    public void hideForwardButton() {
+        if(forward_btn!=null) {
+            forward_btn.setVisibility(View.GONE);
+        }
+    }
+
+    public void showBackButton() {
+        if(back_btn!=null)
+            back_btn.setVisibility(View.VISIBLE);
+    }
+
+    public void hideBackButton() {
+        if(back_btn!=null) {
+            back_btn.setVisibility(View.GONE);
+        }
+    }
+
+    public void setActionBarTitle(String label) {
+        if(title!=null) {
+            title.setText(label);
+        }
+    }
+
+    public String getActionBarTitle() {
+        if(title!=null) {
+            title.getText().toString();
+        }
+        return null;
+    }
+
+    public void onBack(View v) {
+        onBackPressed();
+    }
+
+    public void onForward(View v) {
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.slide_out_back, R.anim.slide_in_back);
     }
 }
