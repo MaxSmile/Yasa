@@ -8,7 +8,11 @@ import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.widget.ShareActionProvider;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
@@ -108,6 +112,43 @@ public class AddStickersActivity extends CameraBaseActivity {
 
 
     }
+
+    private ShareActionProvider mShareActionProvider;
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate menu resource file.
+        getMenuInflater().inflate(R.menu.menu_share, menu);
+
+        MenuItem shareItem = menu.findItem(R.id.action_share);
+        mShareActionProvider =  (ShareActionProvider) MenuItemCompat.getActionProvider(shareItem);
+        mShareActionProvider.setShareIntent(createShareIntent());
+        // Return true to display menu
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.action_share) {
+            // TODO: save Picture
+            savePicture();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    // Create and return the Share Intent
+    private Intent createShareIntent() {
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.setType("image/*");
+        shareIntent.putExtra(Intent.EXTRA_STREAM, getIntent().getData());
+        return shareIntent;
+    }
+
     private void initView() {
 
         setUpActionBar(true,false,"Add Stickers & Share");
