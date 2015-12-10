@@ -8,8 +8,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-
-import com.github.skykai.stickercamera.R;
+import com.getyasa.R;
 import com.getyasa.app.camera.effect.FilterEffect;
 import com.getyasa.app.camera.util.GPUImageFilterTools;
 

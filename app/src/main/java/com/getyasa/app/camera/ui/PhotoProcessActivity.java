@@ -23,9 +23,9 @@ import com.customview.LabelSelector;
 import com.customview.LabelView;
 import com.customview.MyHighlightView;
 import com.customview.MyImageViewDrawableOverlay;
-import com.github.skykai.stickercamera.R;
 import com.getyasa.App;
 import com.getyasa.AppConstants;
+import com.getyasa.R;
 import com.getyasa.app.camera.CameraBaseActivity;
 import com.getyasa.app.camera.CameraManager;
 import com.getyasa.app.camera.EffectService;
@@ -58,24 +58,27 @@ import jp.co.cyberagent.android.gpuimage.GPUImageView;
  */
 public class PhotoProcessActivity extends CameraBaseActivity {
 
-    //滤镜图片
     @InjectView(R.id.gpuimage)
     GPUImageView mGPUImageView;
-    //绘图区域
+
     @InjectView(R.id.drawing_view_container)
     ViewGroup drawArea;
-    //底部按钮
+
     @InjectView(R.id.sticker_btn)
     TextView stickerBtn;
+
     @InjectView(R.id.filter_btn)
     TextView filterBtn;
+
     @InjectView(R.id.text_btn)
     TextView labelBtn;
-    //工具区
+
     @InjectView(R.id.list_tools)
     HListView bottomToolBar;
+
     @InjectView(R.id.toolbar_area)
     ViewGroup toolArea;
+
     private MyImageViewDrawableOverlay mImageView;
     private LabelSelector labelSelector;
 

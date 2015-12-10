@@ -12,8 +12,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.common.util.StringUtils;
-import com.github.skykai.stickercamera.R;
 import com.getyasa.AppConstants;
+import com.getyasa.R;
 import com.getyasa.base.BaseActivity;
 
 import butterknife.ButterKnife;
@@ -30,8 +30,10 @@ public class EditTextActivity extends BaseActivity {
 
     private final static int MAX        = 10;
     private int maxlength               = MAX;
+
     @InjectView(R.id.text_input)
     EditText contentView;
+
     @InjectView(R.id.tag_input_tips)
     TextView numberTips;
 

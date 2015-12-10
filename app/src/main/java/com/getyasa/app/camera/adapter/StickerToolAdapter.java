@@ -9,7 +9,7 @@ import android.widget.ImageView;
 
 
 import com.common.util.ImageLoaderUtils;
-import com.github.skykai.stickercamera.R;
+import com.getyasa.R;
 import com.getyasa.app.model.Addon;
 
 import java.util.List;

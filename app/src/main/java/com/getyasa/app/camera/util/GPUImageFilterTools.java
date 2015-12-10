@@ -20,7 +20,7 @@ import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.graphics.PointF;
 
-import com.github.skykai.stickercamera.R;
+import com.getyasa.R;
 
 import jp.co.cyberagent.android.gpuimage.GPUImage3x3ConvolutionFilter;
 import jp.co.cyberagent.android.gpuimage.GPUImage3x3TextureSamplingFilter;

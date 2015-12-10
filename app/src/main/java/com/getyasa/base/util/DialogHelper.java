@@ -10,7 +10,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.github.skykai.stickercamera.R;
+import com.getyasa.R;
 
 
 public class DialogHelper {

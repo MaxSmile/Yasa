@@ -3,7 +3,7 @@ package com.getyasa.app.ui;
 import android.os.Bundle;
 import android.view.View;
 
-import com.github.skykai.stickercamera.R;
+import com.getyasa.R;
 
 
 /**

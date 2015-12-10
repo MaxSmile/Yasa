@@ -9,8 +9,8 @@ import android.util.TypedValue;
 import android.view.View;
 import android.view.WindowManager;
 
-import com.github.skykai.stickercamera.R;
 import com.customview.CommonTitleBar;
+import com.getyasa.R;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 /**

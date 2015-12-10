@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.github.skykai.stickercamera.R;
+import com.getyasa.R;
 
 
 /**
@@ -43,7 +43,7 @@ public class CommonTitleBar extends RelativeLayout {
     public CommonTitleBar(Context context, AttributeSet attrs) {
         super(context, attrs);
         TypedArray arr = context.obtainStyledAttributes(attrs, R.styleable.CommonTitleBar);
-        // 如果后续有文字按钮，可使用该模式设置
+        // If there is a subsequent Text button, you can use the mode setting
         leftBtnStr = arr.getString(R.styleable.CommonTitleBar_leftBtnTxt);
         leftBtnIconId = arr.getResourceId(R.styleable.CommonTitleBar_leftBtnIcon, 0);
         titleTxtStr = arr.getString(R.styleable.CommonTitleBar_titleTxt);

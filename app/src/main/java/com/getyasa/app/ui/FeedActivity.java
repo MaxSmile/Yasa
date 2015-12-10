@@ -16,7 +16,7 @@ import com.alibaba.fastjson.JSON;
 import com.common.util.DataUtils;
 import com.common.util.StringUtils;
 import com.customview.LabelView;
-import com.github.skykai.stickercamera.R;
+import com.getyasa.R;
 import com.melnykov.fab.FloatingActionButton;
 import com.getyasa.App;
 import com.getyasa.AppConstants;
@@ -70,7 +70,16 @@ public class FeedActivity extends BaseActivity {
     }
 
 
+    public void onEventMainThread(FeedItem feedItem) {
+        if (feedList == null) {
+            feedList = new ArrayList<FeedItem>();
+        }
+        feedList.add(0, feedItem);
+        DataUtils.setStringPreferences(App.getApp(), AppConstants.FEED_INFO, JSON.toJSONString(feedList));
+        mAdapter.setList(feedList);
+        mAdapter.notifyDataSetChanged();
 
+    }
 
     @Override
     protected void onDestroy() {
@@ -98,6 +107,7 @@ public class FeedActivity extends BaseActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
+
         if (id == R.id.action_settings) {
             return true;
         }
@@ -106,7 +116,7 @@ public class FeedActivity extends BaseActivity {
     }
 
 
-    //Photo adapter
+    //照片适配器
     public class PictureAdapter extends RecyclerView.Adapter<ViewHolder> {
 
         private List<FeedItem> items = new ArrayList<FeedItem>();
@@ -140,7 +150,7 @@ public class FeedActivity extends BaseActivity {
 
         @Override
         public void onViewRecycled(ViewHolder holder) {
-            // Label repeat the label removed, avoid recycling used
+            // 将标签移除,避免回收使用时标签重复
             holder.pictureLayout.removeViews(1, holder.pictureLayout.getChildCount() - 1);
             super.onViewRecycled(holder);
         }
@@ -148,7 +158,7 @@ public class FeedActivity extends BaseActivity {
         @Override
         public void onViewAttachedToWindow(ViewHolder holder) {
             super.onViewAttachedToWindow(holder);
-            // There may be problems delayed 200 milliseconds to wait pictureLayout loading is already displayed on the screen only for the specific values getWidth
+            // 这里可能有问题 延迟200毫秒加载是为了等pictureLayout已经在屏幕上显示getWidth才为具体的值
             holder.pictureLayout.getHandler().postDelayed(new Runnable() {
                 @Override
                 public void run() {

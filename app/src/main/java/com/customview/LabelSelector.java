@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.github.skykai.stickercamera.R;
+import com.getyasa.R;
 
 
 /**

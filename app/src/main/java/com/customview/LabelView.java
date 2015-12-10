@@ -13,9 +13,9 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.github.skykai.stickercamera.R;
 import com.getyasa.App;
 import com.getyasa.AppConstants;
+import com.getyasa.R;
 import com.getyasa.app.camera.util.EffectUtil;
 import com.getyasa.app.model.TagItem;
 

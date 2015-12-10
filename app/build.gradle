@@ -6,7 +6,7 @@ android {
     buildToolsVersion "22.0.1"
 
     defaultConfig {
-        applicationId "com.github.skykai.getyasa"
+        applicationId "com.getyasa.yasa"
         minSdkVersion 15
         targetSdkVersion 22
         versionCode 1

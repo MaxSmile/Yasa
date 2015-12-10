@@ -8,7 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.github.skykai.stickercamera.R;
+import com.getyasa.R;
+
 
 /**
  * Created by Maxim Vasilkov maxim.vasilkov@gmail.com on 08/12/15.

@@ -23,7 +23,7 @@ import android.widget.Toast;
 import com.common.util.FileUtils;
 import com.common.util.IOUtil;
 import com.common.util.ImageUtils;
-import com.github.skykai.stickercamera.R;
+import com.getyasa.R;
 import com.imagezoom.ImageViewTouch;
 import com.getyasa.App;
 import com.getyasa.app.camera.CameraBaseActivity;
@@ -63,7 +63,7 @@ public class CropPhotoActivity extends CameraBaseActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // 显示界面
+        // Display Interface
         setContentView(R.layout.activity_new_crop);
         ButterKnife.inject(this);
         fileUri = getIntent().getData();

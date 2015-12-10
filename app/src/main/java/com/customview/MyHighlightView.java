@@ -15,7 +15,7 @@ import android.widget.ImageView;
 
 import com.customview.drawable.EditableDrawable;
 import com.customview.drawable.FeatherDrawable;
-import com.github.skykai.stickercamera.R;
+import com.getyasa.R;
 import com.imagezoom.ImageViewTouch;
 import com.getyasa.App;
 import com.getyasa.app.camera.util.Point2D;

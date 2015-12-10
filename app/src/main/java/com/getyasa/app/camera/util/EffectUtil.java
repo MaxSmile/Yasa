@@ -15,7 +15,7 @@ import com.customview.LabelView;
 import com.customview.MyHighlightView;
 import com.customview.MyImageViewDrawableOverlay;
 import com.customview.drawable.StickerDrawable;
-import com.github.skykai.stickercamera.R;
+import com.getyasa.R;
 import com.imagezoom.ImageViewTouch;
 import com.getyasa.App;
 import com.getyasa.AppConstants;
