@@ -1,8 +1,6 @@
-# StickerCamera
+# (Yasa) 
 
 This is an Android application with camera,picture cropping,collage sticking and tagging.
-
-这是一款集成了相机,图片裁剪,给图片贴贴图打标签的APP。
 
 # Feature
 
@@ -14,16 +12,15 @@ This is an Android application with camera,picture cropping,collage sticking and
 - Save the completed pictures locally, show more custom views and better framework.
 
 
-- 实现相机功能
-- 实现对图片进行裁剪的功能
-- 图片的滤镜功能
-- 能为图片添加贴纸(贴纸可移动,放大,旋转)
-- 能为图片添加标签(同样可以移动)
-- 本地保存制作好的图片,并展示
-- 较多的自定义控件,不错的项目架构
+- Implement camera functions
+- To realize the function of cropping the picture
+- Pictures of filter function
+- Can add a sticker for the picture (sticker movable, zoom, rotate)
+- Can add tags to pictures (the same can be moved)
+- Saved locally produced good pictures and show
+- More custom controls, a good project structure
 
 
-  (Translation powered by Amy)
 
 # ScreenShot
 
@@ -38,7 +35,7 @@ This is an Android application with camera,picture cropping,collage sticking and
 
 
 # Thanks
-
+- [StickerCamera] (https://github.com/Skykai521/StickerCamera)
 - [Gpu-image](https://github.com/CyberAgent/android-gpuimage)
 - [Android-Universal-Image-Loader](https://github.com/nostra13/Android-Universal-Image-Loader)
 - [ImageViewTouch](https://github.com/ojas-webonise/ImageViewTouch)
@@ -55,16 +52,12 @@ This is an Android application with camera,picture cropping,collage sticking and
 
 # Contributors
 
-- [ouyezi](https://github.com/ouyezi)
-- [Skykai521](https://github.com/Skykai521)
+- [MaxSmile](https://github.com/MaxSmile)
 
 # Apk Demo
 Change screenshot/StickerCamera.zip to StickerCamera.apk
 
-# Contact Me
 
-- Weibo: http://weibo.com/2030683111
-- Email: 1132234509@qq.com
 
 # License
 ```
