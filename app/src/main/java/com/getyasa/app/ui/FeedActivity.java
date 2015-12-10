@@ -42,8 +42,10 @@ public class FeedActivity extends YasaBaseActivity {
 
     @InjectView(R.id.fab)
     FloatingActionButton fab;
+
     @InjectView(R.id.recycler_view)
     RecyclerView mRecyclerView;
+
     private List<FeedItem> feedList;
     private PictureAdapter mAdapter;
 

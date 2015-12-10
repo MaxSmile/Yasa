@@ -26,31 +26,11 @@ public class YasaBaseActivity extends AppCompatActivity implements ActivityRespo
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
         mActivityHelper = new ActivityHelper(this);
-        initWindow();
 
     }
 
-    @TargetApi(19)
-    private void initWindow() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-            SystemBarTintManager tintManager = new SystemBarTintManager(this);
-            tintManager.setStatusBarTintColor(getStatusBarColor());
-            tintManager.setStatusBarTintEnabled(true);
-        }
-    }
-
-    public int getStatusBarColor() {
-        return getColorPrimary();
-    }
-
-    public int getColorPrimary() {
-        TypedValue typedValue = new TypedValue();
-        getTheme().resolveAttribute(R.attr.colorPrimary, typedValue, true);
-        return typedValue.data;
-    }
 
     @Override
     public void setContentView(int layoutResID) {
@@ -69,17 +49,11 @@ public class YasaBaseActivity extends AppCompatActivity implements ActivityRespo
      * 弹对话框
      *
      * @param title
-     *            标题
      * @param msg
-     *            消息
      * @param positive
-     *            确定
      * @param positiveListener
-     *            确定回调
      * @param negative
-     *            否定
      * @param negativeListener
-     *            否定回调
      */
     @Override
     public void alert(String title, String msg, String positive,

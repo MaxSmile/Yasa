@@ -1,9 +1,11 @@
 package com.getyasa.app.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
 import com.getyasa.R;
+import com.getyasa.app.camera.ui.CameraActivity;
 import com.getyasa.base.YasaBaseActivity;
 
 
@@ -26,9 +28,9 @@ public class ShapesActivity extends YasaBaseActivity {
     }
 
     public void onShapeClick(View v) {
-        //Intent cameraIntent = new Intent(this, MakePicsActivity.class);
-        //cameraIntent.putExtra("shape_id",v.getTag().toString());
-        //startActivity(cameraIntent);
+        Intent cameraIntent = new Intent(this, CameraActivity.class);
+        cameraIntent.putExtra("shape_id",v.getTag().toString());
+        startActivity(cameraIntent);
     }
 
 
