@@ -23,7 +23,7 @@
     <string name="save_picture">Saving picture</string>
     <string name="image_processing_error">Image processing errors, please exit the camera and try again</string>
     <string name="effect_normal">Normal</string>
-    <string name="effect_ambiguous">Ambiguous</string>
+    <string name="effect_ambiguous">Ambi</string>
     <string name="effect_light_blue">Light blue</string>
     <string name="effect_yolk">Yolk</string>
     <string name="effect_retro">Retro</string>

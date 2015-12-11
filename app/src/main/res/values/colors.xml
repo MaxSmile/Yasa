@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#313131</color>
     <color name="common_background">#313131</color>
-    <color name="colorAccentYellow">#f1d11d</color>
+    <color name="colorAccent">#f1f1f1</color>
     <color name="filter_title">#666666</color>
 
     <color name="transparent">#00000000</color>

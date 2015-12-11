@@ -4,7 +4,7 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/dark_blue</item>
-        <item name="colorAccent">@color/colorAccentYellow</item>
+        <item name="colorAccent">@color/colorAccent</item>
         <!--
         <item name="android:fitsSystemWindows">true</item>
         <item name="windowActionBar">false</item>
@@ -35,7 +35,7 @@
     <style name="text_default">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">@color/colorAccentYellow</item>
+        <item name="android:textColor">@color/colorAccent</item>
         <item name="android:clickable">true</item>
         <item name="android:onClick">tagClick</item>
         <item name="android:padding">10dp</item>

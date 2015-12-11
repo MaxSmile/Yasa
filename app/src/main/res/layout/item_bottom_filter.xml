@@ -30,7 +30,7 @@
         android:layout_marginTop="5dp"
         android:gravity="center"
         android:text="@string/no_filters"
-        android:textColor="@color/colorAccentYellow"
+        android:textColor="@color/colorAccent"
         android:textSize="@dimen/filter_label_size" />
 
 </RelativeLayout>

@@ -152,7 +152,7 @@ public class FeedActivity extends YasaBaseActivity {
 
         @Override
         public void onViewRecycled(ViewHolder holder) {
-            // 将标签移除,避免回收使用时标签重复
+            //Label repeat the label removed, avoid recycling used
             holder.pictureLayout.removeViews(1, holder.pictureLayout.getChildCount() - 1);
             super.onViewRecycled(holder);
         }
