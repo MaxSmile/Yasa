@@ -22,6 +22,7 @@ public class YasaConstants {
 
     public static final String FEED_INFO                  = "FEED_INFO";
 
+    public static final int PHOTO_SIZE = 1024;
 
     public static final int REQUEST_CROP = 6709;
     public static final int REQUEST_PICK = 9162;

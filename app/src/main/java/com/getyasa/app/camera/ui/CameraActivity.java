@@ -1,4 +1,4 @@
-package com.getyasa.app.ui;
+package com.getyasa.app.camera.ui;
 
 import android.annotation.TargetApi;
 import android.content.Intent;
@@ -31,15 +31,14 @@ import com.common.util.FileUtils;
 import com.common.util.IOUtil;
 import com.common.util.ImageUtils;
 import com.common.util.StringUtils;
-import com.customview.CameraGrid;
 import com.getyasa.App;
 import com.getyasa.YasaConstants;
 import com.getyasa.R;
 import com.getyasa.app.camera.CameraBaseActivity;
 import com.getyasa.app.camera.CameraManager;
-import com.getyasa.app.camera.ui.AlbumActivity;
 import com.getyasa.app.camera.util.CameraHelper;
 import com.getyasa.app.model.PhotoItem;
+import com.getyasa.app.ui.ApplyEffectsActivity;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -60,7 +59,7 @@ import butterknife.InjectView;
  */
 public class CameraActivity extends CameraBaseActivity {
 
-    private CameraHelper mCameraHelper;
+    protected CameraHelper mCameraHelper;
     private Camera.Parameters parameters = null;
     private Camera cameraInst = null;
     private Bundle bundle = null;
@@ -72,12 +71,11 @@ public class CameraActivity extends CameraBaseActivity {
     static final int ZOOM = 2;
     private int mode;                      //0 is 1 is an enlarged focus
     private float dist;
-    private int PHOTO_SIZE = 2000;
+    private int PHOTO_SIZE = YasaConstants.PHOTO_SIZE;
     private int mCurrentCameraId = 0;  //1 is a front-0 is the rear
-    private Handler handler = new Handler();
 
-    //@InjectView(R.id.masking)
-    //CameraGrid cameraGrid;
+
+    private Handler handler = new Handler();
 
 
     @InjectView(R.id.panel_take_photo)
@@ -92,8 +90,6 @@ public class CameraActivity extends CameraBaseActivity {
     @InjectView(R.id.change)
     ImageView changeBtn;
 
-
-
     @InjectView(R.id.next)
     ImageView galleryBtn;
 
@@ -104,15 +100,7 @@ public class CameraActivity extends CameraBaseActivity {
     SurfaceView surfaceView;
 
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_camera);
-        mCameraHelper = new CameraHelper(this);
-        ButterKnife.inject(this);
-        initView();
-        initEvent();
-    }
+
 
     @Override
     protected void onActivityResult(final int requestCode, final int resultCode, final Intent result) {
@@ -128,7 +116,7 @@ public class CameraActivity extends CameraBaseActivity {
         }
     }
 
-    private void initView() {
+    protected void initView() {
         setUpActionBar(true,false,getString(R.string.label_teke_pictures));
         SurfaceHolder surfaceHolder = surfaceView.getHolder();
         surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
@@ -148,7 +136,7 @@ public class CameraActivity extends CameraBaseActivity {
 
 
 
-    private void initEvent() {
+    protected void initEvent() {
         takePicture.setOnClickListener(v -> {
             try {
                 cameraInst.takePicture(null, null, new MyPictureCallback());
@@ -187,9 +175,6 @@ public class CameraActivity extends CameraBaseActivity {
                 startActivityForResult(photoPickerIntent, YasaConstants.REQUEST_PICK);
             }
         });
-                //(v -> startActivity(new Intent(this, AlbumActivity.class)));
-
-
 
         surfaceView.setOnTouchListener((v, event) -> {
             switch (event.getAction() & MotionEvent.ACTION_MASK) {
@@ -328,6 +313,10 @@ public class CameraActivity extends CameraBaseActivity {
         parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
     }
 
+    private void anotherPictureTaken() {
+
+    }
+
     private final class MyPictureCallback implements Camera.PictureCallback {
 
         @Override
@@ -335,7 +324,7 @@ public class CameraActivity extends CameraBaseActivity {
             bundle = new Bundle();
             bundle.putByteArray("bytes", data); //The image byte data is stored in the bundle, the data exchange
             new SavePicTask(data).execute();
-            //camera.startPreview(); // After taking photographs, resume preview
+            anotherPictureTaken();
         }
     }
 
@@ -554,9 +543,9 @@ public class CameraActivity extends CameraBaseActivity {
                 continue;
             }
 
-            // 在camera分辨率与屏幕分辨率宽高比不相等的情况下，找出差距最小的一组分辨率
-            // 由于camera的分辨率是width>height，我们设置的portrait模式中，width<height
-            // 因此这里要先交换然preview宽高比后在比较
+            // In the camera resolution and aspect ratio of the screen resolution is not equal to the situation, identify gaps minimal set of resolutions
+            // Since the camera's resolution is width> height, we set portrait mode, width <height
+            // So after the first exchange and then preview the aspect ratio here in comparison
             boolean isCandidatePortrait = width > height;
             int maybeFlippedWidth = isCandidatePortrait ? height : width;
             int maybeFlippedHeight = isCandidatePortrait ? width : height;
@@ -567,14 +556,16 @@ public class CameraActivity extends CameraBaseActivity {
                 continue;
             }
 
-            // 找到与屏幕分辨率完全匹配的预览界面分辨率直接返回
+            // Find exactly match the screen resolution of the preview screen resolution of direct return
             if (maybeFlippedWidth == App.getApp().getScreenWidth()
                     && maybeFlippedHeight == App.getApp().getScreenHeight()) {
                 return supportedPreviewResolution;
             }
         }
 
-        // 如果没有找到合适的，并且还有候选的像素，则设置其中最大比例的，对于配置比较低的机器不太合适
+        // If you do not find the right, and there are candidates of pixels,
+        // the setting in which the largest proportion of relatively low for the configuration
+        // of the machine is not appropriate
         if (!supportedPreviewResolutions.isEmpty()) {
             Camera.Size largestPreview = supportedPreviewResolutions.get(0);
             return largestPreview;
@@ -587,7 +578,8 @@ public class CameraActivity extends CameraBaseActivity {
 
     private Camera.Size findBestPictureResolution() {
         Camera.Parameters cameraParameters = cameraInst.getParameters();
-        List<Camera.Size> supportedPicResolutions = cameraParameters.getSupportedPictureSizes(); // 至少会返回一个值
+        List<Camera.Size> supportedPicResolutions = cameraParameters.getSupportedPictureSizes();
+        //It will return at least one value
 
         StringBuilder picResolutionSb = new StringBuilder();
         for (Camera.Size supportedPicResolution : supportedPicResolutions) {
@@ -600,7 +592,7 @@ public class CameraActivity extends CameraBaseActivity {
         Log.d(TAG, "default picture resolution " + defaultPictureResolution.width + "x"
                 + defaultPictureResolution.height);
 
-        // 排序
+        // Sequence
         List<Camera.Size> sortedSupportedPicResolutions = new ArrayList<Camera.Size>(
                 supportedPicResolutions);
         Collections.sort(sortedSupportedPicResolutions, new Comparator<Camera.Size>() {
@@ -618,7 +610,7 @@ public class CameraActivity extends CameraBaseActivity {
             }
         });
 
-        // 移除不符合条件的分辨率
+        // Remove the resolution does not meet the conditions
         double screenAspectRatio = (double) App.getApp().getScreenWidth()
                 / (double) App.getApp().getScreenHeight();
         Iterator<Camera.Size> it = sortedSupportedPicResolutions.iterator();
@@ -627,9 +619,9 @@ public class CameraActivity extends CameraBaseActivity {
             int width = supportedPreviewResolution.width;
             int height = supportedPreviewResolution.height;
 
-            // 在camera分辨率与屏幕分辨率宽高比不相等的情况下，找出差距最小的一组分辨率
-            // 由于camera的分辨率是width>height，我们设置的portrait模式中，width<height
-            // 因此这里要先交换然后在比较宽高比
+            // In the camera resolution and aspect ratio of the screen resolution is not equal to the situation, identify gaps minimal set of resolutions
+            // Since the camera's resolution is width> height, we set portrait mode, width <height
+            // So here first exchange and then compare the aspect ratio
             boolean isCandidatePortrait = width > height;
             int maybeFlippedWidth = isCandidatePortrait ? height : width;
             int maybeFlippedHeight = isCandidatePortrait ? width : height;
@@ -641,17 +633,18 @@ public class CameraActivity extends CameraBaseActivity {
             }
         }
 
-        // 如果没有找到合适的，并且还有候选的像素，对于照片，则取其中最大比例的，而不是选择与屏幕分辨率相同的
+        // If you do not find the right, and there are candidates of pixels, the picture,
+        // then take the largest proportion, instead of selecting the same screen resolution
         if (!sortedSupportedPicResolutions.isEmpty()) {
             return sortedSupportedPicResolutions.get(0);
         }
 
-        // 没有找到合适的，就返回默认的
+        // Not find a suitable, it returns the default
         return defaultPictureResolution;
     }
 
 
-    //控制图像的正确显示方向
+    //Proper control of the image display direction
     private void setDispaly(Camera.Parameters parameters, Camera camera) {
         if (Build.VERSION.SDK_INT >= 8) {
             setDisplayOrientation(camera, 90);
@@ -660,7 +653,7 @@ public class CameraActivity extends CameraBaseActivity {
         }
     }
 
-    //实现的图像的正确显示
+    //Realization of the right of the image display
     private void setDisplayOrientation(Camera camera, int i) {
         Method downPolymorphic;
         try {
@@ -670,13 +663,13 @@ public class CameraActivity extends CameraBaseActivity {
                 downPolymorphic.invoke(camera, new Object[]{i});
             }
         } catch (Exception e) {
-            Log.e("Came_e", "图像出错");
+            Log.e("Came_e", "Image Error");
         }
     }
 
 
     /**
-     * 将拍下来的照片存放在SD卡中
+     * The photo shot down stored in the SD card
      *
      * @param data
      * @throws IOException
@@ -684,7 +677,7 @@ public class CameraActivity extends CameraBaseActivity {
     public String saveToSDCard(byte[] data) throws IOException {
         Bitmap croppedImage;
 
-        //获得图片大小
+        //Get the picture size
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
         BitmapFactory.decodeByteArray(data, 0, data.length, options);
@@ -739,7 +732,7 @@ public class CameraActivity extends CameraBaseActivity {
     }
 
     /**
-     * 闪光灯开关   开->关->自动
+     * Flash switch On -> Off -> Automatic
      *
      * @param mCamera
      */
@@ -775,7 +768,7 @@ public class CameraActivity extends CameraBaseActivity {
     }
 
 
-    //切换前后置摄像头
+    //Switching front and rear camera
     private void switchCamera() {
         mCurrentCameraId = (mCurrentCameraId + 1) % mCameraHelper.getNumberOfCameras();
         releaseCamera();
@@ -807,7 +800,7 @@ public class CameraActivity extends CameraBaseActivity {
                 e.printStackTrace();
             }
         } else {
-            toast("切换失败，请重试！", Toast.LENGTH_LONG);
+            toast(getString(R.string.error_switch_front_back_cameras), Toast.LENGTH_LONG);
 
         }
     }

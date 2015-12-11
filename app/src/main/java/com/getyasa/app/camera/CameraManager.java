@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.net.Uri;
 
 import com.getyasa.app.ui.ApplyEffectsActivity;
-import com.getyasa.app.ui.CameraActivity;
+import com.getyasa.app.camera.ui.CameraActivity;
 import com.getyasa.app.model.PhotoItem;
 
 import java.util.Stack;

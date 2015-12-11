@@ -75,7 +75,7 @@ public class AlbumActivity extends CameraBaseActivity {
 
         @Override
         public Fragment getItem(int position) {
-            //新建一个Fragment来展示ViewPager item的内容，并传递参数
+            //New to display the contents of a Fragment ViewPager item and pass parameters
             return AlbumFragment.newInstance(albums.get(paths.get(position)).getPhotos());
         }
 
@@ -84,7 +84,7 @@ public class AlbumActivity extends CameraBaseActivity {
             Album album = albums.get(paths.get(position % paths.size()));
             if (StringUtils.equalsIgnoreCase(FileUtils.getInst().getSystemPhotoPath(),
                     album.getAlbumUri())) {
-                return "胶卷相册";
+                return getString(R.string.tab_gallery);
             } else if (album.getTitle().length() > 13) {
                 return album.getTitle().substring(0, 11) + "...";
             }
