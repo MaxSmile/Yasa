@@ -64,7 +64,7 @@ public class CameraActivity extends CameraBaseActivity {
     private Camera.Parameters parameters = null;
     private Camera cameraInst = null;
     private Bundle bundle = null;
-    private int photoWidth = DistanceUtil.getCameraPhotoWidth();
+   // private int photoWidth = DistanceUtil.getCameraPhotoWidth();
 
 
     private float pointX, pointY;
@@ -76,8 +76,8 @@ public class CameraActivity extends CameraBaseActivity {
     private int mCurrentCameraId = 0;  //1 is a front-0 is the rear
     private Handler handler = new Handler();
 
-    @InjectView(R.id.masking)
-    CameraGrid cameraGrid;
+    //@InjectView(R.id.masking)
+    //CameraGrid cameraGrid;
 
 
     @InjectView(R.id.panel_take_photo)
@@ -137,56 +137,16 @@ public class CameraActivity extends CameraBaseActivity {
         surfaceView.setBackgroundColor(TRIM_MEMORY_BACKGROUND);
         surfaceView.getHolder().addCallback(new SurfaceCallback());//Add a callback to handle SurfaceView
 
-        //Set up the camera interface, the photo list, and highly photographed layout (guarantee camera preview square)
-        ViewGroup.LayoutParams layout = cameraGrid.getLayoutParams();
-        layout.height = App.getApp().getScreenWidth();
 
-//        layout = photoArea.getLayoutParams();
-//        layout.height = DistanceUtil.getCameraPhotoAreaHeight();
 
-        layout = takePhotoPanel.getLayoutParams();
+        ViewGroup.LayoutParams layout = takePhotoPanel.getLayoutParams();
         layout.height = App.getApp().getScreenHeight()
                 - App.getApp().getScreenWidth()
                 - DistanceUtil.getCameraPhotoAreaHeight();
 
-        //Add a picture album within the system
-//        ArrayList<PhotoItem> sysPhotos = FileUtils.getInst().findPicsInDir(
-//                FileUtils.getInst().getSystemPhotoPath());
-//        int showNumber = sysPhotos.size() > photoNumber ? photoNumber
-//                : sysPhotos.size();
-//        for (int i = 0; i < showNumber; i++) {
-//            addPhoto(sysPhotos.get(showNumber - 1 - i));
-//        }
     }
 
-//    private void addPhoto(PhotoItem photoItem) {
-//        ImageView photo = new ImageView(this);
-//        if (StringUtils.isNotBlank(photoItem.getImageUri())) {
-//            ImageLoaderUtils.displayLocalImage(photoItem.getImageUri(), photo, null);
-//        } else {
-//            photo.setImageResource(R.drawable.default_img);
-//        }
-//        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-//                photoWidth, photoWidth);
-//        params.leftMargin = photoMargin;
-//        params.rightMargin = photoMargin;
-//        params.gravity = Gravity.CENTER;
-//        photo.setScaleType(ImageView.ScaleType.CENTER_CROP);
-//        photo.setTag(photoItem.getImageUri());
-//
-//        if (photoArea.getChildCount() >= photoNumber) {
-//            photoArea.removeViewAt(photoArea.getChildCount() - 1);
-//            photoArea.addView(photo, 0, params);
-//        } else {
-//            photoArea.addView(photo, 0, params);
-//        }
-//        photo.setOnClickListener(v -> {
-//            if (v instanceof ImageView && v.getTag() instanceof String) {
-//                CameraManager.getInst().processPhotoItem(CameraActivity.this,
-//                        new PhotoItem((String) v.getTag(), System.currentTimeMillis()));
-//            }
-//        });
-//    }
+
 
     private void initEvent() {
         takePicture.setOnClickListener(v -> {
@@ -217,8 +177,17 @@ public class CameraActivity extends CameraBaseActivity {
         } else {
             changeBtn.setOnClickListener(v -> switchCamera());
         }
+
         //Jump albums
-        galleryBtn.setOnClickListener(v -> startActivity(new Intent(this, AlbumActivity.class)));
+        galleryBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+                photoPickerIntent.setType("image/*");
+                startActivityForResult(photoPickerIntent, YasaConstants.REQUEST_PICK);
+            }
+        });
+                //(v -> startActivity(new Intent(this, AlbumActivity.class)));
 
 
 
@@ -499,7 +468,7 @@ public class CameraActivity extends CameraBaseActivity {
             e.printStackTrace();
         }
         cameraInst.startPreview();
-        cameraInst.cancelAutoFocus();// 2如果要实现连续的自动对焦，这一句必须加上
+        cameraInst.cancelAutoFocus();// 2If you want to achieve continuous autofocus, which one must add
     }
 
     private void setUpPicSize(Camera.Parameters parameters) {

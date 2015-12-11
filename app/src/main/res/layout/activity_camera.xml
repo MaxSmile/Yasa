@@ -93,14 +93,14 @@
                 android:src="@drawable/camera_flip" />
 
         </RelativeLayout>
-
+<!--
         <com.customview.CameraGrid
             android:id="@+id/masking"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@id/photo_area"
             android:layout_alignParentTop="true" />
-
+-->
         <View
             android:id="@+id/focus_index"
             android:layout_width="40dp"

@@ -33,7 +33,7 @@ public class CameraGrid extends View {
     }
 
 
-    //画一个井字,上下画两条灰边，中间为正方形
+    //Draw a Tic Tac Toe, draw two black bars top and bottom, in the middle of the square
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
