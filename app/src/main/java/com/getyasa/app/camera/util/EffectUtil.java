@@ -18,7 +18,7 @@ import com.customview.drawable.StickerDrawable;
 import com.getyasa.R;
 import com.imagezoom.ImageViewTouch;
 import com.getyasa.App;
-import com.getyasa.AppConstants;
+import com.getyasa.YasaConstants;
 import com.getyasa.app.model.Addon;
 
 import java.util.ArrayList;
@@ -163,13 +163,13 @@ public class EffectUtil {
 
     public static int getStandDis(float realDis, float baseWidth) {
         float imageWidth = baseWidth <= 0 ? App.getApp().getScreenWidth() : baseWidth;
-        float radio = AppConstants.DEFAULT_PIXEL / imageWidth;
+        float radio = YasaConstants.DEFAULT_PIXEL / imageWidth;
         return (int) (radio * realDis);
     }
 
     public static int getRealDis(float standardDis, float baseWidth) {
         float imageWidth = baseWidth <= 0 ? App.getApp().getScreenWidth() : baseWidth;
-        float radio = imageWidth / AppConstants.DEFAULT_PIXEL;
+        float radio = imageWidth / YasaConstants.DEFAULT_PIXEL;
         return (int) (radio * standardDis);
     }
 

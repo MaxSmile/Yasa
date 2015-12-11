@@ -33,7 +33,7 @@ import com.common.util.ImageUtils;
 import com.common.util.StringUtils;
 import com.customview.CameraGrid;
 import com.getyasa.App;
-import com.getyasa.AppConstants;
+import com.getyasa.YasaConstants;
 import com.getyasa.R;
 import com.getyasa.app.camera.CameraBaseActivity;
 import com.getyasa.app.camera.CameraManager;
@@ -116,12 +116,12 @@ public class CameraActivity extends CameraBaseActivity {
 
     @Override
     protected void onActivityResult(final int requestCode, final int resultCode, final Intent result) {
-        if (requestCode == AppConstants.REQUEST_PICK && resultCode == RESULT_OK) {
+        if (requestCode == YasaConstants.REQUEST_PICK && resultCode == RESULT_OK) {
             CameraManager.getInst().processPhotoItem(
                     CameraActivity.this,
                     new PhotoItem(result.getData().getPath(), System
                             .currentTimeMillis()));
-        } else if (requestCode == AppConstants.REQUEST_CROP && resultCode == RESULT_OK) {
+        } else if (requestCode == YasaConstants.REQUEST_CROP && resultCode == RESULT_OK) {
             Intent newIntent = new Intent(this, ApplyEffectsActivity.class);
             newIntent.setData(result.getData());
             startActivity(newIntent);

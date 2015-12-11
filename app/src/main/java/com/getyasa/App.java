@@ -58,7 +58,7 @@ public class App extends Application {
                 .defaultDisplayImageOptions(defaultOptions)
                 .denyCacheImageMultipleSizesInMemory()
                 .diskCacheFileNameGenerator(new Md5FileNameGenerator())
-                .diskCache(new UnlimitedDiskCache(StorageUtils.getOwnCacheDirectory(this, AppConstants.APP_IMAGE)))
+                .diskCache(new UnlimitedDiskCache(StorageUtils.getOwnCacheDirectory(this, YasaConstants.APP_IMAGE)))
                 .diskCacheSize(100 * 1024 * 1024).tasksProcessingOrder(QueueProcessingType.LIFO)
                 .memoryCache(new LruMemoryCache(2 * 1024 * 1024)).memoryCacheSize(2 * 1024 * 1024)
                 .threadPoolSize(3)

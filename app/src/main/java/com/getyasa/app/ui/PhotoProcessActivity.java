@@ -24,7 +24,7 @@ import com.customview.LabelView;
 import com.customview.MyHighlightView;
 import com.customview.MyImageViewDrawableOverlay;
 import com.getyasa.App;
-import com.getyasa.AppConstants;
+import com.getyasa.YasaConstants;
 import com.getyasa.R;
 import com.getyasa.app.camera.CameraBaseActivity;
 import com.getyasa.app.camera.CameraManager;
@@ -190,10 +190,10 @@ public class PhotoProcessActivity extends CameraBaseActivity {
 
         });
         labelSelector.setTxtClicked(v -> {
-            EditTextActivity.openTextEdit(PhotoProcessActivity.this,"",8, AppConstants.ACTION_EDIT_LABEL);
+            EditTextActivity.openTextEdit(PhotoProcessActivity.this,"",8, YasaConstants.ACTION_EDIT_LABEL);
         });
         labelSelector.setAddrClicked(v -> {
-            EditTextActivity.openTextEdit(PhotoProcessActivity.this,"",8, AppConstants.ACTION_EDIT_LABEL_POI);
+            EditTextActivity.openTextEdit(PhotoProcessActivity.this,"",8, YasaConstants.ACTION_EDIT_LABEL_POI);
 
         });
         mImageView.setOnDrawableEventListener(wpEditListener);
@@ -286,7 +286,7 @@ public class PhotoProcessActivity extends CameraBaseActivity {
 
     public void tagClick(View v){
         TextView textView = (TextView)v;
-        TagItem tagItem = new TagItem(AppConstants.POST_TYPE_TAG,textView.getText().toString());
+        TagItem tagItem = new TagItem(YasaConstants.POST_TYPE_TAG,textView.getText().toString());
         addLabel(tagItem);
     }
 
@@ -411,16 +411,16 @@ public class PhotoProcessActivity extends CameraBaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         labelSelector.hide();
         super.onActivityResult(requestCode, resultCode, data);
-        if (AppConstants.ACTION_EDIT_LABEL== requestCode && data != null) {
-            String text = data.getStringExtra(AppConstants.PARAM_EDIT_TEXT);
+        if (YasaConstants.ACTION_EDIT_LABEL== requestCode && data != null) {
+            String text = data.getStringExtra(YasaConstants.PARAM_EDIT_TEXT);
             if(StringUtils.isNotEmpty(text)){
-                TagItem tagItem = new TagItem(AppConstants.POST_TYPE_TAG,text);
+                TagItem tagItem = new TagItem(YasaConstants.POST_TYPE_TAG,text);
                 addLabel(tagItem);
             }
-        }else if(AppConstants.ACTION_EDIT_LABEL_POI== requestCode && data != null){
-            String text = data.getStringExtra(AppConstants.PARAM_EDIT_TEXT);
+        }else if(YasaConstants.ACTION_EDIT_LABEL_POI== requestCode && data != null){
+            String text = data.getStringExtra(YasaConstants.PARAM_EDIT_TEXT);
             if(StringUtils.isNotEmpty(text)){
-                TagItem tagItem = new TagItem(AppConstants.POST_TYPE_POI,text);
+                TagItem tagItem = new TagItem(YasaConstants.POST_TYPE_POI,text);
                 addLabel(tagItem);
             }
         }

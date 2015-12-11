@@ -1,11 +1,9 @@
 package com.getyasa.app.ui;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.RectF;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
@@ -16,41 +14,26 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.common.util.FileUtils;
 import com.common.util.ImageUtils;
-import com.common.util.StringUtils;
 import com.common.util.TimeUtils;
 import com.customview.LabelSelector;
 import com.customview.LabelView;
-import com.customview.MyHighlightView;
 import com.customview.MyImageViewDrawableOverlay;
 import com.getyasa.App;
-import com.getyasa.AppConstants;
 import com.getyasa.R;
 import com.getyasa.app.camera.CameraBaseActivity;
-import com.getyasa.app.camera.CameraManager;
-import com.getyasa.app.camera.EffectService;
-import com.getyasa.app.camera.adapter.FiltersAdapter;
 import com.getyasa.app.camera.adapter.StickerToolAdapter;
-import com.getyasa.app.camera.effect.FilterEffect;
 import com.getyasa.app.camera.util.EffectUtil;
-import com.getyasa.app.camera.util.GPUImageFilterTools;
 import com.getyasa.app.model.Addon;
-import com.getyasa.app.model.FeedItem;
-import com.getyasa.app.model.TagItem;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import de.greenrobot.event.EventBus;
 import it.sephiroth.android.library.widget.HListView;
-import jp.co.cyberagent.android.gpuimage.GPUImageFilter;
 import jp.co.cyberagent.android.gpuimage.GPUImageView;
 
 /**

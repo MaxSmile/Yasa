@@ -14,7 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.getyasa.App;
-import com.getyasa.AppConstants;
+import com.getyasa.YasaConstants;
 import com.getyasa.R;
 import com.getyasa.app.camera.util.EffectUtil;
 import com.getyasa.app.model.TagItem;
@@ -58,7 +58,7 @@ public class LabelView extends LinearLayout {
         tagInfo.setType(tagItem.getType());
         labelTxtLeft.setText(tagItem.getName());
         labelTxtRight.setText(tagItem.getName());
-        if (tagItem.getType() == AppConstants.POST_TYPE_POI) {
+        if (tagItem.getType() == YasaConstants.POST_TYPE_POI) {
             labelIcon.setImageResource(R.drawable.point_poi);
         }
     }

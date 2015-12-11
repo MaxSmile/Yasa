@@ -12,7 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.common.util.StringUtils;
-import com.getyasa.AppConstants;
+import com.getyasa.YasaConstants;
 import com.getyasa.R;
 import com.getyasa.base.YasaBaseActivity;
 
@@ -39,9 +39,9 @@ public class EditTextActivity extends YasaBaseActivity {
 
     public static void openTextEdit(Activity mContext, String defaultStr,int maxLength, int reqCode) {
         Intent i = new Intent(mContext, EditTextActivity.class);
-        i.putExtra(AppConstants.PARAM_EDIT_TEXT, defaultStr);
+        i.putExtra(YasaConstants.PARAM_EDIT_TEXT, defaultStr);
         if (maxLength != 0) {
-            i.putExtra(AppConstants.PARAM_MAX_SIZE, maxLength);
+            i.putExtra(YasaConstants.PARAM_MAX_SIZE, maxLength);
         }
         mContext.startActivityForResult(i, reqCode);
     }
@@ -51,9 +51,9 @@ public class EditTextActivity extends YasaBaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_text);
         ButterKnife.inject(this);
-        maxlength = getIntent().getIntExtra(AppConstants.PARAM_MAX_SIZE, MAX);
+        maxlength = getIntent().getIntExtra(YasaConstants.PARAM_MAX_SIZE, MAX);
 
-        String defaultStr = getIntent().getStringExtra(AppConstants.PARAM_EDIT_TEXT);
+        String defaultStr = getIntent().getStringExtra(YasaConstants.PARAM_EDIT_TEXT);
         if (StringUtils.isNotEmpty(defaultStr)) {
             contentView.setText(defaultStr);
             if (defaultStr.length() <= maxlength) {
@@ -66,7 +66,7 @@ public class EditTextActivity extends YasaBaseActivity {
             public void onClick(View v) {
                 Intent intent = new Intent();
                 String inputTxt = contentView.getText().toString();
-                intent.putExtra(AppConstants.PARAM_EDIT_TEXT, inputTxt);
+                intent.putExtra(YasaConstants.PARAM_EDIT_TEXT, inputTxt);
                 setResult(RESULT_OK, intent);
                 finish();
             }

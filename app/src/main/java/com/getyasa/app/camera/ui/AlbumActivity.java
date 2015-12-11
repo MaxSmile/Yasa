@@ -11,7 +11,7 @@ import com.common.util.FileUtils;
 import com.common.util.ImageUtils;
 import com.common.util.StringUtils;
 import com.customview.PagerSlidingTabStrip;
-import com.getyasa.AppConstants;
+import com.getyasa.YasaConstants;
 import com.getyasa.R;
 import com.getyasa.app.camera.CameraBaseActivity;
 import com.getyasa.app.camera.fragment.AlbumFragment;
@@ -60,7 +60,7 @@ public class AlbumActivity extends CameraBaseActivity {
 
     @Override
     protected void onActivityResult(final int requestCode, final int resultCode, final Intent result) {
-        if (requestCode == AppConstants.REQUEST_CROP && resultCode == RESULT_OK) {
+        if (requestCode == YasaConstants.REQUEST_CROP && resultCode == RESULT_OK) {
             Intent newIntent = new Intent(this, PhotoProcessActivity.class);
             newIntent.setData(result.getData());
             startActivity(newIntent);

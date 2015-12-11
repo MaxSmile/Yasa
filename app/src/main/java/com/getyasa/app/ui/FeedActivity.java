@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -19,7 +17,7 @@ import com.customview.LabelView;
 import com.getyasa.R;
 import com.melnykov.fab.FloatingActionButton;
 import com.getyasa.App;
-import com.getyasa.AppConstants;
+import com.getyasa.YasaConstants;
 import com.getyasa.app.camera.CameraManager;
 import com.getyasa.app.model.FeedItem;
 import com.getyasa.app.model.TagItem;
@@ -59,7 +57,7 @@ public class FeedActivity extends YasaBaseActivity {
         initView();
 
         //If there is no picture then turn on the camera
-        String str = DataUtils.getStringPreferences(App.getApp(), AppConstants.FEED_INFO);
+        String str = DataUtils.getStringPreferences(App.getApp(), YasaConstants.FEED_INFO);
         if (StringUtils.isNotEmpty(str)) {
             feedList = JSON.parseArray(str, FeedItem.class);
         }
@@ -77,7 +75,7 @@ public class FeedActivity extends YasaBaseActivity {
             feedList = new ArrayList<FeedItem>();
         }
         feedList.add(0, feedItem);
-        DataUtils.setStringPreferences(App.getApp(), AppConstants.FEED_INFO, JSON.toJSONString(feedList));
+        DataUtils.setStringPreferences(App.getApp(), YasaConstants.FEED_INFO, JSON.toJSONString(feedList));
         mAdapter.setList(feedList);
         mAdapter.notifyDataSetChanged();
 

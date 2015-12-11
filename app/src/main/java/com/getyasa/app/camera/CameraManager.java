@@ -5,12 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 
-import com.common.util.ImageUtils;
-import com.getyasa.AppConstants;
 import com.getyasa.app.ui.ApplyEffectsActivity;
 import com.getyasa.app.ui.CameraActivity;
-import com.getyasa.app.camera.ui.CropPhotoActivity;
-import com.getyasa.app.ui.PhotoProcessActivity;
 import com.getyasa.app.model.PhotoItem;
 
 import java.util.Stack;
