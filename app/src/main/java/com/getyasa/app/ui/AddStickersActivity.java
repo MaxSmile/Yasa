@@ -1,9 +1,11 @@
 package com.getyasa.app.ui;
 
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.RectF;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
@@ -29,6 +31,7 @@ import com.getyasa.app.camera.adapter.StickerToolAdapter;
 import com.getyasa.app.camera.util.EffectUtil;
 import com.getyasa.app.model.Addon;
 
+import java.io.IOException;
 import java.util.Date;
 
 import butterknife.ButterKnife;
@@ -63,7 +66,7 @@ public class AddStickersActivity extends CameraBaseActivity {
     ViewGroup toolArea;
 
     private MyImageViewDrawableOverlay mImageView;
-    private LabelSelector labelSelector;
+
 
     //当前图片
     private Bitmap currentBitmap;
@@ -107,22 +110,27 @@ public class AddStickersActivity extends CameraBaseActivity {
         MenuItem shareItem = menu.findItem(R.id.action_share);
         mShareActionProvider =  (ShareActionProvider) MenuItemCompat.getActionProvider(shareItem);
         mShareActionProvider.setShareIntent(createShareIntent());
+        mShareActionProvider.setOnShareTargetSelectedListener(new ShareActionProvider.OnShareTargetSelectedListener() {
+            @Override
+            public boolean onShareTargetSelected(ShareActionProvider source, Intent intent) {
+                try {
+                    Uri uri = getIntent().getData();
+                    Bitmap bitmap = applyChangesBitmap();
+                    ImageUtils.saveToFile(uri.getPath(), false, bitmap);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                mShareActionProvider.setShareIntent(createShareIntent());
+                return false;
+            }
+        });
         // Return true to display menu
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
 
-        if (id == R.id.action_share) {
-            // TODO: save Picture
-            savePicture();
-            return true;
-        }
 
-        return super.onOptionsItemSelected(item);
-    }
+
 
     // Create and return the Share Intent
     private Intent createShareIntent() {
@@ -144,18 +152,14 @@ public class AddStickersActivity extends CameraBaseActivity {
         mImageView.setLayoutParams(params);
         overlay.setLayoutParams(params);
         drawArea.addView(overlay);
-        //添加标签选择器
-        RelativeLayout.LayoutParams rparams = new RelativeLayout.LayoutParams(App.getApp().getScreenWidth(), App.getApp().getScreenWidth());
-        labelSelector = new LabelSelector(this);
-        labelSelector.setLayoutParams(rparams);
-        drawArea.addView(labelSelector);
-        labelSelector.hide();
 
-        //初始化滤镜图片
+        RelativeLayout.LayoutParams rparams = new RelativeLayout.LayoutParams(App.getApp().getScreenWidth(), App.getApp().getScreenWidth());
+
+
         mGPUImageView.setLayoutParams(rparams);
 
 
-        //初始化空白标签
+        //Initialization blank label
         emptyLabelView = new LabelView(this);
         emptyLabelView.setEmpty();
         EffectUtil.addLabelEditable(mImageView, drawArea, emptyLabelView,
@@ -178,8 +182,7 @@ public class AddStickersActivity extends CameraBaseActivity {
     }
 
 
-
-    private void savePicture(){
+    private Bitmap applyChangesBitmap() {
         final Bitmap newBitmap = Bitmap.createBitmap(mImageView.getWidth(), mImageView.getHeight(),
                 Bitmap.Config.ARGB_8888);
         Canvas cv = new Canvas(newBitmap);
@@ -192,8 +195,11 @@ public class AddStickersActivity extends CameraBaseActivity {
         }
 
         EffectUtil.applyOnSave(cv, mImageView);
+        return newBitmap;
+    }
 
-        new SavePicToFileTask().execute(newBitmap);
+    private void savePicture(){
+        new SavePicToFileTask().execute(applyChangesBitmap());
     }
 
     private class SavePicToFileTask extends AsyncTask<Bitmap,Void,String>{
@@ -201,7 +207,6 @@ public class AddStickersActivity extends CameraBaseActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            showProgressDialog("图片处理中...");
         }
 
         @Override
@@ -210,7 +215,7 @@ public class AddStickersActivity extends CameraBaseActivity {
             try {
                 bitmap = params[0];
 
-                String picName = TimeUtils.dtFormat(new Date(), "yyyyMMddHHmmss");
+                 String picName = TimeUtils.dtFormat(new Date(), "yyyyMMddHHmmss");
                  fileName = ImageUtils.saveToFile(FileUtils.getInst().getPhotoSavedPath() + "/"+ picName, false, bitmap);
 
             } catch (Exception e) {
@@ -239,13 +244,13 @@ public class AddStickersActivity extends CameraBaseActivity {
             @Override
             public void onItemClick(it.sephiroth.android.library.widget.AdapterView<?> arg0,
                                     View arg1, int arg2, long arg3) {
-                labelSelector.hide();
+
                 Addon sticker = EffectUtil.addonList.get(arg2);
                 EffectUtil.addStickerImage(mImageView, AddStickersActivity.this, sticker,
                         new EffectUtil.StickerCallback() {
                             @Override
                             public void onRemoveSticker(Addon sticker) {
-                                labelSelector.hide();
+
                             }
                         });
             }

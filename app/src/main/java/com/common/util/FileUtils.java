@@ -143,14 +143,13 @@ public class FileUtils {
 
     private FileUtils() {
         String sdcardState = Environment.getExternalStorageState();
-        //如果没SD卡则放缓存
         if (Environment.MEDIA_MOUNTED.equals(sdcardState)) {
             BASE_PATH = Environment.getExternalStorageDirectory().getAbsolutePath()
                         + "/getyasa/";
         } else {
             BASE_PATH = App.getApp().getCacheDirPath();
         }
-
+        //BASE_PATH = App.getApp().getFilesDirPath();
         STICKER_BASE_PATH = BASE_PATH + "/stickers/";
     }
 
@@ -167,10 +166,12 @@ public class FileUtils {
     }
 
     public boolean mkdir(File file) {
-        while (!file.getParentFile().exists()) {
+
+        while (file.getParentFile() != null && !file.getParentFile().exists()) {
             mkdir(file.getParentFile());
         }
-        return file.mkdir();
+        if(!file.isFile()) return file.mkdir();
+        return false;
     }
 
     public boolean writeSimpleString(File file, String string) {

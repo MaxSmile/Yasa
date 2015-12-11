@@ -166,8 +166,8 @@ public class ApplyEffectsActivity extends CameraBaseActivity {
             try {
                 bitmap = params[0];
 
-                String picName = TimeUtils.dtFormat(new Date(), "yyyyMMddHHmmss");
-                 fileName = ImageUtils.saveToFile(FileUtils.getInst().getPhotoSavedPath() + "/"+ picName, false, bitmap);
+                String picName = TimeUtils.dtFormat(new Date(), "yyyyMMddHHmmss") + ".jpg";
+                fileName = ImageUtils.saveToFile(FileUtils.getInst().getPhotoSavedPath() + "/"+ picName, false, bitmap);
 
             } catch (Exception e) {
                 e.printStackTrace();

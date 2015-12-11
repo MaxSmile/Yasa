@@ -50,7 +50,7 @@ public class ImageUtils {
         return options.outHeight == options.outWidth;
     }
 
-    //图片是不是正方形
+    // is Image square
     public static boolean isSquare(Uri imageUri) {
         ContentResolver resolver = App.getApp().getContentResolver();
 
@@ -65,25 +65,29 @@ public class ImageUtils {
         return options.outHeight == options.outWidth;
     }
 
-    //保存图片文件
+    //Save the image file
     public static String saveToFile(String fileFolderStr, boolean isDir, Bitmap croppedImage) throws FileNotFoundException, IOException {
         File jpgFile;
         if (isDir) {
             File fileFolder = new File(fileFolderStr);
             Date date = new Date();
-            SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss"); // 格式化时间
+            SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss"); // Formatting time
             String filename = format.format(date) + ".jpg";
-            if (!fileFolder.exists()) { // 如果目录不存在，则创建一个名为"finger"的目录
+            if (!fileFolder.exists()) { // If the directory does not exist, create a directory called "finger" of
                 FileUtils.getInst().mkdir(fileFolder);
             }
             jpgFile = new File(fileFolder, filename);
         } else {
+
             jpgFile = new File(fileFolderStr);
-            if (!jpgFile.getParentFile().exists()) { // 如果目录不存在，则创建一个名为"finger"的目录
-                FileUtils.getInst().mkdir(jpgFile.getParentFile());
+
+            File file = jpgFile.getAbsoluteFile().getParentFile();
+            if (file!=null && !file.exists()) {
+                FileUtils util = FileUtils.getInst();
+                util.mkdir(file);
             }
         }
-        FileOutputStream outputStream = new FileOutputStream(jpgFile); // 文件输出流
+        FileOutputStream outputStream = new FileOutputStream(jpgFile); // File output stream
 
         croppedImage.compress(Bitmap.CompressFormat.JPEG, 70, outputStream);
         IOUtil.closeStream(outputStream);
@@ -92,7 +96,7 @@ public class ImageUtils {
 
 
 
-    //从文件中读取Bitmap
+    //Bitmap read from a file
     public static Bitmap decodeBitmapWithOrientation(String pathName, int width, int height) {
         return decodeBitmapWithSize(pathName, width, height, false);
     }

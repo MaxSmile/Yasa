@@ -53,7 +53,7 @@ public class EffectUtil {
         public void onRemoveSticker(Addon sticker);
     }
 
-    //添加贴纸
+    //Add stickers
     public static MyHighlightView addStickerImage(final ImageViewTouch processImage,
                                                   Context context, final Addon sticker,
                                                   final StickerCallback callback) {
@@ -66,7 +66,7 @@ public class EffectUtil {
         drawable.setMinSize(30, 30);
 
         final MyHighlightView hv = new MyHighlightView(processImage, R.style.AppTheme, drawable);
-        //设置贴纸padding
+        //Set Sticker padding
         hv.setPadding(10);
         hv.setOnDeleteClickListener(new MyHighlightView.OnDeleteClickListener() {
 
@@ -144,7 +144,7 @@ public class EffectUtil {
     }
 
 
-    //----添加标签-----
+    //----Add tags-----
     public static void addLabelEditable(MyImageViewDrawableOverlay overlay, ViewGroup container,
                                         LabelView label, int left, int top) {
         addLabel(container, label, left, top);
@@ -174,19 +174,19 @@ public class EffectUtil {
     }
 
     /**
-     * 使标签在Overlay上可以移动
+     * The label can be moved in the Overlay
      * @param overlay
      * @param label
      */
     private static void addLabel2Overlay(final MyImageViewDrawableOverlay overlay,
                                          final LabelView label) {
-        //添加事件，触摸生效
+        //Add an event, touch take effect
         overlay.addLabel(label);
         label.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:// 手指按下时
+                    case MotionEvent.ACTION_DOWN:// Finger pressed
                         overlay.setCurrentLabel(label, event.getRawX(), event.getRawY());
                         return false;
                     default:
@@ -197,7 +197,7 @@ public class EffectUtil {
     }
 
 
-    //添加水印
+    //Add a watermark
     public static void applyOnSave(Canvas mCanvas, ImageViewTouch processImage) {
         for (MyHighlightView view : hightlistViews) {
             applyOnSave(mCanvas, processImage, view);
