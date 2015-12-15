@@ -28,6 +28,9 @@ import android.widget.Toast;
 import com.common.util.DistanceUtil;
 import com.getyasa.App;
 import com.getyasa.R;
+import com.github.siyamed.shapeimageview.BubbleImageView;
+import com.github.siyamed.shapeimageview.ShaderImageView;
+import com.github.siyamed.shapeimageview.ShapeImageView;
 
 import java.io.IOException;
 import java.util.List;
@@ -58,7 +61,8 @@ public class CameraFragmentExt extends YasaCameraBaseFragment implements Surface
 
     private boolean mIsSafeToTakePhoto = false;
 
-    GPUImageView cover;
+    ViewGroup cover;
+    View takePhotoPanel;
 
     private ImageParameters mImageParameters;
 
@@ -68,6 +72,9 @@ public class CameraFragmentExt extends YasaCameraBaseFragment implements Surface
         return new CameraFragment();
     }
 
+    public void onCoverClick(View v) {
+
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -90,15 +97,39 @@ public class CameraFragmentExt extends YasaCameraBaseFragment implements Surface
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        parentActivity = (MakePicsActivity) getActivity();
+        if (parentActivity!=null) {
+            switch (parentActivity.shape_id) {
+                case "1":
+                    return inflater.inflate(R.layout._fragment_camera1_1, container, false);
+                case "2":
+                    return inflater.inflate(R.layout._fragment_camera2_1, container, false);
+                case "3":
+                    return inflater.inflate(R.layout._fragment_camera3_1, container, false);
+                case "4":
+                    return inflater.inflate(R.layout._fragment_camera4_1, container, false);
+                case "5":
+                    return inflater.inflate(R.layout._fragment_camera5_1, container, false);
+                case "6":
+                    return inflater.inflate(R.layout._fragment_camera6_1, container, false);
+                case "7":
+                    return inflater.inflate(R.layout._fragment_camera7_1, container, false);
+                case "8":
+                    return inflater.inflate(R.layout._fragment_camera8_1, container, false);
+
+
+            }
+        }
         return inflater.inflate(R.layout._fragment_camera1_1, container, false);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        cover = (GPUImageView) view.findViewById(R.id.gpuimage);
+        cover = (ViewGroup) view.findViewById(R.id.covering_view_container);
 
-        View takePhotoPanel = view.findViewById(R.id.panel_take_photo);;
+
+        takePhotoPanel = view.findViewById(R.id.panel_take_photo);;
         ViewGroup.LayoutParams layout = takePhotoPanel.getLayoutParams();
         layout.height = App.getApp().getScreenHeight()
                 - App.getApp().getScreenWidth()

@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorPrimary">
 
-    <!-- vertical -->
+    <!-- circle -->
 
     <com.getyasa.fragmented.camera.SquareCameraPreview
         android:id="@+id/camera_preview_view"
@@ -18,15 +18,14 @@
 
         <RelativeLayout
             android:id="@+id/covering_view_container"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:background="@color/black">
-            <ImageView
+            <android.support.v4.widget.CircleImageView
                 android:id="@+id/shapeimageview"
+                android:src="@drawable/default_img"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="fitStart"
-                android:onClick="onCoverClick"/>
+                android:layout_height="match_parent"/>
         </RelativeLayout>
 
 
@@ -46,16 +45,16 @@
                 android:layout_height="80dp"
                 android:layout_centerInParent="true"
                 android:background="@drawable/btn_take_photo" />
-<!--
-            <ImageView
-                android:id="@+id/next"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="20dp"
-                android:padding="5dp"
-                android:src="@drawable/camera_library" />-->
+            <!--
+                        <ImageView
+                            android:id="@+id/next"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="20dp"
+                            android:padding="5dp"
+                            android:src="@drawable/camera_library" />-->
         </RelativeLayout>
 
 

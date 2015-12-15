@@ -8,7 +8,7 @@ public class DistanceUtil {
         return (App.getApp().getScreenWidth() - App.getApp().dp2px(10)) / 4 - App.getApp().dp2px(4);
     }
     
-    // 相机照片列表高度计算 
+    // Camera photo list height calculation
     public static int getCameraPhotoAreaHeight() {
         return getCameraPhotoWidth() + App.getApp().dp2px(4);
     }
@@ -17,7 +17,7 @@ public class DistanceUtil {
         return App.getApp().getScreenWidth() / 4 - App.getApp().dp2px(2);
     }
 
-    //活动标签页grid图片高度
+    //Events tab grid Image Height
     public static int getActivityHeight() {
         return (App.getApp().getScreenWidth() - App.getApp().dp2px(24)) / 3;
     }

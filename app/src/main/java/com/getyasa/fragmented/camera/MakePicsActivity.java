@@ -24,6 +24,7 @@ public class MakePicsActivity extends YasaBaseActivity {
     private static final int REQUEST_CAMERA_PERMISSION = 1;
 
 
+    public String shape_id;
 
 
     @Override
@@ -32,6 +33,7 @@ public class MakePicsActivity extends YasaBaseActivity {
         setContentView(R.layout.activity_make_pics);
         setUpActionBar(true,false,"Make pics");
         requestForCameraPermission();
+        shape_id = getIntent().getStringExtra("shape_id");
     }
 
     public void launchCameraFragment() {

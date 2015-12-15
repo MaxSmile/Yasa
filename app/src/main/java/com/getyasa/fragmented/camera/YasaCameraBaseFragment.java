@@ -18,7 +18,7 @@ public abstract class YasaCameraBaseFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
         parentActivity = (MakePicsActivity) getActivity();
+        super.onViewCreated(view, savedInstanceState);
     }
 }
