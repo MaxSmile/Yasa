@@ -152,7 +152,6 @@ public class CameraActivity extends CameraBaseActivity {
 
                 }
             }
-
         });
 
         flashBtn.setOnClickListener(v -> turnLight(cameraInst));

@@ -8,6 +8,7 @@ import android.os.Parcelable;
  */
 public class ImageParameters implements Parcelable {
 
+    // TODO : optimize
     public boolean mIsPortrait;
 
     public int mDisplayOrientation;
