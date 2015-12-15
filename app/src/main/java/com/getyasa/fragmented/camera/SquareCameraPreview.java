@@ -181,12 +181,15 @@ public class SquareCameraPreview extends SurfaceView {
             params.setFocusAreas(mFocusAreas);
             params.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
             mCamera.setParameters(params);
-            mCamera.autoFocus(new Camera.AutoFocusCallback() {
-                @Override
-                public void onAutoFocus(boolean success, Camera camera) {
-                    // Callback when the auto focus completes
-                }
-            });
+
+
+
+//            mCamera.autoFocus(new Camera.AutoFocusCallback() {
+//                @Override
+//                public void onAutoFocus(boolean success, Camera camera) {
+//                    // Callback when the auto focus completes
+//                }
+//            });
         }
     }
 

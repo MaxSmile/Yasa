@@ -1,4 +1,4 @@
-package com.getyasa.yasa.fragmented;
+package com.getyasa.fragmented.camera;
 
 
 
@@ -13,17 +13,18 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
+import com.getyasa.R;
+import com.getyasa.app.ui.ApplyEffectsActivity;
+import com.getyasa.base.YasaBaseActivity;
 
-import com.getyasa.yasa.EditShapeActivity;
-import com.getyasa.yasa.R;
-import com.getyasa.yasa.YasaBaseActivity;
-import com.getyasa.yasa.fragmented.camera.CameraFragment;
-import com.getyasa.yasa.fragmented.camera.EditSavePhotoFragment;
 
 
 public class MakePicsActivity extends YasaBaseActivity {
-    public static final String TAG = com.getyasa.yasa.fragmented.MakePicsActivity.class.getSimpleName();
+    public static final String TAG = MakePicsActivity.class.getSimpleName();
     private static final int REQUEST_CAMERA_PERMISSION = 1;
+
+
+    public String shape_id;
 
 
     @Override
@@ -32,6 +33,7 @@ public class MakePicsActivity extends YasaBaseActivity {
         setContentView(R.layout.activity_make_pics);
         setUpActionBar(true,false,"Make pics");
         requestForCameraPermission();
+        shape_id = getIntent().getStringExtra("shape_id");
     }
 
     public void launchCameraFragment() {
@@ -43,13 +45,11 @@ public class MakePicsActivity extends YasaBaseActivity {
         }
     }
 
-    public EditSavePhotoFragment fragmentSavePhoto;
-
     @Override
     public void onForward(View v) {
         // accept Image and pass it later
-
-        fragmentSavePhoto.savePicture();
+        // TODO: lets go on!
+        //fragmentSavePhoto.savePicture();
         super.onForward(v);
 
 
@@ -94,7 +94,7 @@ public class MakePicsActivity extends YasaBaseActivity {
                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        com.getyasa.yasa.fragmented.MakePicsActivity.this.requestForPermission(permission);
+                        MakePicsActivity.this.requestForPermission(permission);
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -112,7 +112,7 @@ public class MakePicsActivity extends YasaBaseActivity {
     }
 
     public void navigateWithPhotoUri(Uri uri) {
-        Intent data = new Intent(this, EditShapeActivity.class);
+        Intent data = new Intent(this, ApplyEffectsActivity.class);
         data.putExtra("picture",uri);
 
         startActivity(data);

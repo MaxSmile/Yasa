@@ -76,7 +76,7 @@ public class FiltersAdapter extends BaseAdapter {
 
         holder.filteredImg.setImage(background);
         holder.filterName.setText(effect.getTitle());
-        //if (!effect.isOri() && effect.getType() != null) {
+        // TODO : optimize it to use usual ImageView
         GPUImageFilter filter = GPUImageFilterTools.createFilterForType(mContext, effect.getType());
         holder.filteredImg.setFilter(filter);
 

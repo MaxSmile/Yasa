@@ -1,15 +1,13 @@
-package com.getyasa.yasa.fragmented.camera;
+package com.getyasa.fragmented.camera;
 
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.hardware.Camera;
 import android.hardware.Camera.CameraInfo;
 import android.hardware.Camera.Size;
-import android.hardware.SensorManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,28 +15,35 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.OrientationEventListener;
 import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.getyasa.yasa.R;
+
+import com.common.util.DistanceUtil;
+import com.getyasa.App;
+import com.getyasa.R;
+import com.github.siyamed.shapeimageview.BubbleImageView;
+import com.github.siyamed.shapeimageview.ShaderImageView;
+import com.github.siyamed.shapeimageview.ShapeImageView;
 
 import java.io.IOException;
 import java.util.List;
 
+import jp.co.cyberagent.android.gpuimage.GPUImageView;
+
 /**
  * Created by Maxim Vasilkov maxim.vasilkov@gmail.com on 25/11/15.
  */
-public class CameraFragment extends com.getyasa.yasa.fragmented.camera.YasaCameraBaseFragment implements SurfaceHolder.Callback, Camera.PictureCallback {
+public class CameraFragmentExt extends YasaCameraBaseFragment implements SurfaceHolder.Callback, Camera.PictureCallback {
 
-    public static final String TAG = com.getyasa.yasa.fragmented.camera.CameraFragment.class.getSimpleName();
+    public static final String TAG = CameraFragment.class.getSimpleName();
+
     public static final String CAMERA_ID_KEY = "camera_id";
     public static final String CAMERA_FLASH_KEY = "flash_mode";
     public static final String IMAGE_INFO = "image_info";
@@ -47,27 +52,28 @@ public class CameraFragment extends com.getyasa.yasa.fragmented.camera.YasaCamer
     private static final int PREVIEW_SIZE_MAX_WIDTH = 640;
 
     private int mCameraID;
+
+
     private String mFlashMode;
     private Camera mCamera;
-    private com.getyasa.yasa.fragmented.camera.SquareCameraPreview mPreviewView;
+    private SquareCameraPreview mPreviewView;
     private SurfaceHolder mSurfaceHolder;
 
     private boolean mIsSafeToTakePhoto = false;
 
-    private com.getyasa.yasa.fragmented.camera.ImageParameters mImageParameters;
+    ViewGroup cover;
+    View takePhotoPanel;
 
-    private CameraOrientationListener mOrientationListener;
+    private ImageParameters mImageParameters;
+
+
 
     public static Fragment newInstance() {
-        return new com.getyasa.yasa.fragmented.camera.CameraFragment();
+        return new CameraFragment();
     }
 
-    public CameraFragment() {}
+    public void onCoverClick(View v) {
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        mOrientationListener = new CameraOrientationListener(context);
     }
 
     @Override
@@ -78,34 +84,62 @@ public class CameraFragment extends com.getyasa.yasa.fragmented.camera.YasaCamer
         // onCreate() -> onSavedInstanceState() instead of going through onCreateView()
         if (savedInstanceState == null) {
             mCameraID = getBackCameraID();
-            mFlashMode = com.getyasa.yasa.fragmented.camera.CameraSettingPreferences.getCameraFlashMode(getActivity());
-            mImageParameters = new com.getyasa.yasa.fragmented.camera.ImageParameters();
+            mFlashMode = CameraSettingPreferences.getCameraFlashMode(getActivity());
+            mImageParameters = new ImageParameters();
         } else {
             mCameraID = savedInstanceState.getInt(CAMERA_ID_KEY);
             mFlashMode = savedInstanceState.getString(CAMERA_FLASH_KEY);
             mImageParameters = savedInstanceState.getParcelable(IMAGE_INFO);
         }
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_camera, container, false);
+        parentActivity = (MakePicsActivity) getActivity();
+        if (parentActivity!=null) {
+            switch (parentActivity.shape_id) {
+                case "1":
+                    return inflater.inflate(R.layout._fragment_camera1_1, container, false);
+                case "2":
+                    return inflater.inflate(R.layout._fragment_camera2_1, container, false);
+                case "3":
+                    return inflater.inflate(R.layout._fragment_camera3_1, container, false);
+                case "4":
+                    return inflater.inflate(R.layout._fragment_camera4_1, container, false);
+                case "5":
+                    return inflater.inflate(R.layout._fragment_camera5_1, container, false);
+                case "6":
+                    return inflater.inflate(R.layout._fragment_camera6_1, container, false);
+                case "7":
+                    return inflater.inflate(R.layout._fragment_camera7_1, container, false);
+                case "8":
+                    return inflater.inflate(R.layout._fragment_camera8_1, container, false);
+
+
+            }
+        }
+        return inflater.inflate(R.layout._fragment_camera1_1, container, false);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mOrientationListener.enable();
+        cover = (ViewGroup) view.findViewById(R.id.covering_view_container);
 
-        mPreviewView = (com.getyasa.yasa.fragmented.camera.SquareCameraPreview) view.findViewById(R.id.camera_preview_view);
-        mPreviewView.getHolder().addCallback(com.getyasa.yasa.fragmented.camera.CameraFragment.this);
 
-        final View topCoverView = view.findViewById(R.id.cover_top_view);
-        final View btnCoverView = view.findViewById(R.id.cover_bottom_view);
+        takePhotoPanel = view.findViewById(R.id.panel_take_photo);;
+        ViewGroup.LayoutParams layout = takePhotoPanel.getLayoutParams();
+        layout.height = App.getApp().getScreenHeight()
+                - App.getApp().getScreenWidth()
+                - DistanceUtil.getCameraPhotoAreaHeight();
 
-        mImageParameters.mIsPortrait =
-                getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT;
+        mPreviewView = (SquareCameraPreview) view.findViewById(R.id.camera_preview_view);
+        mPreviewView.getHolder().addCallback(CameraFragmentExt.this);
+
+
+        mImageParameters.mIsPortrait = true;
 
         if (savedInstanceState == null) {
             ViewTreeObserver observer = mPreviewView.getViewTreeObserver();
@@ -118,9 +152,6 @@ public class CameraFragment extends com.getyasa.yasa.fragmented.camera.YasaCamer
                     mImageParameters.mCoverWidth = mImageParameters.mCoverHeight
                             = mImageParameters.calculateCoverWidthHeight();
 
-//                    Log.d(TAG, "parameters: " + mImageParameters.getStringValues());
-//                    Log.d(TAG, "cover height " + topCoverView.getHeight());
-                    resizeTopAndBtmCover(topCoverView, btnCoverView);
 
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                         mPreviewView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
@@ -129,16 +160,8 @@ public class CameraFragment extends com.getyasa.yasa.fragmented.camera.YasaCamer
                     }
                 }
             });
-        } else {
-            //TODO: reotation is not correct
-            if (mImageParameters.isPortrait()) {
-                topCoverView.getLayoutParams().height = mImageParameters.mCoverHeight;
-                btnCoverView.getLayoutParams().height = mImageParameters.mCoverHeight;
-            } else {
-                topCoverView.getLayoutParams().width = mImageParameters.mCoverWidth;
-                btnCoverView.getLayoutParams().width = mImageParameters.mCoverWidth;
-            }
         }
+
         // TODO: edit here
         final ImageView swapCameraBtn = (ImageView) view.findViewById(R.id.change_camera);
         swapCameraBtn.setOnClickListener(new View.OnClickListener() {
@@ -196,31 +219,10 @@ public class CameraFragment extends com.getyasa.yasa.fragmented.camera.YasaCamer
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-//        Log.d(TAG, "onSaveInstanceState");
         outState.putInt(CAMERA_ID_KEY, mCameraID);
         outState.putString(CAMERA_FLASH_KEY, mFlashMode);
         outState.putParcelable(IMAGE_INFO, mImageParameters);
         super.onSaveInstanceState(outState);
-    }
-
-    /**
-     * Adds animation of camera surface appear and makes Surface to be square
-     * in between top and bottom Covers
-     * @param topCover
-     * @param bottomCover
-     */
-    private void resizeTopAndBtmCover(final View topCover, final View bottomCover) {
-        com.getyasa.yasa.fragmented.camera.ResizeAnimation resizeTopAnimation
-                = new com.getyasa.yasa.fragmented.camera.ResizeAnimation(topCover, mImageParameters);
-        resizeTopAnimation.setDuration(800);
-        resizeTopAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
-        topCover.startAnimation(resizeTopAnimation);
-
-        com.getyasa.yasa.fragmented.camera.ResizeAnimation resizeBtmAnimation
-                = new com.getyasa.yasa.fragmented.camera.ResizeAnimation(bottomCover, mImageParameters);
-        resizeBtmAnimation.setDuration(800);
-        resizeBtmAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
-        bottomCover.startAnimation(resizeBtmAnimation);
     }
 
     private void getCamera(int cameraID) {
@@ -426,27 +428,30 @@ public class CameraFragment extends com.getyasa.yasa.fragmented.camera.YasaCamer
      */
     private void takePicture() {
         // TODO: optimise here
-        if (mIsSafeToTakePhoto) {
-            setSafeToTakePhoto(false);
+        try {
+            if (mIsSafeToTakePhoto) {
+                setSafeToTakePhoto(false);
 
-            mOrientationListener.rememberOrientation();
 
-            // Shutter callback occurs after the image is captured. This can
-            // be used to trigger a sound to let the user know that image is taken
-            Camera.ShutterCallback shutterCallback = null;
+                // Shutter callback occurs after the image is captured. This can
+                // be used to trigger a sound to let the user know that image is taken
+                Camera.ShutterCallback shutterCallback = null;
 
-            // Raw callback occurs when the raw image data is available
-            Camera.PictureCallback raw = null;
+                // Raw callback occurs when the raw image data is available
+                Camera.PictureCallback raw = null;
 
-            // postView callback occurs when a scaled, fully processed
-            // postView image is available.
-            Camera.PictureCallback postView = null;
+                // postView callback occurs when a scaled, fully processed
+                // postView image is available.
+                Camera.PictureCallback postView = null;
 
-            // jpeg callback occurs when the compressed image is available
-            mCamera.takePicture(shutterCallback, raw, postView, this);
-        } else {
-            // TODO: put this to strings
-            Toast.makeText(getContext(),"Camera is busy now. Try to stop other applications which uses the camera", Toast.LENGTH_SHORT).show();
+                // jpeg callback occurs when the compressed image is available
+                mCamera.takePicture(shutterCallback, raw, postView, this);
+            } else {
+                // TODO: put this to strings
+                Toast.makeText(parentActivity, "Camera is busy now. Try to stop other applications which uses the camera", Toast.LENGTH_SHORT).show();
+            }
+        } catch (Exception e) {
+            Toast.makeText(getContext(), R.string.take_pic_failed,Toast.LENGTH_SHORT);
         }
     }
 
@@ -461,7 +466,6 @@ public class CameraFragment extends com.getyasa.yasa.fragmented.camera.YasaCamer
 
     @Override
     public void onStop() {
-        mOrientationListener.disable();
 
         // stop the preview
         if (mCamera != null) {
@@ -470,7 +474,7 @@ public class CameraFragment extends com.getyasa.yasa.fragmented.camera.YasaCamer
             mCamera = null;
         }
 
-        com.getyasa.yasa.fragmented.camera.CameraSettingPreferences.saveCameraFlashMode(getActivity(), mFlashMode);
+        CameraSettingPreferences.saveCameraFlashMode(getActivity(), mFlashMode);
 
         super.onStop();
     }
@@ -514,15 +518,17 @@ public class CameraFragment extends com.getyasa.yasa.fragmented.camera.YasaCamer
      */
     @Override
     public void onPictureTaken(byte[] data, Camera camera) {
-        int rotation = getPhotoRotation();
-        parentActivity.fragmentSavePhoto = com.getyasa.yasa.fragmented.camera.EditSavePhotoFragment.newInstance(data, rotation, mImageParameters.createCopy());
-        getFragmentManager()
-                .beginTransaction()
-                .replace(
-                        R.id.fragment_container,
-                        parentActivity.fragmentSavePhoto,
-                        com.getyasa.yasa.fragmented.camera.EditSavePhotoFragment.TAG)
-                .commit();
+        //int rotation = getPhotoRotation();
+
+
+//        parentActivity.fragmentSavePhoto = EditSavePhotoFragment.newInstance(data, rotation, mImageParameters.createCopy());
+//        getFragmentManager()
+//                .beginTransaction()
+//                .replace(
+//                        R.id.fragment_container,
+//                        parentActivity.fragmentSavePhoto,
+//                        EditSavePhotoFragment.TAG)
+//                .commit();
 
         setSafeToTakePhoto(true);
         parentActivity.showForwardButton();
@@ -531,69 +537,17 @@ public class CameraFragment extends com.getyasa.yasa.fragmented.camera.YasaCamer
 
     private int getPhotoRotation() {
         int rotation;
-        int orientation = mOrientationListener.getRememberedNormalOrientation();
         CameraInfo info = new CameraInfo();
         Camera.getCameraInfo(mCameraID, info);
 
         if (info.facing == CameraInfo.CAMERA_FACING_FRONT) {
-            rotation = (info.orientation - orientation + 360) % 360;
+            rotation = (info.orientation -  360) % 360;
         } else {
-            rotation = (info.orientation + orientation) % 360;
+            rotation = (info.orientation ) % 360;
         }
 
         return rotation;
     }
 
-    /**
-     * When orientation changes, onOrientationChanged(int) of the listener will be called
-     */
-    private static class CameraOrientationListener extends OrientationEventListener {
 
-        private int mCurrentNormalizedOrientation;
-        private int mRememberedNormalOrientation;
-
-        public CameraOrientationListener(Context context) {
-            super(context, SensorManager.SENSOR_DELAY_NORMAL);
-        }
-
-        @Override
-        public void onOrientationChanged(int orientation) {
-            if (orientation != ORIENTATION_UNKNOWN) {
-                mCurrentNormalizedOrientation = normalize(orientation);
-            }
-        }
-
-        /**
-         * @param degrees Amount of clockwise rotation from the device's natural position
-         * @return Normalized degrees to just 0, 90, 180, 270
-         */
-        private int normalize(int degrees) {
-            if (degrees > 315 || degrees <= 45) {
-                return 0;
-            }
-
-            if (degrees > 45 && degrees <= 135) {
-                return 90;
-            }
-
-            if (degrees > 135 && degrees <= 225) {
-                return 180;
-            }
-
-            if (degrees > 225 && degrees <= 315) {
-                return 270;
-            }
-
-            throw new RuntimeException("The physics as we know them are no more. Watch out for anomalies.");
-        }
-
-        public void rememberOrientation() {
-            mRememberedNormalOrientation = mCurrentNormalizedOrientation;
-        }
-
-        public int getRememberedNormalOrientation() {
-            rememberOrientation();
-            return mRememberedNormalOrientation;
-        }
-    }
 }

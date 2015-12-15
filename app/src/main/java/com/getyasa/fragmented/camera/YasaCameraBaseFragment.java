@@ -1,13 +1,10 @@
 package com.getyasa.fragmented.camera;
 
-import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.View;
 
-import com.getyasa.app.ui.TakePictures;
 
 
 /**
@@ -15,13 +12,13 @@ import com.getyasa.app.ui.TakePictures;
  */
 public abstract class YasaCameraBaseFragment extends Fragment {
 
-    protected TakePictures parentActivity;
+    protected MakePicsActivity parentActivity;
 
 
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        parentActivity = (MakePicsActivity) getActivity();
         super.onViewCreated(view, savedInstanceState);
-        parentActivity = (TakePictures) getActivity();
     }
 }

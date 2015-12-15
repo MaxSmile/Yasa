@@ -31,7 +31,7 @@
         </activity>
 
         <activity
-            android:name=".app.ui.TakePictures"
+            android:name=".fragmented.camera.MakePicsActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"/>
         <!--
