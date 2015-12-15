@@ -9,6 +9,7 @@ import android.graphics.Matrix;
 import android.graphics.PixelFormat;
 import android.graphics.Rect;
 import android.hardware.Camera;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -105,10 +106,12 @@ public class CameraActivity extends CameraBaseActivity {
     @Override
     protected void onActivityResult(final int requestCode, final int resultCode, final Intent result) {
         if (requestCode == YasaConstants.REQUEST_PICK && resultCode == RESULT_OK) {
-            CameraManager.getInst().processPhotoItem(
-                    CameraActivity.this,
-                    new PhotoItem(result.getData().getPath(), System
-                            .currentTimeMillis()));
+            Uri uri =  result.getData();
+
+            Intent newIntent = new Intent(this, ApplyEffectsActivity.class);
+            newIntent.setData(uri);
+            this.startActivity(newIntent);
+
         } else if (requestCode == YasaConstants.REQUEST_CROP && resultCode == RESULT_OK) {
             Intent newIntent = new Intent(this, ApplyEffectsActivity.class);
             newIntent.setData(result.getData());
@@ -249,7 +252,7 @@ public class CameraActivity extends CameraBaseActivity {
         }
         float x = event.getX(0) - event.getX(1);
         float y = event.getY(0) - event.getY(1);
-        return FloatMath.sqrt(x * x + y * y);
+        return (float) Math.sqrt(x * x + y * y);
     }
 
 
@@ -313,7 +316,7 @@ public class CameraActivity extends CameraBaseActivity {
         parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
     }
 
-    private void anotherPictureTaken() {
+    protected void anotherPictureTaken() {
 
     }
 

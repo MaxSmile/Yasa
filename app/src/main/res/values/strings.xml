@@ -41,4 +41,6 @@
     <string name="menu_action_share">Share</string>
     <string name="tab_gallery">Gallery</string>
     <string name="error_switch_front_back_cameras">Switch failed, please try again！</string>
+    <string name="request_write_storage_permission_text">Approval is needed to save your photo on your device</string>
+
 </resources>

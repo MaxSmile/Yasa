@@ -21,7 +21,6 @@ import android.widget.Toast;
 import com.common.util.FileUtils;
 import com.common.util.ImageUtils;
 import com.common.util.TimeUtils;
-import com.customview.LabelSelector;
 import com.customview.LabelView;
 import com.customview.MyImageViewDrawableOverlay;
 import com.getyasa.App;
@@ -31,7 +30,6 @@ import com.getyasa.app.camera.adapter.StickerToolAdapter;
 import com.getyasa.app.camera.util.EffectUtil;
 import com.getyasa.app.model.Addon;
 
-import java.io.IOException;
 import java.util.Date;
 
 import butterknife.ButterKnife;
