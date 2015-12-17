@@ -34,10 +34,11 @@
             android:layout_alignParentTop="true"
             android:layout_alignBottom="@+id/center_point">
             <com.getyasa.collage.CollageView
-                android:id="@+id/image2"
-                android:src="@drawable/sticker1"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent" />
+                android:id="@+id/image1"
+                android:scaleType="centerCrop"
+                android:src="@drawable/default_img"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
         </LinearLayout>
 
 
@@ -49,10 +50,11 @@
             android:layout_alignParentBottom="true"
             android:layout_alignTop="@+id/center_point" >
             <com.getyasa.collage.CollageView
-                android:id="@+id/image1"
-                android:src="@drawable/sticker2"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent" />
+                android:id="@+id/image2"
+                android:scaleType="centerInside"
+                android:src="@drawable/default_img"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
         </LinearLayout>
 
 </RelativeLayout>

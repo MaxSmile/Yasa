@@ -66,15 +66,15 @@ public class AddStickersActivity extends CameraBaseActivity {
     private MyImageViewDrawableOverlay mImageView;
 
 
-    //当前图片
+    //Current picture
     private Bitmap currentBitmap;
 
-    //小白点标签
+    //White Point Labels
     private LabelView emptyLabelView;
 
 
 
-    //标签区域
+    //The label area
     private View commonLabelArea;
 
     @Override
@@ -127,9 +127,6 @@ public class AddStickersActivity extends CameraBaseActivity {
     }
 
 
-
-
-
     // Create and return the Share Intent
     private Intent createShareIntent() {
         Intent shareIntent = new Intent(Intent.ACTION_SEND);
@@ -164,7 +161,7 @@ public class AddStickersActivity extends CameraBaseActivity {
                 mImageView.getWidth() / 2, mImageView.getWidth() / 2);
         emptyLabelView.setVisibility(View.INVISIBLE);
 
-        //初始化推荐标签栏
+        //Recommended Initialization tab bar
         commonLabelArea = LayoutInflater.from(AddStickersActivity.this).inflate(
                 R.layout.view_label_bottom,null);
         commonLabelArea.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,

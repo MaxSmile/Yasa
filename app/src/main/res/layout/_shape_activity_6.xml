@@ -17,13 +17,17 @@
     android:layout_height="match_parent">
     <com.getyasa.collage.CollageView
         android:id="@+id/image1"
+        android:scaleType="centerCrop"
         android:src="@drawable/default_img"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
     <com.github.siyamed.shapeimageview.CircularImageView
         android:id="@+id/image2"
-        android:src="@drawable/sticker1"
+        android:src="@drawable/default_img"
+        android:layout_gravity="center"
+        app:siBorderWidth="6dp"
+        app:siBorderColor="@color/half_white"
         android:layout_width="240dp"
         android:layout_height="240dp" />
 </FrameLayout>

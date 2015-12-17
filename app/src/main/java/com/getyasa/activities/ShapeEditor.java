@@ -1,10 +1,14 @@
 package com.getyasa.activities;
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -21,6 +25,7 @@ import com.getyasa.base.YasaBaseActivity;
 import com.getyasa.collage.MultiTouchListener;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Date;
 
 /**
@@ -34,6 +39,7 @@ public class ShapeEditor extends YasaBaseActivity {
     ImageView image1, image2;
 
     int counter = 0;
+    Uri imageUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,9 +81,9 @@ public class ShapeEditor extends YasaBaseActivity {
         image2 = (ImageView)findViewById(R.id.image2);
         image1.setOnTouchListener(new MultiTouchListener());
         image2.setOnTouchListener(new MultiTouchListener());
-        setUpActionBar(true,true,"Good job!");
+        setUpActionBar(true,true,"");
         if(counter==0) {
-            startCamera();
+            startCamera(false);
         }
     }
 
@@ -89,7 +95,6 @@ public class ShapeEditor extends YasaBaseActivity {
         v1.setDrawingCacheEnabled(true);
         bitmap = Bitmap.createBitmap(v1.getDrawingCache());
         v1.setDrawingCacheEnabled(false);
-        //image1.setImageBitmap(bitmap);
         new SavePicToFileTask().execute(bitmap);
     }
 
@@ -132,30 +137,76 @@ public class ShapeEditor extends YasaBaseActivity {
         this.startActivity(newIntent);
     }
 
-    void startCamera() {
-        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(cameraIntent, CAMERA_REQUEST);
+    void startCamera(boolean front) {
 
+        ContentValues values = new ContentValues();
+        values.put(MediaStore.Images.Media.TITLE, "New Picture");
+        values.put(MediaStore.Images.Media.DESCRIPTION, "From your Camera");
+        imageUri = getContentResolver().insert(
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+
+        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+        if (front) {
+            cameraIntent.putExtra("android.intent.extras.CAMERA_FACING", 1);
+        }
+        startActivityForResult(cameraIntent, CAMERA_REQUEST);
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
+        if (resultCode == RESULT_OK) {
+        if (requestCode == CAMERA_REQUEST  ) {
             switch (counter) {
                 case 0: {
-                    Bitmap photo = (Bitmap) data.getExtras().get("data");
 
-                    image1.setImageBitmap(photo);
+                    try {
+                        Bitmap thumbnail = MediaStore.Images.Media.getBitmap(
+                                getContentResolver(), imageUri);
+                        image1.setImageBitmap(thumbnail);
+                        image1.setAdjustViewBounds(true);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    String imageurl = getRealPathFromURI(imageUri);
+
+//                    Bitmap photo = (Bitmap) data.getExtras().get("data");
+//                    BitmapFactory.Options options = new BitmapFactory.Options();
+//                    options.inScaled = false;
+//                    image1.setImageBitmap(photo);
                     counter++;
-                    startCamera();
-                } break;
+                    startCamera(true);
+                }
+                break;
                 case 1: {
-                    Bitmap photo = (Bitmap) data.getExtras().get("data");
-                    image2.setImageBitmap(photo);
+
+                    try {
+                        Bitmap thumbnail = MediaStore.Images.Media.getBitmap(
+                                getContentResolver(), imageUri);
+                        image2.setImageBitmap(thumbnail);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+//                    Bitmap photo = (Bitmap) data.getExtras().get("data");
+//                    image2.setImageBitmap(photo);
                     counter++;
                     //startCamera()
-                } break;
+                }
+                break;
             }
-
         }
+        } else {
+            finish();
+        }
+    }
+
+
+    public String getRealPathFromURI(Uri contentUri) {
+        String[] proj = { MediaStore.Images.Media.DATA };
+        Cursor cursor = managedQuery(contentUri, proj, null, null, null);
+        int column_index = cursor
+                .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        return cursor.getString(column_index);
     }
 }

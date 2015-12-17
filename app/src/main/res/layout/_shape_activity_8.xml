@@ -23,7 +23,10 @@
 
     <com.github.siyamed.shapeimageview.StarImageView
         android:id="@+id/image2"
-        android:src="@drawable/sticker1"
+        android:src="@drawable/default_img"
+        android:layout_gravity="center"
+        app:siBorderWidth="6dp"
+        app:siBorderColor="@color/half_white"
         android:layout_width="240dp"
         android:layout_height="240dp" />
 </FrameLayout>

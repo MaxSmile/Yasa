@@ -38,4 +38,5 @@
 
     <color name="background_tab_pressed">#6633B5E5</color>
     <color name="light_grey">#ffbebebe</color>
+    <color name="half_white">#aaffffff</color>
 </resources>

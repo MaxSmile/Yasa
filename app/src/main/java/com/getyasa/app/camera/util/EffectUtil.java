@@ -42,6 +42,39 @@ public class EffectUtil {
         addonList.add(new Addon(R.drawable.sticker6));
         addonList.add(new Addon(R.drawable.sticker7));
         addonList.add(new Addon(R.drawable.sticker8));
+        addonList.add(new Addon(R.drawable.sticker9));
+        addonList.add(new Addon(R.drawable.sticker10));
+        addonList.add(new Addon(R.drawable.sticker11));
+        addonList.add(new Addon(R.drawable.sticker12));
+        addonList.add(new Addon(R.drawable.sticker13));
+        addonList.add(new Addon(R.drawable.sticker14));
+        addonList.add(new Addon(R.drawable.sticker15));
+        addonList.add(new Addon(R.drawable.sticker16));
+        addonList.add(new Addon(R.drawable.sticker17));
+        addonList.add(new Addon(R.drawable.sticker18));
+        addonList.add(new Addon(R.drawable.sticker19));
+        addonList.add(new Addon(R.drawable.sticker20));
+        addonList.add(new Addon(R.drawable.sticker21));
+        addonList.add(new Addon(R.drawable.sticker22));
+        addonList.add(new Addon(R.drawable.sticker23));
+        addonList.add(new Addon(R.drawable.sticker24));
+        addonList.add(new Addon(R.drawable.sticker25));
+        addonList.add(new Addon(R.drawable.sticker26));
+        addonList.add(new Addon(R.drawable.sticker27));
+        addonList.add(new Addon(R.drawable.sticker28));
+        addonList.add(new Addon(R.drawable.sticker29));
+        addonList.add(new Addon(R.drawable.sticker30));
+        addonList.add(new Addon(R.drawable.sticker31));
+        addonList.add(new Addon(R.drawable.sticker32));
+        addonList.add(new Addon(R.drawable.sticker33));
+        addonList.add(new Addon(R.drawable.sticker34));
+        addonList.add(new Addon(R.drawable.sticker35));
+        addonList.add(new Addon(R.drawable.sticker36));
+        addonList.add(new Addon(R.drawable.sticker37));
+        addonList.add(new Addon(R.drawable.sticker38));
+        addonList.add(new Addon(R.drawable.sticker39));
+        addonList.add(new Addon(R.drawable.sticker40));
+
     }
 
     public static void clear() {

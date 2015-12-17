@@ -53,7 +53,6 @@ public class StickerToolAdapter extends BaseAdapter {
             holder = new EffectHolder();
             holder.logo = (ImageView) convertView.findViewById(R.id.effect_image);
             holder.container = (ImageView) convertView.findViewById(R.id.effect_background);
-            //holder.navImage.setOnClickListener(holder.clickListener);
             convertView.setTag(holder);
         } else {
             holder = (EffectHolder) convertView.getTag();

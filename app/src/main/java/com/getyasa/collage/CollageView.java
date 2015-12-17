@@ -32,7 +32,7 @@ public class CollageView extends ImageView {
         mBorderPaint = new Paint();
         mBorderPaint.setAntiAlias(true);
         mBorderPaint.setStyle(Paint.Style.STROKE);
-        mBorderPaint.setColor(Color.WHITE);
+        mBorderPaint.setColor(0x66ffffff);
         mBorderPaint.setStrokeWidth(STROKE_WIDTH);
     }
 

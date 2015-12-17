@@ -22,11 +22,11 @@
             android:orientation="horizontal"
             android:id="@+id/center_point"
             android:background="@color/white"
-            android:layout_width="2dp"
+            android:layout_width="4dp"
             android:layout_height="match_parent"
             android:layout_centerInParent="true"/>
 
-        <LinearLayout
+        <RelativeLayout
             android:orientation="horizontal"
             android:id="@+id/left_layout"
             android:layout_width="match_parent"
@@ -34,15 +34,17 @@
             android:layout_alignParentLeft="true"
             android:layout_alignRight="@+id/center_point">
             <com.getyasa.collage.CollageView
-                android:id="@+id/image2"
+                android:id="@+id/image1"
+                android:adjustViewBounds="true"
                 android:scaleType="fitXY"
-                android:src="@drawable/sticker1"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </LinearLayout>
+                android:src="@drawable/default_img"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
 
 
-        <LinearLayout
+        <RelativeLayout
             android:orientation="horizontal"
             android:id="@+id/right_layout"
             android:layout_width="match_parent"
@@ -50,12 +52,14 @@
             android:layout_alignParentRight="true"
             android:layout_alignLeft="@+id/center_point" >
             <com.getyasa.collage.CollageView
-                android:id="@+id/image1"
+                android:id="@+id/image2"
+                android:adjustViewBounds="true"
                 android:scaleType="fitXY"
-                android:src="@drawable/sticker2"
-                android:layout_width="match_parent"
+                android:src="@drawable/default_img"
+                android:layout_gravity="center"
+                android:layout_width="fill_parent"
                 android:layout_height="match_parent" />
-        </LinearLayout>
+        </RelativeLayout>
 
 </RelativeLayout>
 
