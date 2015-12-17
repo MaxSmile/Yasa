@@ -1,0 +1,38 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary">
+
+    <!-- Hexagon -->
+
+<com.getyasa.SquareLayout
+    android:id="@+id/squareRoot"
+    android:background="@color/black"
+    android:layout_width="match_parent"
+    android:layout_height="100dp">
+
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <com.getyasa.collage.CollageView
+        android:id="@+id/image1"
+        android:src="@drawable/default_img"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <com.github.siyamed.shapeimageview.HexagonImageView
+        android:id="@+id/image2"
+        android:src="@drawable/sticker1"
+        android:layout_width="240dp"
+        android:layout_height="240dp" />
+</FrameLayout>
+
+
+
+
+
+
+</com.getyasa.SquareLayout>
+
+</RelativeLayout>

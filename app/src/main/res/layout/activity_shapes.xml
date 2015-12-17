@@ -11,7 +11,7 @@
     android:orientation="vertical"
     android:gravity="center_vertical"
     android:background="@color/colorPrimary"
-    tools:context=".app.ui.ShapesActivity">
+    tools:context=".activities.ShapesActivity">
 
     <RelativeLayout
         android:layout_marginBottom="@dimen/shape_distance"
