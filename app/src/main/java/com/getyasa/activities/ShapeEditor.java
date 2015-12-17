@@ -162,38 +162,24 @@ public class ShapeEditor extends YasaBaseActivity {
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
-        if (requestCode == CAMERA_REQUEST  ) {
-            switch (counter) {
-                case 0: {
+            if (requestCode == CAMERA_SURFACE  ) {
+                switch (counter) {
+                    case 0: {
+                        image1.setImageBitmap((Bitmap) data.getParcelableExtra("image"));
 
-                    try {
-                        Bitmap thumbnail = MediaStore.Images.Media.getBitmap(
-                                getContentResolver(), imageUri);
-                        image1.setImageBitmap(thumbnail);
-
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                        counter++;
+                        startCamera(true);
                     }
+                    break;
+                    case 1: {
 
-                    counter++;
-                    startCamera(true);
-                }
-                break;
-                case 1: {
+                        image2.setImageBitmap((Bitmap) data.getParcelableExtra("image"));
 
-                    try {
-                        Bitmap thumbnail = MediaStore.Images.Media.getBitmap(
-                                getContentResolver(), imageUri);
-                        image2.setImageBitmap(thumbnail);
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                        counter++;
                     }
-
-                    counter++;
+                    break;
                 }
-                break;
             }
-        }
         } else {
             finish();
         }

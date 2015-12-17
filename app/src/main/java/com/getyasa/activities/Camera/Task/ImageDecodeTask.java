@@ -1,6 +1,8 @@
 package com.getyasa.activities.Camera.Task;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -14,7 +16,7 @@ import com.getyasa.activities.Camera.Utility.Constant;
  */
 public class ImageDecodeTask extends AsyncTask<Void, Void, Bitmap> {
 
-    private Context context;
+    private Activity activity;
     private byte[] data;
 
     private int layoutHeight;
@@ -22,8 +24,8 @@ public class ImageDecodeTask extends AsyncTask<Void, Void, Bitmap> {
 
 //    private Bitmap bitmap;
 
-    public ImageDecodeTask(Context context, byte[] data, int layoutHeight, int surfaceViewHeight){
-        this.context = context;
+    public ImageDecodeTask(Activity context, byte[] data, int layoutHeight, int surfaceViewHeight){
+        this.activity = context;
         this.data = data;
         this.layoutHeight = layoutHeight;
         this.surfaceViewHeight = surfaceViewHeight;
@@ -71,8 +73,11 @@ public class ImageDecodeTask extends AsyncTask<Void, Void, Bitmap> {
 
     @Override
     protected void onPostExecute(Bitmap bitmap) {
-
-        //TODO: back with the result
+        Intent i = new Intent();
+        i.setData(null);
+        i.putExtra("image",bitmap);
+        activity.setResult(Activity.RESULT_OK, i);
+        activity.finish();
     }
 
 }

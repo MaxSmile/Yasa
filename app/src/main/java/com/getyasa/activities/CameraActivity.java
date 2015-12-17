@@ -1,19 +1,28 @@
 package com.getyasa.activities;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.hardware.Camera;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.common.util.FileUtils;
 import com.getyasa.R;
+import com.getyasa.YasaConstants;
 import com.getyasa.activities.Camera.PreviewSurfaceView;
 import com.getyasa.activities.Camera.Task.ImageDecodeTask;
 import com.getyasa.activities.Camera.Task.SaveImageTask;
 import com.getyasa.activities.Camera.Utility.Constant;
+import com.getyasa.app.ui.ApplyEffectsActivity;
 import com.getyasa.base.YasaBaseActivity;
+
+import java.io.IOException;
 
 /**
  * Created by maxim.vasilkov@gmail.com on 17/12/15.
@@ -24,24 +33,41 @@ public class CameraActivity extends YasaBaseActivity {
     private PreviewSurfaceView previewSurfaceView;
     private FrameLayout previewFrame;
     private Button captureButton;
-    private Button switchCameraButton;
+    private ImageView switchCameraButton;
+    private ImageView galleryButton;
+    String shape_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Boolean front = getIntent().getBooleanExtra("front",false);
+        Constant.BACK_CAMERA_IN_USE = !front;
         setContentView(R.layout.activity_camera_surface);
         setUpActionBar(true,false,"");
-        String shape_id = getIntent().getStringExtra("shape_id");
+        shape_id = getIntent().getStringExtra("shape_id");
+
+
 
 
         previewFrame = (FrameLayout)findViewById(R.id.camera_preview);
         captureButton = (Button)findViewById(R.id.button_capture);
-        switchCameraButton = (Button)findViewById(R.id.button_switch);
+        switchCameraButton = (ImageView)findViewById(R.id.button_switch);
+        galleryButton = (ImageView)findViewById(R.id.gallery);
 
         captureButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 camera.takePicture(null, null, pictureCallback);
+            }
+        });
+
+        galleryButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+                photoPickerIntent.setType("image/*");
+                startActivityForResult(photoPickerIntent, YasaConstants.REQUEST_PICK);
             }
         });
 
@@ -58,9 +84,34 @@ public class CameraActivity extends YasaBaseActivity {
     }
 
     @Override
+    protected void onActivityResult(final int requestCode, final int resultCode, final Intent result) {
+        if (requestCode == YasaConstants.REQUEST_PICK && resultCode == RESULT_OK) {
+            Uri uri = result.getData();
+
+            try {
+                Bitmap image = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+                Intent i = new Intent();
+                i.setData(uri);
+                i.putExtra("image",image);
+                setResult(RESULT_OK, i);
+                finish();
+                return;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            setResult(RESULT_CANCELED, null);
+            finish();
+        }
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
-        showBackCamera();
+        if (Constant.BACK_CAMERA_IN_USE) {
+            showBackCamera();
+        } else {
+            showFrontCamera();
+        }
     }
 
     @Override
@@ -133,39 +184,13 @@ public class CameraActivity extends YasaBaseActivity {
 
             camera.stopPreview();
 
-            //decodes and returns the bitmap if this flag is set in constants.
-            if(Constant.FLAG_DECODE_BITMAP){
-                new ImageDecodeTask(CameraActivity.this, data, previewFrame.getHeight(), previewSurfaceView.getHeight()).execute();
-            }else{
-                //the method decodeBitmapComplete will not be called if the task is not started. So enable the button
-                captureButton.setEnabled(true);
-            }
+            new ImageDecodeTask(CameraActivity.this, data, previewFrame.getHeight(), previewSurfaceView.getHeight()).execute();
 
-            camera.startPreview();
         }
     };
 
-    public void decodeBitmapComplete(Bitmap bitmap){
-        captureButton.setEnabled(true);
-        //The decoded bitmap is passed as a parameter. Use this for all further operations.
-        if(bitmap != null){
 
-            //Save the image to disk if this flag is set
-            if(Constant.FLAG_SAVE_IMAGE){
-                new SaveImageTask(this).execute(bitmap);
-            }
-        }
-        //set the bitmap to null if it is no longer needed
-        bitmap = null;
 
-    }
 
-    public void fileSaveComplete(Constant.FileSaveStatus fileSaveStatus){
-        showToast(fileSaveStatus == Constant.FileSaveStatus.SUCCESS ? Constant.IMAGE_SAVE_SUCCESS_MESSAGE : Constant.IMAGE_SAVE_FAILURE_MESSAGE);
-    }
-
-    private void showToast(String message){
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-    }
 
 }
