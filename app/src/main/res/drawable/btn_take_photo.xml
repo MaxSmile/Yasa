@@ -11,7 +11,7 @@
         android:right="6dp"
         android:top="6dp">
         <shape android:shape="oval">
-            <solid android:color="@color/colorAccent" />
+            <solid android:color="@color/accent_blue" />
         </shape>
     </item>
     <item>

@@ -42,10 +42,11 @@
 
         </activity>
 
-        <!--<activity
-            android:name=".app.camera.ui.AlbumActivity"
+        <activity
+            android:name=".activities.CameraActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"/>
+        <!--
         <activity android:name=".app.ui.EditTextActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"/>
