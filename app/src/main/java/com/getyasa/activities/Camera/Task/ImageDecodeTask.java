@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.getyasa.activities.Camera.Utility.BitmapHelper;
 import com.getyasa.activities.Camera.Utility.Constant;
@@ -73,11 +74,18 @@ public class ImageDecodeTask extends AsyncTask<Void, Void, Bitmap> {
 
     @Override
     protected void onPostExecute(Bitmap bitmap) {
-        Intent i = new Intent();
-        i.setData(null);
-        i.putExtra("image",bitmap);
-        activity.setResult(Activity.RESULT_OK, i);
-        activity.finish();
+        try {
+            Intent i = new Intent();
+            i.setData(null);
+            i.putExtra("image","bitmap");
+            Constant.bitmap = bitmap;
+            activity.setResult(Activity.RESULT_OK, i);
+            activity.finish();
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(activity,"Failed to take a picture",Toast.LENGTH_SHORT).show();
+        }
+
     }
 
 }

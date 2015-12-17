@@ -20,6 +20,7 @@ import com.common.util.ImageUtils;
 import com.common.util.TimeUtils;
 import com.getyasa.App;
 import com.getyasa.R;
+import com.getyasa.activities.Camera.Utility.Constant;
 import com.getyasa.app.ui.AddStickersActivity;
 import com.getyasa.app.ui.ApplyEffectsActivity;
 import com.getyasa.base.YasaBaseActivity;
@@ -165,7 +166,7 @@ public class ShapeEditor extends YasaBaseActivity {
             if (requestCode == CAMERA_SURFACE  ) {
                 switch (counter) {
                     case 0: {
-                        image1.setImageBitmap((Bitmap) data.getParcelableExtra("image"));
+                        image1.setImageBitmap(Constant.bitmap);
 
                         counter++;
                         startCamera(true);
@@ -173,7 +174,7 @@ public class ShapeEditor extends YasaBaseActivity {
                     break;
                     case 1: {
 
-                        image2.setImageBitmap((Bitmap) data.getParcelableExtra("image"));
+                        image2.setImageBitmap(Constant.bitmap);
 
                         counter++;
                     }

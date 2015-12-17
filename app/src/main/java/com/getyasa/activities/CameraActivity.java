@@ -89,10 +89,10 @@ public class CameraActivity extends YasaBaseActivity {
             Uri uri = result.getData();
 
             try {
-                Bitmap image = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+                Constant.bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
                 Intent i = new Intent();
                 i.setData(uri);
-                i.putExtra("image",image);
+                i.putExtra("image","image");
                 setResult(RESULT_OK, i);
                 finish();
                 return;

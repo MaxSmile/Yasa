@@ -1,5 +1,7 @@
 package com.getyasa.activities.Camera.Utility;
 
+import android.graphics.Bitmap;
+
 /**
  * Created by maxim.vasilkov@gmail.com on 17/12/15.
  */
@@ -30,6 +32,8 @@ public class Constant {
     public static final String IMAGE_SAVE_FAILURE_MESSAGE = "Failed to save image";
     public static final int MEDIA_TYPE_IMAGE = 1;
     public static final int MEDIA_TYPE_VIDEO = 2;
+
+    public static Bitmap bitmap;
 
     public enum FileSaveStatus {
         SUCCESS, FAILED
