@@ -163,7 +163,7 @@ public class ShapeEditor extends YasaBaseActivity {
                         Bitmap thumbnail = MediaStore.Images.Media.getBitmap(
                                 getContentResolver(), imageUri);
                         image1.setImageBitmap(thumbnail);
-                        image1.setAdjustViewBounds(true);
+
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

@@ -32,8 +32,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentTop="true"
+            android:clipChildren="false"
+            android:clipToPadding="false"
             android:layout_alignBottom="@+id/center_point">
-            <com.getyasa.collage.CollageView
+            <ImageView
                 android:id="@+id/image1"
                 android:scaleType="centerCrop"
                 android:src="@drawable/default_img"
@@ -47,11 +49,13 @@
             android:id="@+id/bottom_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:clipChildren="false"
+            android:clipToPadding="false"
             android:layout_alignParentBottom="true"
             android:layout_alignTop="@+id/center_point" >
-            <com.getyasa.collage.CollageView
+            <ImageView
                 android:id="@+id/image2"
-                android:scaleType="centerInside"
+                android:scaleType="centerCrop"
                 android:src="@drawable/default_img"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />

@@ -15,7 +15,7 @@
 <FrameLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <com.getyasa.collage.CollageView
+    <ImageView
         android:id="@+id/image1"
         android:scaleType="centerCrop"
         android:src="@drawable/default_img"
@@ -26,7 +26,7 @@
         android:id="@+id/image2"
         android:src="@drawable/default_img"
         android:layout_gravity="center"
-        app:siBorderWidth="6dp"
+        app:siBorderWidth="@dimen/shape_border_width"
         app:siBorderColor="@color/half_white"
         android:layout_width="240dp"
         android:layout_height="240dp" />
