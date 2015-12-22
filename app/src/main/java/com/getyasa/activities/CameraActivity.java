@@ -52,42 +52,42 @@ public class CameraActivity extends YasaBaseActivity {
                 if (front) {
                     setContentView(R.layout.activity_camera_surface3_);
                 } else {
-                    setContentView(R.layout.activity_camera_surface3);
+                    setContentView(R.layout.activity_camera_surface);
                 }
             } break;
             case "4": {
                 if (front) {
                     setContentView(R.layout.activity_camera_surface4_);
                 } else {
-                    setContentView(R.layout.activity_camera_surface4);
+                    setContentView(R.layout.activity_camera_surface);
                 }
             } break;
             case "5": {
                 if (front) {
                     setContentView(R.layout.activity_camera_surface5_);
                 } else {
-                    setContentView(R.layout.activity_camera_surface5);
+                    setContentView(R.layout.activity_camera_surface);
                 }
             } break;
             case "6": {
                 if (front) {
                     setContentView(R.layout.activity_camera_surface6_);
                 } else {
-                    setContentView(R.layout.activity_camera_surface6);
+                    setContentView(R.layout.activity_camera_surface);
                 }
             } break;
             case "7": {
                 if (front) {
                     setContentView(R.layout.activity_camera_surface7_);
                 } else {
-                    setContentView(R.layout.activity_camera_surface7);
+                    setContentView(R.layout.activity_camera_surface);
                 }
             } break;
             case "8": {
                 if (front) {
                     setContentView(R.layout.activity_camera_surface8_);
                 } else {
-                    setContentView(R.layout.activity_camera_surface8);
+                    setContentView(R.layout.activity_camera_surface);
                 }
             } break;
             default: {
