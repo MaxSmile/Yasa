@@ -43,5 +43,6 @@
     <string name="error_switch_front_back_cameras">Switch failed, please try again！</string>
     <string name="request_write_storage_permission_text">Approval is needed to save your photo on your device</string>
     <string name="take_pic_failed">Taking the picture filed</string>
+    <string name="camera_saved">Saved</string>
 
 </resources>

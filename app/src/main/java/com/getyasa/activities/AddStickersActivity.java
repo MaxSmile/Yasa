@@ -1,6 +1,7 @@
-package com.getyasa.app.ui;
+package com.getyasa.activities;
 
-import android.content.ContentResolver;
+import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -8,6 +9,7 @@ import android.graphics.RectF;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.ShareActionProvider;
 import android.view.LayoutInflater;
@@ -30,6 +32,9 @@ import com.getyasa.app.camera.adapter.StickerToolAdapter;
 import com.getyasa.app.camera.util.EffectUtil;
 import com.getyasa.app.model.Addon;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Date;
 
 import butterknife.ButterKnife;
@@ -137,7 +142,7 @@ public class AddStickersActivity extends CameraBaseActivity {
 
     private void initView() {
 
-        setUpActionBar(true,false,"Add Stickers & Share");
+        setUpActionBar(true,false,"");
 
         View overlay = LayoutInflater.from(AddStickersActivity.this).inflate(
                 R.layout.view_drawable_overlay, null);
@@ -210,7 +215,7 @@ public class AddStickersActivity extends CameraBaseActivity {
             try {
                 bitmap = params[0];
 
-                 String picName = TimeUtils.dtFormat(new Date(), "yyyyMMddHHmmss");
+                 String picName = TimeUtils.dtFormat(new Date(), "yyyyMMddHHmmss")+".jpg";
                  fileName = ImageUtils.saveToFile(FileUtils.getInst().getPhotoSavedPath() + "/"+ picName, false, bitmap);
 
             } catch (Exception e) {
@@ -252,6 +257,52 @@ public class AddStickersActivity extends CameraBaseActivity {
         });
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch(item.getItemId()){
+            case R.id.action_save:
+                try {
+                    String picName = TimeUtils.dtFormat(new Date(), "yyyyMMddHHmmss")+".jpg";
+                    Bitmap bitmap = applyChangesBitmap();
+                    saveToInternalSorage(bitmap,picName);
+                    toast(getString(R.string.camera_saved),Toast.LENGTH_SHORT);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    toast(getString(R.string.camera_failed),Toast.LENGTH_LONG);
+                }
+                return true;
+            case R.id.action_logo:
+                Intent intent = new Intent(this, ShapesActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                return true;
+        }
+        return false;
+    }
 
+
+    private String saveToInternalSorage(Bitmap bitmapImage, String fileName) throws IOException {
+        ContextWrapper cw = new ContextWrapper(getApplicationContext());
+        // path to /data/data/yourapp/app_data/imageDir
+        File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
+
+
+
+
+        // Create imageDir
+        File mypath=new File(directory,fileName);
+
+        FileOutputStream fos = null;
+        try {
+            fos = new FileOutputStream(mypath);
+            bitmapImage.compress(Bitmap.CompressFormat.JPEG, 80, fos);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            fos.close();
+        }
+        MediaStore.Images.Media.insertImage(this.getContentResolver(), mypath.getAbsolutePath(), mypath.getName(), fileName);
+        return mypath.getAbsolutePath();
+    }
 
 }

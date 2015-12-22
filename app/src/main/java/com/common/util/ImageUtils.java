@@ -223,11 +223,11 @@ public class ImageUtils {
         paths.clear();
         paths.add(FileUtils.getInst().getSystemPhotoPath());
         String[] projection = { MediaStore.Images.Media._ID, MediaStore.Images.Media.DATA,
-                MediaStore.Images.Media.DATE_ADDED };//FIXME 拍照时间为新增照片时间
+                MediaStore.Images.Media.DATE_ADDED };//FIXME Photographing time to time new photos
         Cursor cursor = mContext.getContentResolver().query(
-                MediaStore.Images.Media.EXTERNAL_CONTENT_URI, projection,//指定所要查询的字段
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI, projection,//Field / designated to be queried
                 MediaStore.Images.Media.SIZE + ">?",//查询条件
-                new String[] { "100000" }, //查询条件中问号对应的值
+                new String[] { "100000" }, //Question mark query condition corresponding value
                 MediaStore.Images.Media.DATE_ADDED + " desc");
 
         cursor.moveToFirst();
@@ -308,7 +308,7 @@ public class ImageUtils {
         }
     }
 
-    //异步加载缩略图
+    //Asynchronous loading thumbnails
     public static void asyncLoadSmallImage(Context context, Uri imageUri, LoadImageCallback callback) {
         new LoadSmallPicTask(context, imageUri, callback).execute();
     }
@@ -338,7 +338,7 @@ public class ImageUtils {
 
     }
 
-    //得到指定大小的Bitmap对象
+    //Bitmap object to obtain the specified size
     public static Bitmap getResizedBitmap(Context context, Uri imageUri, int width, int height) {
         InputStream inputStream = null;
         try {

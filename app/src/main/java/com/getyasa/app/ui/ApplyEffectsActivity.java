@@ -3,7 +3,6 @@ package com.getyasa.app.ui;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Matrix;
 import android.graphics.RectF;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -16,29 +15,24 @@ import android.widget.Toast;
 
 import com.common.util.FileUtils;
 import com.common.util.ImageUtils;
-import com.common.util.StringUtils;
 import com.common.util.TimeUtils;
 import com.customview.MyImageViewDrawableOverlay;
 import com.getyasa.App;
 import com.getyasa.R;
+import com.getyasa.activities.AddStickersActivity;
 import com.getyasa.app.camera.CameraBaseActivity;
-import com.getyasa.app.camera.CameraManager;
 import com.getyasa.app.camera.EffectService;
 import com.getyasa.app.camera.adapter.FiltersAdapter;
 import com.getyasa.app.camera.effect.FilterEffect;
 import com.getyasa.app.camera.util.EffectUtil;
 import com.getyasa.app.camera.util.GPUImageFilterTools;
-import com.getyasa.app.model.FeedItem;
-import com.getyasa.app.model.TagItem;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import de.greenrobot.event.EventBus;
 import it.sephiroth.android.library.widget.HListView;
 import jp.co.cyberagent.android.gpuimage.GPUImageFilter;
 import jp.co.cyberagent.android.gpuimage.GPUImageView;

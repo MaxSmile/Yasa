@@ -1,33 +1,26 @@
 package com.getyasa.activities;
 
-import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.common.util.FileUtils;
 import com.common.util.ImageUtils;
 import com.common.util.TimeUtils;
-import com.getyasa.App;
 import com.getyasa.R;
 import com.getyasa.activities.Camera.Utility.Constant;
-import com.getyasa.app.ui.AddStickersActivity;
 import com.getyasa.app.ui.ApplyEffectsActivity;
 import com.getyasa.base.YasaBaseActivity;
 import com.getyasa.collage.MultiTouchListener;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.Date;
 
 /**
