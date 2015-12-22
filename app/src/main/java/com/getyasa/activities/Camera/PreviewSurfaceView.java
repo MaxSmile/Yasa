@@ -92,11 +92,10 @@ public class PreviewSurfaceView extends SurfaceView implements SurfaceHolder.Cal
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 
         final int width = resolveSize(getSuggestedMinimumWidth(), widthMeasureSpec);
-        final int height = resolveSize(getSuggestedMinimumHeight(), heightMeasureSpec);
 
         if (supportedPreviewSizes != null) {
 
-            previewSize = getOptimalPreviewSize(supportedPreviewSizes, width, height);
+            previewSize = getOptimalPreviewSize(supportedPreviewSizes, width, width);
 
             setCameraPictureSize();
 
@@ -132,6 +131,12 @@ public class PreviewSurfaceView extends SurfaceView implements SurfaceHolder.Cal
 
         for(Camera.Size size : pictureSizes){
             float pictureAspectRatio = (float) size.width / size.height;
+            double downsize = (double)  previewSize.width/size.width;
+            if (downsize > MAX_DOWNSIZE) {
+                //if the preview is a lot larger than our display surface ignore it
+                //reason - on some phones there is not enough heap available to show the larger preview sizes
+                continue;
+            }
             if(previewAspectRatio == pictureAspectRatio){
                 pictureSize = size;
                 break;
@@ -140,15 +145,13 @@ public class PreviewSurfaceView extends SurfaceView implements SurfaceHolder.Cal
 
         if(pictureSize == null) {
             //get the largest picture size
-            pictureSize = pictureSizes.get(0);
+            pictureSize = getOptimalPreviewSize(pictureSizes,previewSize.width, previewSize.height); //pictureSizes.get(0);
         }
     }
 
-
+    final double MAX_DOWNSIZE = 1.2;
+    final double ASPECT_TOLERANCE = 0.25;
     private Camera.Size getOptimalPreviewSize(List<Camera.Size> sizes, int width, int height) {
-
-        final double ASPECT_TOLERANCE = 0.1;
-        final double MAX_DOWNSIZE = 1.5;
 
         double targetRatio = (double) width / height;
         if (sizes == null) return null;
@@ -160,7 +163,7 @@ public class PreviewSurfaceView extends SurfaceView implements SurfaceHolder.Cal
 
         // Try to find an size match aspect ratio and size
         for (Camera.Size size : sizes) {
-            double ratio = (double) size.width / size.height;
+            double ratio = (double) size.width * size.height;
             double downsize = (double) size.width / width;
             if (downsize > MAX_DOWNSIZE) {
                 //if the preview is a lot larger than our display surface ignore it

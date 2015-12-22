@@ -25,7 +25,9 @@ public class ShapesActivity extends YasaBaseActivity {
         transition_out = R.anim.fade_out;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shapes);
-
+        actionBar.setDisplayShowHomeEnabled(true);
+        actionBar.setLogo(R.mipmap.ic_launcher);
+        actionBar.setDisplayUseLogoEnabled(true);
     }
 
     public void onShapeClick(View v) {

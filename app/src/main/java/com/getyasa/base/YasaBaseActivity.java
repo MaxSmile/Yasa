@@ -3,6 +3,7 @@ package com.getyasa.base;
 import android.annotation.TargetApi;
 import android.content.DialogInterface;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -39,6 +40,7 @@ public class YasaBaseActivity extends AppCompatActivity implements ActivityRespo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         overridePendingTransition(transition_in, transition_out);
+        actionBar = getSupportActionBar();
         mActivityHelper = new ActivityHelper(this);
         this.savedInstanceState = savedInstanceState;
     }
@@ -123,7 +125,7 @@ public class YasaBaseActivity extends AppCompatActivity implements ActivityRespo
     }
 
 
-
+    protected android.support.v7.app.ActionBar actionBar=null;
     protected void setUpActionBar(boolean back,boolean forward, String label) {
         // Inflate your custom layout
         final ViewGroup actionBarLayout = (ViewGroup) getLayoutInflater().inflate(
@@ -131,7 +133,7 @@ public class YasaBaseActivity extends AppCompatActivity implements ActivityRespo
                 null);
 
         // Set up your ActionBar
-        final android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+
         actionBar.setDisplayShowHomeEnabled(false);
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setDisplayShowCustomEnabled(true);
@@ -206,5 +208,37 @@ public class YasaBaseActivity extends AppCompatActivity implements ActivityRespo
                 .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
         cursor.moveToFirst();
         return cursor.getString(column_index);
+    }
+
+    protected Bitmap getViewBitmap(View v) {
+        v.clearFocus();
+        v.setPressed(false);
+
+        boolean willNotCache = v.willNotCacheDrawing();
+        v.setWillNotCacheDrawing(false);
+
+        // Reset the drawing cache background color to fully transparent
+        // for the duration of this operation
+        int color = v.getDrawingCacheBackgroundColor();
+        v.setDrawingCacheBackgroundColor(0);
+
+        if (color != 0) {
+            v.destroyDrawingCache();
+        }
+        v.buildDrawingCache();
+        Bitmap cacheBitmap = v.getDrawingCache();
+        if (cacheBitmap == null) {
+            //Log.e(TAG, "failed getViewBitmap(" + v + ")", new RuntimeException());
+            return null;
+        }
+
+        Bitmap bitmap = Bitmap.createBitmap(cacheBitmap);
+
+        // Restore the view
+        v.destroyDrawingCache();
+        v.setWillNotCacheDrawing(willNotCache);
+        v.setDrawingCacheBackgroundColor(color);
+
+        return bitmap;
     }
 }

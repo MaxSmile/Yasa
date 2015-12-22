@@ -23,7 +23,6 @@ public class ImageDecodeTask extends AsyncTask<Void, Void, Bitmap> {
     private int layoutHeight;
     private int surfaceViewHeight;
 
-//    private Bitmap bitmap;
 
     public ImageDecodeTask(Activity context, byte[] data, int layoutHeight, int surfaceViewHeight){
         this.activity = context;
