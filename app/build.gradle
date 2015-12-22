@@ -25,7 +25,7 @@ android {
         applicationId "com.getyasa.yasa"
         minSdkVersion 15
         targetSdkVersion 22
-        versionCode 12
+        versionCode 13
         versionName "1.0"
     }
     buildTypes {

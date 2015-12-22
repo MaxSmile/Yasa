@@ -9,7 +9,10 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.hardware.Camera;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -231,12 +234,27 @@ public class CameraActivity extends YasaBaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (Constant.BACK_CAMERA_IN_USE) {
-            showBackCamera();
-        } else {
-            showFrontCamera();
-        }
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                hCamera.sendEmptyMessage(0);
+            }
+        },200);
     }
+
+    Handler hCamera = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message msg) {
+            if (Constant.BACK_CAMERA_IN_USE) {
+                showBackCamera();
+            } else {
+                showFrontCamera();
+            }
+            return false;
+        }
+    });
+
+
 
     @Override
     protected void onPause() {
@@ -286,7 +304,11 @@ public class CameraActivity extends YasaBaseActivity {
     }
 
     private void removePreview() {
-        previewFrame.removeView(previewSurfaceView);
+        try {
+            previewFrame.removeView(previewSurfaceView);
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void releaseCamera(){
