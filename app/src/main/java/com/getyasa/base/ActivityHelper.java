@@ -10,15 +10,9 @@ import com.getyasa.base.util.DialogHelper;
 public class ActivityHelper {
     final static String TAG = ActivityHelper.class.getSimpleName();
 
-    /**
-     * 对应的Activity
-     */
     private Activity mActivity;
 
 
-    /**
-     * 对话框帮助类
-     */
     private DialogHelper mDialogHelper;
 
     public ActivityHelper(Activity activity) {
@@ -31,14 +25,13 @@ public class ActivityHelper {
     }
 
     /**
-     * 弹对话框
      *
-     * @param title            标题
-     * @param msg              消息
-     * @param positive         确定
-     * @param positiveListener 确定回调
-     * @param negative         否定
-     * @param negativeListener 否定回调
+     * @param title
+     * @param msg
+     * @param positive
+     * @param positiveListener
+     * @param negative
+     * @param negativeListener
      */
     public void alert(String title, String msg, String positive,
                       DialogInterface.OnClickListener positiveListener, String negative,
@@ -48,15 +41,13 @@ public class ActivityHelper {
 
 
     /**
-     * 弹对话框
-     *
-     * @param title                    标题
-     * @param msg                      消息
-     * @param positive                 确定
-     * @param positiveListener         确定回调
-     * @param negative                 否定
-     * @param negativeListener         否定回调
-     * @param isCanceledOnTouchOutside 外部是否可点取消
+     * @param title
+     * @param msg
+     * @param positive
+     * @param positiveListener
+     * @param negative
+     * @param negativeListener
+     * @param isCanceledOnTouchOutside
      */
     public void alert(String title, String msg, String positive,
                       DialogInterface.OnClickListener positiveListener, String negative,
@@ -69,30 +60,30 @@ public class ActivityHelper {
     /**
      * TOAST
      *
-     * @param msg    消息
-     * @param period 时长
+     * @param msg
+     * @param period
      */
     public void toast(String msg, int period) {
         mDialogHelper.toast(msg, period);
     }
 
     /**
-     * 显示进度对话框
+     * Show progress dialog
      *
-     * @param msg 消息
+     * @param msg
      */
     public void showProgressDialog(String msg) {
         mDialogHelper.showProgressDialog(msg);
     }
 
     /**
-     * 显示可取消的进度对话框
+     * Show progress dialog
      *
-     * @param msg 消息
+     * @param msg
      */
     public void showProgressDialog(final String msg, final boolean cancelable,
                                    final OnCancelListener cancelListener) {
-        mDialogHelper.showProgressDialog(msg, cancelable, cancelListener, true);
+        mDialogHelper.showProgressDialog(msg, cancelable, cancelListener);
     }
 
     public void dismissProgressDialog() {

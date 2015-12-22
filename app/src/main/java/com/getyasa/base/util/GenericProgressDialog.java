@@ -4,6 +4,9 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.RotateAnimation;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -15,7 +18,6 @@ public class GenericProgressDialog extends AlertDialog {
     private TextView     mMessageView;
     private CharSequence mMessage;
     private boolean      mIndeterminate;
-    private boolean      mProgressVisiable;
 
     public GenericProgressDialog(Context context) {
         super(context/*,R.style.Float*/);
@@ -32,6 +34,13 @@ public class GenericProgressDialog extends AlertDialog {
         mProgress = (ProgressBar) findViewById(android.R.id.progress);
         mMessageView = (TextView) findViewById(R.id.message);
 
+        ImageView img = (ImageView) findViewById(R.id.yaicon1p);
+        RotateAnimation rotateAnimation = new RotateAnimation(0, 360,
+                Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        rotateAnimation.setDuration(1000);
+        rotateAnimation.setRepeatCount(Animation.INFINITE);
+        img.startAnimation(rotateAnimation);
+
         setMessageAndView();
         setIndeterminate(mIndeterminate);
     }
@@ -43,7 +52,6 @@ public class GenericProgressDialog extends AlertDialog {
             mMessageView.setVisibility(View.GONE);
         }
 
-        mProgress.setVisibility(mProgressVisiable ? View.VISIBLE : View.GONE);
     }
 
     @Override
@@ -51,13 +59,7 @@ public class GenericProgressDialog extends AlertDialog {
         mMessage = message;
     }
 
-    /**
-     * 圈圈可见性设置
-     * @param progressVisiable 是否显示圈圈
-     */
-    public void setProgressVisiable(boolean progressVisiable) {
-        mProgressVisiable = progressVisiable;
-    }
+
 
     public void setIndeterminate(boolean indeterminate) {
         if (mProgress != null) {

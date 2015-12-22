@@ -327,7 +327,7 @@ public class AddStickersActivity extends CameraBaseActivity {
                 new AlertDialog.Builder(this)
                         .setTitle(getString(R.string.app_name))
                         .setMessage(getString(R.string.confirmation_navigation))
-                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setIcon(R.mipmap.ic_launcher)
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
                                 Intent intent = new Intent(AddStickersActivity.this, ShapesActivity.class);

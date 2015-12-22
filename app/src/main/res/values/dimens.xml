@@ -9,6 +9,7 @@
     <dimen name="filter_toolbox_size">80dp</dimen>
     <dimen name="filter_label_size">14sp</dimen>
     <dimen name="shape_border_width">8dp</dimen>
+    <dimen name="progres_picture">40dp</dimen>
 
     <!-- Various heights -->
     <dimen name="height_625px">313dp</dimen>
