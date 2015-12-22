@@ -33,18 +33,18 @@ public class MyImageViewDrawableOverlay extends ImageViewTouch {
 
         void onClick(MyHighlightView view);
 
-        //标签的点击事件处理
+        //Click event handler tag
         void onClick(LabelView label);
     };
 
-    //删除的时候会出错
+    //Deleted when an error occurs
     private List<MyHighlightView>   mOverlayViews         = new CopyOnWriteArrayList<MyHighlightView>();
 
     private MyHighlightView         mOverlayView;
 
     private OnDrawableEventListener mDrawableListener;
 
-    private boolean                 mForceSingleSelection = true;
+    private boolean                 mForceSingleSelection = false;
 
     private Paint                   mDropPaint;
 
@@ -53,19 +53,16 @@ public class MyImageViewDrawableOverlay extends ImageViewTouch {
     private boolean                 mScaleWithContent     = false;
 
     private List<LabelView>         labels                = new ArrayList<LabelView>();
-    //当前被点击的标签
+    //The current label is clicked
     private LabelView               currentLabel;
-    //标签被点击的处与基本坐标的距离
+    //At a distance tag is clicked with the basic coordinates
     private float                   labelX, labelY, downLabelX, downLabelY;
 
     /************************[BEGIN]贴纸处理**********************/
     /**
-     * 用于感知label被点击了
-     * @param label
-     * @param locationX
-     * @param locationY
+     * For sensing the label is clicked
      */
-    //贴纸在上面进行操作
+    //Stickers in the above operation
     public void setCurrentLabel(LabelView label, float eventRawX, float eventRawY) {
         if (labels.contains(label)) {
             currentLabel = label;
@@ -99,7 +96,7 @@ public class MyImageViewDrawableOverlay extends ImageViewTouch {
         }
         if (currentLabel != null) {
             switch (event.getAction()) {
-                case MotionEvent.ACTION_UP:// 手指离开时 
+                case MotionEvent.ACTION_UP:// Finger leave
                 case MotionEvent.ACTION_CANCEL:
 
                     float upX = event.getRawX();
@@ -107,8 +104,8 @@ public class MyImageViewDrawableOverlay extends ImageViewTouch {
                     double distance = Math.sqrt(Math.abs(upX - downLabelX)
                                                 * Math.abs(upX - downLabelX)
                                                 + Math.abs(upY - downLabelY)
-                                                * Math.abs(upY - downLabelY));//两点之间的距离
-                    if (distance < 15) { // 距离较小，当作click事件来处理
+                                                * Math.abs(upY - downLabelY));//The distance between two points
+                    if (distance < 15) { // The distance is small, as a click event to handle
                         if(mDrawableListener!=null){
                             mDrawableListener.onClick(currentLabel);
                         }
@@ -123,7 +120,7 @@ public class MyImageViewDrawableOverlay extends ImageViewTouch {
         return super.onTouchEvent(event);
     }
 
-    /************************[END]贴纸处理**********************/
+    /************************[END] Stickers Processing**********************/
 
     public MyImageViewDrawableOverlay(Context context) {
         super(context);
@@ -364,7 +361,7 @@ public class MyImageViewDrawableOverlay extends ImageViewTouch {
         }
 
         if (mOverlayView != null) {
-            //通过触摸区域得到Mode
+            //Obtained by touching the area Mode
             int edge = mOverlayView.getHit(e.getX(), e.getY());
             if (edge != MyHighlightView.NONE) {
                 mOverlayView.setMode((edge == MyHighlightView.MOVE) ? MyHighlightView.MOVE

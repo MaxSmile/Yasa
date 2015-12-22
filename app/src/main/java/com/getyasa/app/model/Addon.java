@@ -2,12 +2,11 @@ package com.getyasa.app.model;
 
 
 /**
- * 本地简单使用,实际项目中与贴纸相关的属性可以添加到此类中
+ * Local simple to use, the actual project-related stickers attributes can be added to this class
  */
 public class Addon  {
     private int    id;
 
-    //JSON用到
     public Addon() {
 
     }

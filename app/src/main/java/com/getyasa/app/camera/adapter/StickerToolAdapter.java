@@ -16,7 +16,7 @@ import java.util.List;
 
 /**
  * 
- * 贴纸适配器
+ * Stickers adapter
  * @author tongqian.ni
  */
 public class StickerToolAdapter extends BaseAdapter {
@@ -24,8 +24,8 @@ public class StickerToolAdapter extends BaseAdapter {
     List<Addon> filterUris;
     Context     mContext;
 
-    public StickerToolAdapter(Context context, List<Addon> effects) {
-        filterUris = effects;
+    public StickerToolAdapter(Context context, List<Addon> filters) {
+        filterUris = filters;
         mContext = context;
     }
 

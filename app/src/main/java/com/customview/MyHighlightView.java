@@ -203,7 +203,7 @@ public class MyHighlightView implements EditableDrawable.OnSizeChange {
         if (is_selected || is_focused) {
 
             if (mShowAnchors) {
-                //绘制边框
+                //Draw Border
                 outlinePath.reset();
                 outlinePath.addRect(mTempRect, Path.Direction.CW);
                 outlinePaint.setColor(Color.WHITE);
@@ -615,7 +615,7 @@ public class MyHighlightView implements EditableDrawable.OnSizeChange {
         return isSelected() && mMode != NONE;
     }
 
-    protected void updateDrawableState() {
+    public void updateDrawableState() {
 
         if (null == mBackgroundDrawable)
             return;
@@ -644,6 +644,11 @@ public class MyHighlightView implements EditableDrawable.OnSizeChange {
         mDeleteClickListener = listener;
     }
 
+    public void clearState() {
+        showAnchors(false);
+        mState = STATE_NONE;
+        updateDrawableState();
+    }
     public void setSelected(final boolean selected) {
         Log.d(LOG_TAG, "setSelected: " + selected);
         boolean is_selected = isSelected();

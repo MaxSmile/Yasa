@@ -16,7 +16,6 @@ import com.getyasa.R;
 import com.getyasa.app.camera.CameraBaseActivity;
 import com.getyasa.app.camera.fragment.AlbumFragment;
 import com.getyasa.app.model.Album;
-import com.getyasa.app.ui.PhotoProcessActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,12 +24,7 @@ import java.util.Map;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-/**
- * 相册界面
- * Created by sky on 2015/7/8.
- * Weibo: http://weibo.com/2030683111
- * Email: 1132234509@qq.com
- */
+
 public class AlbumActivity extends CameraBaseActivity {
 
     private Map<String, Album> albums;
@@ -61,9 +55,7 @@ public class AlbumActivity extends CameraBaseActivity {
     @Override
     protected void onActivityResult(final int requestCode, final int resultCode, final Intent result) {
         if (requestCode == YasaConstants.REQUEST_CROP && resultCode == RESULT_OK) {
-            Intent newIntent = new Intent(this, PhotoProcessActivity.class);
-            newIntent.setData(result.getData());
-            startActivity(newIntent);
+
         }
     }
 

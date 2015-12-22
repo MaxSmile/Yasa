@@ -9,8 +9,12 @@ import android.graphics.RectF;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.provider.MediaStore;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.ShareActionProvider;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -24,11 +28,12 @@ import com.common.util.FileUtils;
 import com.common.util.ImageUtils;
 import com.common.util.TimeUtils;
 import com.customview.LabelView;
+import com.customview.MyHighlightView;
 import com.customview.MyImageViewDrawableOverlay;
 import com.getyasa.App;
+import com.getyasa.FiltersAdapter;
 import com.getyasa.R;
 import com.getyasa.app.camera.CameraBaseActivity;
-import com.getyasa.app.camera.adapter.StickerToolAdapter;
 import com.getyasa.app.camera.util.EffectUtil;
 import com.getyasa.app.model.Addon;
 
@@ -62,11 +67,13 @@ public class AddStickersActivity extends CameraBaseActivity {
     ViewGroup drawArea;
 
 
-    @InjectView(R.id.list_tools)
-    HListView bottomToolBar;
-
     @InjectView(R.id.toolbar_area)
     ViewGroup toolArea;
+
+    @InjectView(R.id.my_recycler_view)
+    RecyclerView mRecyclerView;
+
+    private RecyclerView.LayoutManager mLayoutManager;
 
     private MyImageViewDrawableOverlay mImageView;
 
@@ -82,14 +89,58 @@ public class AddStickersActivity extends CameraBaseActivity {
     //The label area
     private View commonLabelArea;
 
+
+    int[] stickers = {
+            R.drawable.sticker1,
+            R.drawable.sticker2,
+            R.drawable.sticker3,
+            R.drawable.sticker4,
+//            R.drawable.sticker5,
+            R.drawable.sticker6,
+            R.drawable.sticker7,
+            R.drawable.sticker8,
+            R.drawable.sticker9,
+            R.drawable.sticker11,
+            R.drawable.sticker12,
+            R.drawable.sticker14,
+            R.drawable.sticker15,
+
+//            R.drawable.sticker20,
+//            R.drawable.sticker21,
+//            R.drawable.sticker22,
+//            R.drawable.sticker23,
+//            R.drawable.sticker24,
+            R.drawable.sticker25,
+            R.drawable.sticker26,
+            R.drawable.sticker27,
+           // R.drawable.sticker28,
+            R.drawable.sticker29,
+
+
+//            R.drawable.sticker30,
+            R.drawable.sticker31,
+            R.drawable.sticker32,
+//            R.drawable.sticker33,
+//            R.drawable.sticker34,
+//            R.drawable.sticker35,
+//            R.drawable.sticker36,
+//            R.drawable.sticker37,
+//            R.drawable.sticker38,
+//            R.drawable.sticker39,
+//            R.drawable.sticker40
+                            };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_stickers);
         ButterKnife.inject(this);
-        EffectUtil.clear();
+        // use a linear layout manager
+        mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+
+        mRecyclerView.setAdapter(new FiltersAdapter(stickers,stickerAddHandler));
         initView();
-        initStickerToolBar();
 
         ImageUtils.asyncLoadImage(this, getIntent().getData(), new ImageUtils.LoadImageCallback() {
             @Override
@@ -233,29 +284,36 @@ public class AddStickersActivity extends CameraBaseActivity {
         }
     }
 
-
-
-
-    private void initStickerToolBar(){
-
-        bottomToolBar.setAdapter(new StickerToolAdapter(AddStickersActivity.this, EffectUtil.addonList));
-        bottomToolBar.setOnItemClickListener(new it.sephiroth.android.library.widget.AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(it.sephiroth.android.library.widget.AdapterView<?> arg0,
-                                    View arg1, int arg2, long arg3) {
-
-                Addon sticker = EffectUtil.addonList.get(arg2);
-                EffectUtil.addStickerImage(mImageView, AddStickersActivity.this, sticker,
-                        new EffectUtil.StickerCallback() {
-                            @Override
-                            public void onRemoveSticker(Addon sticker) {
-
-                            }
-                        });
+    private void startDeselectTimer() {
+        new Handler().postDelayed(new Runnable() {
+            public void run() {
+                for (MyHighlightView v:EffectUtil.hightlistViews) {
+                    v.clearState();
+                }
             }
-        });
+        }, 3000);
     }
+
+
+    private Handler stickerAddHandler = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message msg) {
+            Addon sticker = new Addon(msg.arg1);
+            EffectUtil.addStickerImage(mImageView, AddStickersActivity.this, sticker,
+                    new EffectUtil.StickerCallback() {
+                        @Override
+                        public void onRemoveSticker(Addon sticker) {
+
+                        }
+                    });
+                    startDeselectTimer();
+
+
+            return false;
+
+        }
+    });
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
@@ -272,6 +330,7 @@ public class AddStickersActivity extends CameraBaseActivity {
                 }
                 return true;
             case R.id.action_logo:
+                // TODO: ask if sure?
                 Intent intent = new Intent(this, ShapesActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
