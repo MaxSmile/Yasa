@@ -645,8 +645,8 @@ public class MyHighlightView implements EditableDrawable.OnSizeChange {
     }
 
     public void clearState() {
-        showAnchors(false);
-        mState = STATE_NONE;
+        setSelected(false);
+        invalidate();
         updateDrawableState();
     }
     public void setSelected(final boolean selected) {

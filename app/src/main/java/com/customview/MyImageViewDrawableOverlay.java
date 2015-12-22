@@ -6,6 +6,7 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -14,6 +15,7 @@ import android.view.ViewConfiguration;
 
 import com.customview.drawable.EditableDrawable;
 import com.customview.drawable.FeatherDrawable;
+import com.getyasa.app.camera.util.EffectUtil;
 import com.imagezoom.ImageViewTouch;
 
 import java.util.ArrayList;
@@ -388,12 +390,25 @@ public class MyImageViewDrawableOverlay extends ImageViewTouch {
     @Override
     public boolean onUp(MotionEvent e) {
         Log.i(LOG_TAG, "onUp");
-
+        autoDeselect();
         if (mOverlayView != null) {
             mOverlayView.setMode(MyHighlightView.NONE);
             postInvalidate();
         }
         return super.onUp(e);
+    }
+
+    public void autoDeselect() {
+        // Auto deselection timeout
+        new Handler().postDelayed(new Runnable() {
+            public void run() {
+                if (mOverlayView != null) {
+                    mOverlayView.setMode(MyHighlightView.NONE);
+                    postInvalidate();
+                }
+                setSelectedHighlightView(null);
+            }
+        }, 3000);
     }
 
     @Override
@@ -418,6 +433,7 @@ public class MyImageViewDrawableOverlay extends ImageViewTouch {
             if (mOverlayViews.size() != 1) {
                 setSelectedHighlightView(null);
             }
+
         }
 
         return super.onSingleTapUp(e);

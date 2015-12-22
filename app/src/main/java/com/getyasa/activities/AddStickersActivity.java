@@ -285,13 +285,7 @@ public class AddStickersActivity extends CameraBaseActivity {
     }
 
     private void startDeselectTimer() {
-        new Handler().postDelayed(new Runnable() {
-            public void run() {
-                for (MyHighlightView v:EffectUtil.hightlistViews) {
-                    v.clearState();
-                }
-            }
-        }, 3000);
+
     }
 
 
@@ -306,9 +300,7 @@ public class AddStickersActivity extends CameraBaseActivity {
 
                         }
                     });
-                    startDeselectTimer();
-
-
+            mImageView.autoDeselect();
             return false;
 
         }
