@@ -11,6 +11,8 @@ import android.hardware.Camera;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -25,6 +27,7 @@ import com.getyasa.activities.Camera.Utility.Constant;
 import com.getyasa.base.YasaBaseActivity;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Created by maxim.vasilkov@gmail.com on 17/12/15.
@@ -38,6 +41,23 @@ public class CameraActivity extends YasaBaseActivity {
     private ImageView switchCameraButton;
     private ImageView galleryButton;
     String shape_id;
+
+    MenuItem flashBtn;
+    boolean hasFlash;
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate menu resource file.
+        getMenuInflater().inflate(R.menu.menu_camera_flash, menu);
+
+        flashBtn = menu.findItem(R.id.action_flash);
+
+        hasFlash = isHasFlash();
+        flashBtn.setVisible(hasFlash);
+
+        // Return true to display menu
+        return true;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,7 +123,6 @@ public class CameraActivity extends YasaBaseActivity {
 
 
 
-
         previewFrame = (FrameLayout)findViewById(R.id.camera_preview);
         captureButton = (Button)findViewById(R.id.button_capture);
         switchCameraButton = (ImageView)findViewById(R.id.button_switch);
@@ -136,6 +155,54 @@ public class CameraActivity extends YasaBaseActivity {
                 }
             }
         });
+    }
+
+
+
+    /**
+     * Flash switch On -> Off -> Automatic
+     *
+     * @param mCamera
+     */
+    private void turnLight(Camera mCamera) {
+        if (mCamera == null || mCamera.getParameters() == null
+                || mCamera.getParameters().getSupportedFlashModes() == null) {
+            return;
+        }
+        Camera.Parameters parameters = mCamera.getParameters();
+        String flashMode = mCamera.getParameters().getFlashMode();
+        List<String> supportedModes = mCamera.getParameters().getSupportedFlashModes();
+        if (Camera.Parameters.FLASH_MODE_OFF.equals(flashMode)
+                && supportedModes.contains(Camera.Parameters.FLASH_MODE_ON)) {
+            parameters.setFlashMode(Camera.Parameters.FLASH_MODE_ON);
+            mCamera.setParameters(parameters);
+            flashBtn.setIcon(R.drawable.camera_flash_on);
+        } else if (Camera.Parameters.FLASH_MODE_ON.equals(flashMode)) {
+            if (supportedModes.contains(Camera.Parameters.FLASH_MODE_AUTO)) {
+                parameters.setFlashMode(Camera.Parameters.FLASH_MODE_AUTO);
+                flashBtn.setIcon(R.drawable.camera_flash_auto);
+                mCamera.setParameters(parameters);
+            } else if (supportedModes.contains(Camera.Parameters.FLASH_MODE_OFF)) {
+                parameters.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
+                flashBtn.setIcon(R.drawable.camera_flash_off);
+                mCamera.setParameters(parameters);
+            }
+        } else if (Camera.Parameters.FLASH_MODE_AUTO.equals(flashMode)
+                && supportedModes.contains(Camera.Parameters.FLASH_MODE_OFF)) {
+            parameters.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
+            mCamera.setParameters(parameters);
+            flashBtn.setIcon(R.drawable.camera_flash_off);
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_flash:
+                turnLight(camera);
+                return true;
+        }
+        return false;
     }
 
     @Override
@@ -202,9 +269,18 @@ public class CameraActivity extends YasaBaseActivity {
         }
     }
 
+    boolean isHasFlash() {
+        if (camera == null || camera.getParameters() == null
+                || camera.getParameters().getSupportedFlashModes() == null) return false;
+        List<String> supportedModes = camera.getParameters().getSupportedFlashModes();
+        return supportedModes.size()>1;
+    }
+
     private void attachCameraToPreview() {
         previewSurfaceView = new PreviewSurfaceView(this, camera);
         previewFrame.addView(previewSurfaceView);
+        hasFlash = isHasFlash();
+        if(flashBtn!=null)flashBtn.setVisible(hasFlash);
     }
 
     private void removePreview() {
