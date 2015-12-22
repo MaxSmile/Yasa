@@ -44,5 +44,6 @@
     <string name="request_write_storage_permission_text">Approval is needed to save your photo on your device</string>
     <string name="take_pic_failed">Taking the picture filed</string>
     <string name="camera_saved">Saved</string>
+    <string name="confirmation_navigation">Do you want to take a new creation?</string>
 
 </resources>

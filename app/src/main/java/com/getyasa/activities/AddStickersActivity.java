@@ -2,6 +2,7 @@ package com.getyasa.activities;
 
 import android.content.Context;
 import android.content.ContextWrapper;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -13,6 +14,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.ShareActionProvider;
@@ -322,10 +324,19 @@ public class AddStickersActivity extends CameraBaseActivity {
                 }
                 return true;
             case R.id.action_logo:
-                // TODO: ask if sure?
-                Intent intent = new Intent(this, ShapesActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
+                new AlertDialog.Builder(this)
+                        .setTitle(getString(R.string.app_name))
+                        .setMessage(getString(R.string.confirmation_navigation))
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                Intent intent = new Intent(AddStickersActivity.this, ShapesActivity.class);
+                                overridePendingTransition(R.anim.flip_horizontal_in, R.anim.flip_horizontal_out);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent);
+                            }})
+                        .setNegativeButton(android.R.string.no, null).show();
+
                 return true;
         }
         return false;

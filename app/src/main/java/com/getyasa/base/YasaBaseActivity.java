@@ -30,13 +30,15 @@ public class YasaBaseActivity extends AppCompatActivity implements ActivityRespo
 
     protected CommonTitleBar titleBar;
 
-    private ActivityHelper           mActivityHelper;
+    protected ActivityHelper  mActivityHelper;
 
+    protected int transition_in = R.anim.slide_in;
+    protected int transition_out = R.anim.slide_out;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+        overridePendingTransition(transition_in, transition_out);
         mActivityHelper = new ActivityHelper(this);
         this.savedInstanceState = savedInstanceState;
     }

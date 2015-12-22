@@ -21,6 +21,8 @@ public class ShapesActivity extends YasaBaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        transition_in = R.anim.fade_in;
+        transition_out = R.anim.fade_out;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shapes);
 

@@ -131,7 +131,11 @@ public class CameraActivity extends YasaBaseActivity {
         captureButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                camera.takePicture(null, null, pictureCallback);
+                try {
+                    camera.takePicture(null, null, pictureCallback);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
 
