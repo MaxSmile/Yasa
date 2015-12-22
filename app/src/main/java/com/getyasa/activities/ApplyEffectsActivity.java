@@ -1,4 +1,4 @@
-package com.getyasa.app.ui;
+package com.getyasa.activities;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -19,7 +19,6 @@ import com.common.util.TimeUtils;
 import com.customview.MyImageViewDrawableOverlay;
 import com.getyasa.App;
 import com.getyasa.R;
-import com.getyasa.activities.AddStickersActivity;
 import com.getyasa.app.camera.CameraBaseActivity;
 import com.getyasa.app.camera.EffectService;
 import com.getyasa.app.camera.adapter.FiltersAdapter;
@@ -98,7 +97,7 @@ public class ApplyEffectsActivity extends CameraBaseActivity {
 
 
     private void initView() {
-        setUpActionBar(true,true,"Apply Filter");
+        setUpActionBar(true,true,"");
         View overlay = LayoutInflater.from(ApplyEffectsActivity.this).inflate(
                 R.layout.view_drawable_overlay, null);
 

@@ -14,7 +14,6 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.FloatMath;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -39,7 +38,7 @@ import com.getyasa.app.camera.CameraBaseActivity;
 import com.getyasa.app.camera.CameraManager;
 import com.getyasa.app.camera.util.CameraHelper;
 import com.getyasa.app.model.PhotoItem;
-import com.getyasa.app.ui.ApplyEffectsActivity;
+import com.getyasa.activities.ApplyEffectsActivity;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -51,7 +50,6 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
-import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 /**

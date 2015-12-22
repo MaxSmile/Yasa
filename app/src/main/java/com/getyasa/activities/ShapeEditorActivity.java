@@ -1,12 +1,10 @@
 package com.getyasa.activities;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -16,7 +14,6 @@ import com.common.util.ImageUtils;
 import com.common.util.TimeUtils;
 import com.getyasa.R;
 import com.getyasa.activities.Camera.Utility.Constant;
-import com.getyasa.app.ui.ApplyEffectsActivity;
 import com.getyasa.base.YasaBaseActivity;
 import com.getyasa.collage.MultiTouchListener;
 
@@ -26,7 +23,7 @@ import java.util.Date;
 /**
  * Created by maxim.vasilkov@gmail.com on 16/12/15.
  */
-public class ShapeEditor extends YasaBaseActivity {
+public class ShapeEditorActivity extends YasaBaseActivity {
 
     private static final int CAMERA_REQUEST = 1888;
     private static final int CAMERA_SURFACE = 1889;

@@ -14,7 +14,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 import com.getyasa.R;
-import com.getyasa.app.ui.ApplyEffectsActivity;
+import com.getyasa.activities.ApplyEffectsActivity;
 import com.getyasa.base.YasaBaseActivity;
 
 

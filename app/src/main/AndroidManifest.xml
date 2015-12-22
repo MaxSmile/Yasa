@@ -36,7 +36,7 @@
             android:screenOrientation="portrait"/>
 
         <activity
-            android:name=".activities.ShapeEditor"
+            android:name=".activities.ShapeEditorActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
 
@@ -62,7 +62,7 @@
             android:screenOrientation="portrait"/>
 
         <activity
-            android:name=".app.ui.ApplyEffectsActivity"
+            android:name=".activities.ApplyEffectsActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"/>
 
