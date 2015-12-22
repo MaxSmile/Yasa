@@ -19,6 +19,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
             </FrameLayout>
+            <com.getyasa.InverterLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <com.github.siyamed.shapeimageview.HexagonImageView
+                    android:id="@+id/shape"
+                    android:src="@drawable/half"
+                    android:layout_gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </com.getyasa.InverterLayout>
 
         </FrameLayout>
 

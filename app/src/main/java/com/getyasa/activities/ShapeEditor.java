@@ -42,12 +42,12 @@ public class ShapeEditor extends YasaBaseActivity {
     ImageView image1, image2;
 
     int counter = 0;
-    Uri imageUri;
+    String shape_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        String shape_id = getIntent().getStringExtra("shape_id");
+        shape_id = getIntent().getStringExtra("shape_id");
         switch (shape_id) {
             case "1": {
                 setContentView(R.layout._shape_activity_1);
@@ -156,7 +156,7 @@ public class ShapeEditor extends YasaBaseActivity {
 //        startActivityForResult(cameraIntent, CAMERA_REQUEST);
 
         Intent cameraIntent = new Intent(this,CameraActivity.class);
-
+        cameraIntent.putExtra("shape_id",shape_id);
         cameraIntent.putExtra("front",front);
         startActivityForResult(cameraIntent,CAMERA_SURFACE);
     }

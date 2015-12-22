@@ -1,7 +1,12 @@
 package com.getyasa.activities;
 
 import android.content.Intent;
+import android.graphics.AvoidXfermode;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
 import android.hardware.Camera;
 import android.net.Uri;
 import android.os.Bundle;
@@ -12,14 +17,11 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.common.util.FileUtils;
 import com.getyasa.R;
 import com.getyasa.YasaConstants;
 import com.getyasa.activities.Camera.PreviewSurfaceView;
 import com.getyasa.activities.Camera.Task.ImageDecodeTask;
-import com.getyasa.activities.Camera.Task.SaveImageTask;
 import com.getyasa.activities.Camera.Utility.Constant;
-import com.getyasa.app.ui.ApplyEffectsActivity;
 import com.getyasa.base.YasaBaseActivity;
 
 import java.io.IOException;
@@ -42,9 +44,62 @@ public class CameraActivity extends YasaBaseActivity {
         super.onCreate(savedInstanceState);
         Boolean front = getIntent().getBooleanExtra("front",false);
         Constant.BACK_CAMERA_IN_USE = !front;
-        setContentView(R.layout.activity_camera_surface);
-        setUpActionBar(true,false,"");
+
         shape_id = getIntent().getStringExtra("shape_id");
+        switch (shape_id) {
+
+            case "3": {
+                if (front) {
+                    setContentView(R.layout.activity_camera_surface3_);
+                } else {
+                    setContentView(R.layout.activity_camera_surface3);
+                }
+            } break;
+            case "4": {
+                if (front) {
+                    setContentView(R.layout.activity_camera_surface4_);
+                } else {
+                    setContentView(R.layout.activity_camera_surface4);
+                }
+            } break;
+            case "5": {
+                if (front) {
+                    setContentView(R.layout.activity_camera_surface5_);
+                } else {
+                    setContentView(R.layout.activity_camera_surface5);
+                }
+            } break;
+            case "6": {
+                if (front) {
+                    setContentView(R.layout.activity_camera_surface6_);
+                } else {
+                    setContentView(R.layout.activity_camera_surface6);
+                }
+            } break;
+            case "7": {
+                if (front) {
+                    setContentView(R.layout.activity_camera_surface7_);
+                } else {
+                    setContentView(R.layout.activity_camera_surface7);
+                }
+            } break;
+            case "8": {
+                if (front) {
+                    setContentView(R.layout.activity_camera_surface8_);
+                } else {
+                    setContentView(R.layout.activity_camera_surface8);
+                }
+            } break;
+            default: {
+                setContentView(R.layout.activity_camera_surface);
+            }
+        }
+
+
+
+
+
+        setUpActionBar(true,false,"");
 
 
 
@@ -190,7 +245,53 @@ public class CameraActivity extends YasaBaseActivity {
     };
 
 
+    private Bitmap getViewBitmap(View v) {
+        v.clearFocus();
+        v.setPressed(false);
 
+        boolean willNotCache = v.willNotCacheDrawing();
+        v.setWillNotCacheDrawing(false);
 
+        // Reset the drawing cache background color to fully transparent
+        // for the duration of this operation
+        int color = v.getDrawingCacheBackgroundColor();
+        v.setDrawingCacheBackgroundColor(0);
+
+        if (color != 0) {
+            v.destroyDrawingCache();
+        }
+        v.buildDrawingCache();
+        Bitmap cacheBitmap = v.getDrawingCache();
+        if (cacheBitmap == null) {
+            //Log.e(TAG, "failed getViewBitmap(" + v + ")", new RuntimeException());
+            return null;
+        }
+
+        Bitmap bitmap = Bitmap.createBitmap(cacheBitmap);
+
+        // Restore the view
+        v.destroyDrawingCache();
+        v.setWillNotCacheDrawing(willNotCache);
+        v.setDrawingCacheBackgroundColor(color);
+
+        return bitmap;
+    }
+
+    Bitmap composite(Bitmap bitmap1,Bitmap bitmap2) {
+
+        Bitmap resultingImage=Bitmap.createBitmap(bitmap1.getWidth(), bitmap1.getHeight(), bitmap1.getConfig());
+
+        Canvas canvas = new Canvas(resultingImage);
+
+        // Drawing first image on Canvas
+        Paint paint = new Paint();
+        canvas.drawBitmap(bitmap1, 0, 0, paint);
+
+        // Drawing second image on the Canvas, with Xfermode set to XOR
+        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.XOR));
+        canvas.drawBitmap(bitmap2, 0, 0, paint);
+
+        return resultingImage;
+    }
 
 }

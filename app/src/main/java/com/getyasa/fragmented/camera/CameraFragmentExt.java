@@ -98,123 +98,123 @@ public class CameraFragmentExt extends YasaCameraBaseFragment implements Surface
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         parentActivity = (MakePicsActivity) getActivity();
-        if (parentActivity!=null) {
-            switch (parentActivity.shape_id) {
-                case "1":
-                    return inflater.inflate(R.layout._fragment_camera1_1, container, false);
-                case "2":
-                    return inflater.inflate(R.layout._fragment_camera2_1, container, false);
-                case "3":
-                    return inflater.inflate(R.layout._fragment_camera3_1, container, false);
-                case "4":
-                    return inflater.inflate(R.layout._fragment_camera4_1, container, false);
-                case "5":
-                    return inflater.inflate(R.layout._fragment_camera5_1, container, false);
-                case "6":
-                    return inflater.inflate(R.layout._fragment_camera6_1, container, false);
-                case "7":
-                    return inflater.inflate(R.layout._fragment_camera7_1, container, false);
-                case "8":
-                    return inflater.inflate(R.layout._fragment_camera8_1, container, false);
-
-
-            }
-        }
-        return inflater.inflate(R.layout._fragment_camera1_1, container, false);
+//        if (parentActivity!=null) {
+//            switch (parentActivity.shape_id) {
+//                case "1":
+//                    return inflater.inflate(R.layout._fragment_camera1_1, container, false);
+//                case "2":
+//                    return inflater.inflate(R.layout._fragment_camera2_1, container, false);
+//                case "3":
+//                    return inflater.inflate(R.layout._fragment_camera3_1, container, false);
+//                case "4":
+//                    return inflater.inflate(R.layout._fragment_camera4_1, container, false);
+//                case "5":
+//                    return inflater.inflate(R.layout._fragment_camera5_1, container, false);
+//                case "6":
+//                    return inflater.inflate(R.layout._fragment_camera6_1, container, false);
+//                case "7":
+//                    return inflater.inflate(R.layout._fragment_camera7_1, container, false);
+//                case "8":
+//                    return inflater.inflate(R.layout._fragment_camera8_1, container, false);
+//
+//
+//            }
+//        }
+        return inflater.inflate(R.layout.fragment_album, container, false);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        cover = (ViewGroup) view.findViewById(R.id.covering_view_container);
-
-
-        takePhotoPanel = view.findViewById(R.id.panel_take_photo);;
-        ViewGroup.LayoutParams layout = takePhotoPanel.getLayoutParams();
-        layout.height = App.getApp().getScreenHeight()
-                - App.getApp().getScreenWidth()
-                - DistanceUtil.getCameraPhotoAreaHeight();
-
-        mPreviewView = (SquareCameraPreview) view.findViewById(R.id.camera_preview_view);
-        mPreviewView.getHolder().addCallback(CameraFragmentExt.this);
-
-
-        mImageParameters.mIsPortrait = true;
-
-        if (savedInstanceState == null) {
-            ViewTreeObserver observer = mPreviewView.getViewTreeObserver();
-            observer.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-                @Override
-                public void onGlobalLayout() {
-                    mImageParameters.mPreviewWidth = mPreviewView.getWidth();
-                    mImageParameters.mPreviewHeight = mPreviewView.getHeight();
-
-                    mImageParameters.mCoverWidth = mImageParameters.mCoverHeight
-                            = mImageParameters.calculateCoverWidthHeight();
-
-
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                        mPreviewView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                    } else {
-                        mPreviewView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                    }
-                }
-            });
-        }
+//        super.onViewCreated(view, savedInstanceState);
+//        cover = (ViewGroup) view.findViewById(R.id.covering_view_container);
+//
+//
+//        takePhotoPanel = view.findViewById(R.id.panel_take_photo);;
+//        ViewGroup.LayoutParams layout = takePhotoPanel.getLayoutParams();
+//        layout.height = App.getApp().getScreenHeight()
+//                - App.getApp().getScreenWidth()
+//                - DistanceUtil.getCameraPhotoAreaHeight();
+//
+//        mPreviewView = (SquareCameraPreview) view.findViewById(R.id.camera_preview_view);
+//        mPreviewView.getHolder().addCallback(CameraFragmentExt.this);
+//
+//
+//        mImageParameters.mIsPortrait = true;
+//
+//        if (savedInstanceState == null) {
+//            ViewTreeObserver observer = mPreviewView.getViewTreeObserver();
+//            observer.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+//                @Override
+//                public void onGlobalLayout() {
+//                    mImageParameters.mPreviewWidth = mPreviewView.getWidth();
+//                    mImageParameters.mPreviewHeight = mPreviewView.getHeight();
+//
+//                    mImageParameters.mCoverWidth = mImageParameters.mCoverHeight
+//                            = mImageParameters.calculateCoverWidthHeight();
+//
+//
+//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+//                        mPreviewView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+//                    } else {
+//                        mPreviewView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+//                    }
+//                }
+//            });
+//        }
 
         // TODO: edit here
-        final ImageView swapCameraBtn = (ImageView) view.findViewById(R.id.change_camera);
-        swapCameraBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mCameraID == CameraInfo.CAMERA_FACING_FRONT) {
-                    mCameraID = getBackCameraID();
-                } else {
-                    mCameraID = getFrontCameraID();
-                }
-                restartPreview();
-            }
-        });
-
-        final View changeCameraFlashModeBtn = view.findViewById(R.id.flash);
-        changeCameraFlashModeBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mFlashMode.equalsIgnoreCase(Camera.Parameters.FLASH_MODE_AUTO)) {
-                    mFlashMode = Camera.Parameters.FLASH_MODE_ON;
-                } else if (mFlashMode.equalsIgnoreCase(Camera.Parameters.FLASH_MODE_ON)) {
-                    mFlashMode = Camera.Parameters.FLASH_MODE_OFF;
-                } else if (mFlashMode.equalsIgnoreCase(Camera.Parameters.FLASH_MODE_OFF)) {
-                    mFlashMode = Camera.Parameters.FLASH_MODE_AUTO;
-                }
-
-                setupFlashMode();
-                setupCamera();
-            }
-        });
+//        final ImageView swapCameraBtn = (ImageView) view.findViewById(R.id.change_camera);
+//        swapCameraBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (mCameraID == CameraInfo.CAMERA_FACING_FRONT) {
+//                    mCameraID = getBackCameraID();
+//                } else {
+//                    mCameraID = getFrontCameraID();
+//                }
+//                restartPreview();
+//            }
+//        });
+//
+//        final View changeCameraFlashModeBtn = view.findViewById(R.id.flash);
+//        changeCameraFlashModeBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (mFlashMode.equalsIgnoreCase(Camera.Parameters.FLASH_MODE_AUTO)) {
+//                    mFlashMode = Camera.Parameters.FLASH_MODE_ON;
+//                } else if (mFlashMode.equalsIgnoreCase(Camera.Parameters.FLASH_MODE_ON)) {
+//                    mFlashMode = Camera.Parameters.FLASH_MODE_OFF;
+//                } else if (mFlashMode.equalsIgnoreCase(Camera.Parameters.FLASH_MODE_OFF)) {
+//                    mFlashMode = Camera.Parameters.FLASH_MODE_AUTO;
+//                }
+//
+//                setupFlashMode();
+//                setupCamera();
+//            }
+//        });
         setupFlashMode();
 
-        final ImageView takePhotoBtn = (ImageView) view.findViewById(R.id.capture_image_button);
-        takePhotoBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                takePicture();
-            }
-        });
+//        final ImageView takePhotoBtn = (ImageView) view.findViewById(R.id.capture_image_button);
+//        takePhotoBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                takePicture();
+//            }
+//        });
     }
 
     private void setupFlashMode() {
         View view = getView();
         if (view == null) return;
-
-        final TextView autoFlashIcon = (TextView) view.findViewById(R.id.auto_flash_icon);
-        if (Camera.Parameters.FLASH_MODE_AUTO.equalsIgnoreCase(mFlashMode)) {
-            autoFlashIcon.setText("Auto");
-        } else if (Camera.Parameters.FLASH_MODE_ON.equalsIgnoreCase(mFlashMode)) {
-            autoFlashIcon.setText("On");
-        }  else if (Camera.Parameters.FLASH_MODE_OFF.equalsIgnoreCase(mFlashMode)) {
-            autoFlashIcon.setText("Off");
-        }
+//
+//        final TextView autoFlashIcon = (TextView) view.findViewById(R.id.auto_flash_icon);
+//        if (Camera.Parameters.FLASH_MODE_AUTO.equalsIgnoreCase(mFlashMode)) {
+//            autoFlashIcon.setText("Auto");
+//        } else if (Camera.Parameters.FLASH_MODE_ON.equalsIgnoreCase(mFlashMode)) {
+//            autoFlashIcon.setText("On");
+//        }  else if (Camera.Parameters.FLASH_MODE_OFF.equalsIgnoreCase(mFlashMode)) {
+//            autoFlashIcon.setText("Off");
+//        }
     }
 
     @Override
@@ -360,14 +360,14 @@ public class CameraFragmentExt extends YasaCameraBaseFragment implements Surface
             parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
         }
 
-        final View changeCameraFlashModeBtn = getView().findViewById(R.id.flash);
-        List<String> flashModes = parameters.getSupportedFlashModes();
-        if (flashModes != null && flashModes.contains(mFlashMode)) {
-            parameters.setFlashMode(mFlashMode);
-            changeCameraFlashModeBtn.setVisibility(View.VISIBLE);
-        } else {
-            changeCameraFlashModeBtn.setVisibility(View.INVISIBLE);
-        }
+//        final View changeCameraFlashModeBtn = getView().findViewById(R.id.flash);
+//        List<String> flashModes = parameters.getSupportedFlashModes();
+//        if (flashModes != null && flashModes.contains(mFlashMode)) {
+//            parameters.setFlashMode(mFlashMode);
+//            changeCameraFlashModeBtn.setVisibility(View.VISIBLE);
+//        } else {
+//            changeCameraFlashModeBtn.setVisibility(View.INVISIBLE);
+//        }
 
         // Lock in the changes
         mCamera.setParameters(parameters);

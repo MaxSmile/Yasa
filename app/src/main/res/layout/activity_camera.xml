@@ -50,7 +50,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginRight="20dp"
                 android:padding="5dp"
-                android:src="@drawable/camera_library" />
+                android:src="@drawable/gallery" />
         </RelativeLayout>
 
 
