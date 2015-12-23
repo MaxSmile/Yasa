@@ -307,7 +307,7 @@ public class MyImageViewDrawableOverlay extends ImageViewTouch {
     @Override
     public boolean onDown(MotionEvent e) {
         Log.i(LOG_TAG, "onDown");
-
+        autoDeselectCancel();
         mScrollStarted = false;
         mLastMotionScrollX = e.getX();
         mLastMotionScrollY = e.getY();
@@ -398,17 +398,30 @@ public class MyImageViewDrawableOverlay extends ImageViewTouch {
         return super.onUp(e);
     }
 
+    Handler autoDeselectTimer = new Handler();
+    Runnable autoDeselectRunnable = null;
+
+    public void autoDeselectCancel() {
+        if(autoDeselectRunnable!=null) {
+            autoDeselectTimer.removeCallbacks(autoDeselectRunnable);
+            autoDeselectRunnable = null;
+        }
+    }
+
     public void autoDeselect() {
+        autoDeselectCancel();
         // Auto deselection timeout
-        new Handler().postDelayed(new Runnable() {
+        autoDeselectRunnable = new Runnable() {
             public void run() {
                 if (mOverlayView != null) {
                     mOverlayView.setMode(MyHighlightView.NONE);
                     postInvalidate();
                 }
                 setSelectedHighlightView(null);
+                autoDeselectRunnable = null;
             }
-        }, 3000);
+        };
+        autoDeselectTimer.postDelayed(autoDeselectRunnable, 2000);
     }
 
     @Override
