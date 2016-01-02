@@ -3,6 +3,7 @@ package com.getyasa;
 import android.app.Application;
 import android.util.DisplayMetrics;
 
+import com.appsflyer.AppsFlyerLib;
 import com.crashlytics.android.Crashlytics;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
@@ -43,6 +44,11 @@ public class App extends Application {
         Fabric.with(this, new Crashlytics());
         initImageLoader();
         mInstance = this;
+        // Set the Currency
+        AppsFlyerLib.setCurrencyCode("USD");
+        // The Dev key cab be set here or in the manifest.xml
+        AppsFlyerLib.setAppsFlyerKey("D2Gh7BMgRdmmtPPdUcQuZf");
+        AppsFlyerLib.sendTracking(getApplicationContext());
     }
 
 
