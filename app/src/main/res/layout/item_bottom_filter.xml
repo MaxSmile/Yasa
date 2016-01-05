@@ -2,29 +2,40 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:gravity="center_vertical"
     android:background="@color/colorPrimary"
-    android:padding="1dp" >
+    tools:context=".activities.ApplyEffectsActivity"
+    android:padding="1dp">
 
     <LinearLayout
         android:id="@+id/small_filter_container"
-        android:layout_width="@dimen/filter_toolbox_size"
-        android:layout_height="@dimen/filter_toolbox_size"
+        android:layout_width="@dimen/stickers_square_size"
+        android:layout_height="@dimen/stickers_square_size"
         android:gravity="center"
-        android:background="@drawable/bottom_tool" >
+        android:clipChildren="true"
+        android:background="@android:drawable/dialog_frame"
+        android:shape="@drawable/bottom_tool" >
+        <LinearLayout
+            android:clipChildren="true"
+            android:gravity="center"
+            android:background="@drawable/bottom_tool"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <jp.co.cyberagent.android.gpuimage.GPUImageView
+                android:id="@+id/small_filter"
+                android:layout_width="@dimen/stickers_square_size"
+                android:layout_height="@dimen/stickers_square_size"
+                android:layout_gravity="center"
+                android:contentDescription="@null"
+                android:scaleType="fitCenter" />
+        </LinearLayout>
 
-        <jp.co.cyberagent.android.gpuimage.GPUImageView
-            android:id="@+id/small_filter"
-            android:layout_width="@dimen/filter_icon_size"
-            android:layout_height="@dimen/filter_icon_size"
-            android:layout_gravity="center"
-            android:contentDescription="@null"
-            android:scaleType="fitCenter" />
     </LinearLayout>
 
     <TextView
         android:id="@+id/filter_name"
-        android:layout_width="@dimen/filter_toolbox_size"
+        android:layout_width="@dimen/stickers_square_size"
         android:layout_height="wrap_content"
         android:layout_below="@id/small_filter_container"
         android:layout_marginTop="5dp"

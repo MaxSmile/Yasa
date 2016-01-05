@@ -10,6 +10,7 @@
     <dimen name="filter_label_size">14sp</dimen>
     <dimen name="shape_border_width">8dp</dimen>
     <dimen name="progres_picture">40dp</dimen>
+    <dimen name="stickers_square_size">106dp</dimen>
 
     <!-- Various heights -->
     <dimen name="height_625px">313dp</dimen>

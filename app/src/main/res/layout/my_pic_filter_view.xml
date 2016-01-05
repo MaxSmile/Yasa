@@ -4,11 +4,22 @@
     android:layout_width="wrap_content"
     android:layout_height="fill_parent"
     android:layout_margin="8dp">
-    <ImageView
-        android:id="@+id/effect_thumbnail"
-        android:scaleType="centerInside"
-        android:layout_width="60dp"
-        android:layout_gravity="center"
-        android:layout_height="wrap_content"
-        android:src="@drawable/default_img" />
+
+    <LinearLayout
+        android:layout_centerVertical="true"
+        android:layout_width="@dimen/stickers_square_size"
+        android:layout_height="@dimen/stickers_square_size"
+        android:background="@android:drawable/dialog_frame"
+        >
+        <ImageView
+            android:id="@+id/effect_thumbnail"
+            android:scaleType="fitCenter"
+            android:layout_centerVertical="true"
+            android:padding="8dp"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@color/light_grey"
+            android:src="@drawable/default_img" />
+    </LinearLayout>
+
 </RelativeLayout>
